@@ -1,8 +1,19 @@
 import { GetClassHitDie } from '../utils/common'
 
 enum ClassEnum {
+    Artificer,
+    Barbarian,
+    Bard,
+    Cleric,
+    Druid,
+    Fighter,
+    Monk,
+    Paladin,
+    Ranger,
+    Rogue,
+    Sorcerer,
     Warlock,
-    Paladin
+    Wizard,
 }
 
 enum SubclassEnum {
@@ -11,15 +22,15 @@ enum SubclassEnum {
 }
 
 type Class = {
-    class: ClassEnum,
+    classEnum: ClassEnum,
     get name(): () => string,
     get hitDie(): () => number,
     get averageLevelupHealth(): () => number,
 }
 
 const ClassDefault: Class = {
-    name: function () { return ClassEnum[this.class]; },
-    hitDie: function () { return GetClassHitDie(this.class); },
+    name: function () { return ClassEnum[this.classEnum]; },
+    hitDie: function () { return GetClassHitDie(this.classEnum); },
     averageLevelupHealth: function () { return this.hitDie()/2 + 1; },
 }
 

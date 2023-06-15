@@ -1,7 +1,7 @@
 import { Equipment, EquipmentEnum } from "../typings/equipment.d";
 import { AttributeEnum } from "../typings/attribute.d";
 import { DamageType } from "../typings/common.d";
-import { GetAllSkillsArray, GetAllAttributesArray } from "../utils/common";
+import { GetSkillEnumArray, GetAttributeEnumArray } from "../utils/common";
 
 export const GetEquipment = (): Equipment[] => {
     const equipment: Equipment[] = [
@@ -71,11 +71,23 @@ export const GetEquipment = (): Equipment[] => {
             count: 1,
         },
         { 
+            equipmentEnum: EquipmentEnum.Shield,
+            grantsACBonus: 2,
+            isEquipped: false,
+            count: 1,
+        },
+        { 
+            equipmentEnum: EquipmentEnum.RingMail,
+            grantsBaseAC: 16,
+            isEquipped: true,
+            count: 1,
+        },
+        { 
             equipmentEnum: EquipmentEnum.LuckStone,
             isEquipped: true,
             count: 1,
-            skills: GetAllSkillsArray().map(x => ({ skill: x, value: 1 })),
-            savingThrows: GetAllAttributesArray().map(x => ({ attribute: x, value: 1 })),
+            skills: GetSkillEnumArray().map(x => ({ skill: x, value: 1 })),
+            savingThrows: GetAttributeEnumArray().map(x => ({ attribute: x, value: 1 })),
         },
         { 
             equipmentEnum: EquipmentEnum.Custom,
@@ -102,6 +114,7 @@ const GetEquipmentName = (equipment: EquipmentEnum): string => {
         case EquipmentEnum.BlockAndTackle: return 'Block and Tackle';
         case EquipmentEnum.ExplorersPack: return 'Explorer\'s Pack';
         case EquipmentEnum.LuckStone: return 'Stone of Good Luck';
+        case EquipmentEnum.RingMail: return 'Ring Mail';
         case EquipmentEnum.RopeSilk: return 'Silk Rope';
         default: return EquipmentEnum[equipment];;
     }

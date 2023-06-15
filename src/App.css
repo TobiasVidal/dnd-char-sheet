@@ -15,3 +15,12 @@ tbody > tr:last-child > td {
   font-size: 12px;
   margin-bottom: 0;
 }
+
+.inline-icon {
+  vertical-align: bottom;
+  font-size: 20px;
+}
+
+.row.accordion-button {
+  margin: 0;
+}

@@ -1,13 +1,15 @@
+import { GetSkillEnumArray, GetClassSavingThrows, GetSkillAttribute } from "../utils/common";
+import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell } from "../typings/character.d";
 import { Attribute, AttributeDefault, AttributeEnum } from "../typings/attribute.d";
-import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature } from "../typings/character.d";
 import { ClassDefault, ClassEnum } from "../typings/class.d";
-import { SkillEnum } from "../typings/skill.d";
-import { FeatEnum } from "../typings/feat.d";
 import { SavingThrow } from "../typings/savingThrow.d";
-import { GetClass } from "../service/ClassService"
-import { GetAllSkillsArray, GetClassSavingThrows, GetSkillAttribute } from "../utils/common";
+import { SkillEnum } from "../typings/skill.d";
+import { Spell, SpellEnum } from "../typings/spell.d";
+import { FeatEnum } from "../typings/feat.d";
+import { GetClass, GetCharacterClassSpellSlots } from "../service/ClassService"
 import { Background } from "../typings/background";
 import { GetEquipment } from "./EquipmentService";
+import { GetAllSpells } from "./SpellService";
 
 const GetCharacter = (): Character => {
     const character = {
@@ -20,11 +22,13 @@ const GetCharacter = (): Character => {
         feats: GetCharacterFeats(),
         equipment: GetEquipment(),
         race: GetCharacterRace(),
+        spells: GetCharacterSpells(),
     }
 
     UpdateCharacterAttributes(character);
     SetSavingThrows(character);
     SetInitiative(character);
+    SetSpellSlots(character);
     SetHealthMax(character);
     SetSkills(character);
     SetSpeed(character);
@@ -91,7 +95,7 @@ const GetCharacterFeats = (): CharacterFeat[] => [
 
 const SetSavingThrows = (character: Character) => {
     let savingThrows: SavingThrow[] = [];
-    const firstLevelClass: ClassEnum = character.classes.filter(x => x.startingClass)[0].class.class;
+    const firstLevelClass: ClassEnum = character.classes.filter(x => x.startingClass)[0].class.classEnum;
     for (let i = 0; i < character.attributes.length; i++) {
         const attribute = character.attributes[i];
         const hasProficiency = GetClassSavingThrows(firstLevelClass).includes(attribute.attribute);
@@ -119,7 +123,7 @@ const GetBackground = (): Background => {
 const SetSkills = (character: Character) => {
     character.skills = [];
     
-    const skillList: SkillEnum[] = GetAllSkillsArray();
+    const skillList: SkillEnum[] = GetSkillEnumArray();
     
     for (const skill of skillList) {
         const hasProficiency = HasProficiencyInSkill(character, skill);
@@ -143,7 +147,23 @@ const HasProficiencyInSkill = (character: Character, skill: SkillEnum): boolean 
 }
 
 const SetAC = (character: Character) => {
-    character.armorClass = 10;
+    character.armorClass = character.equipment.find(x => x.isEquipped && x.grantsBaseAC)?.grantsBaseAC ?? 10;
+    character.armorClass += character.equipment.filter(x => x.isEquipped && x.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.grantsACBonus ?? 0), 0);
+}
+
+const SetSpellSlots = (character: Character) => {
+    const warlockClass = character.classes.find(x => x.class.classEnum === ClassEnum.Warlock);
+    const casterClasses = character.classes.filter(x => x.class.classEnum !== ClassEnum.Warlock && GetCharacterClassSpellSlots(x));
+    if (casterClasses.length > 1) { /* quilombo */}
+    let result = GetCharacterClassSpellSlots(casterClasses[0]);
+    if (warlockClass) {
+        const warlockSpellSlot = GetCharacterClassSpellSlots(warlockClass)[0];
+        result = result.map(x => x.level === warlockSpellSlot.level ? 
+            {level: x.level, amount: x.amount + warlockSpellSlot.amount } 
+            : x
+        )
+    }
+    character.spellSlots = result;
 }
 
 const SetInitiative = (character: Character) => {
@@ -158,7 +178,6 @@ const SetHealthMax = (character: Character) => {
     const conModifier = character.attributes.find(x => x.attribute === AttributeEnum.Con)?.modifier() ?? 0;
     character.healthMax = character.level() * conModifier;
     character.classes?.forEach(x => {
-        console.log(x.class.name(), x.class.averageLevelupHealth(), x.class.hitDie(), x.class.hitDie()/2);
         character.healthMax += x.level * x.class.averageLevelupHealth();
         if (x.startingClass) {
             character.healthMax += x.class.hitDie() - x.class.averageLevelupHealth();
@@ -310,5 +329,58 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
         },
     ]
 }
+
+const GetCharacterSpells = (): CharacterSpell[] => {
+    const allSpells = GetAllSpells();
+    const warlockSpells = [
+        { spell: SpellEnum.EldritchBlast, origin: 'Warlock' },
+        { spell: SpellEnum.Prestidigitation, origin: 'Warlock' },
+        { spell: SpellEnum.MinorIllusion, origin: 'Warlock' },
+        { spell: SpellEnum.Suggestion, origin: 'Warlock' },
+        { spell: SpellEnum.Invisibility, origin: 'Warlock' },
+        { spell: SpellEnum.Darkness, origin: 'Warlock' },
+        { spell: SpellEnum.Shield, origin: 'Warlock - Hexblade' },
+        { spell: SpellEnum.Blur, origin: 'Warlock - Hexblade' },
+    ];
+    const paladinExtraSpells = [
+        { spell: SpellEnum.Bane, origin: 'Paladin - Oath of Vengance' },
+        { spell: SpellEnum.HuntersMark, origin: 'Paladin - Oath of Vengance' },
+        { spell: SpellEnum.HoldPerson, origin: 'Paladin - Oath of Vengance' },
+        { spell: SpellEnum.MistyStep, origin: 'Paladin - Oath of Vengance' },
+    ];
+    const paladinPreparedSpells = [
+        SpellEnum.Bless,
+        SpellEnum.Command,
+        SpellEnum.CureWounds,
+        SpellEnum.DetectMagic,
+        SpellEnum.ShieldOfFaith,
+        SpellEnum.ThunderousSmite,
+    ];
+    const preparedSpells = [
+        ...warlockSpells.map(x => ({
+            spell: allSpells.find(y => y.spellEnum === x.spell) as Spell,
+            prepared: true,
+            origin: x.origin,
+        })),
+        ...paladinExtraSpells.map(x => ({
+            spell: allSpells.find(y => y.spellEnum === x.spell) as Spell,
+            prepared: true,
+            origin: x.origin,
+        })),
+        ...paladinPreparedSpells.map(x => ({
+            spell: allSpells.find(y => y.spellEnum === x) as Spell,
+            prepared: true,
+            origin: "Paladin"
+        })),
+    ];
+    return [
+        ...preparedSpells,
+        ...allSpells.filter(x => x.classes?.includes(ClassEnum.Paladin) ?? false).map(x =>({
+            spell: x,
+            prepared: false,
+            origin: "Paladin"
+        }))
+    ]
+};
 
 export { GetCharacter };

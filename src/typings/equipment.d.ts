@@ -14,6 +14,8 @@ export type Equipment = {
     name?: string,
     url?: string,
     count: number,
+    grantsBaseAC?: number,//Esto es para cosas que definen tu AC base, como armadura
+    grantsACBonus?: number,//Esto es para cosas como shields, que dan un bonus (suma) al AC
     //weight: number,//lbs
     skills?: { skill: SkillEnum, value: number }[],
     savingThrows?: { attribute: AttributeEnum, value: number }[],
@@ -37,7 +39,9 @@ export enum EquipmentEnum {
     Piton,
     LuckStone,
     Rations,
+    RingMail,
     RopeSilk,
     Shovel,
+    Shield,
     Whetstone,
 }

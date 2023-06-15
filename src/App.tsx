@@ -11,20 +11,21 @@ import HitPoints from './components/HitPoints';
 import Skills from './components/Skills';
 import { SkillEnum } from './typings/skill.d';
 import { Features } from './components/Features';
+import { Spells } from './components/Spells';
 
 function App() {
   const character:Character = GetCharacter();
   
   return (
     <div className="App">
-      <div className='sheet mt-5'>
+      <div className='sheet my-5'>
         <div className='row'>
           <h1 className='col-6'>
             {character.name}
             <small className='text-secondary ms-2'>[{character.level()}]</small>
           </h1>
           <div className='col-6'>
-            {character.classes.map(x => <p key={x.class.class.toString()}>{`${x.class.name()} [${x.level}]`}</p>)}
+            {character.classes.map(x => <p key={x.class.classEnum.toString()}>{`${x.class.name()} [${x.level}]`}</p>)}
           </div>
         </div>
         <div className='row'>
@@ -48,6 +49,9 @@ function App() {
           <div className='col-4'>
             <Features features={character.features} />
           </div>
+        </div>
+        <div>
+          <Spells spells={character.spells} spellSlots={character.spellSlots}></Spells>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-
-export const spells = [
+//https://github.com/5e-bits/5e-database/tree/main/src
+export const dbSpells = [
     {
       "index": "acid-arrow",
       "name": "Acid Arrow",
@@ -812,6 +812,33 @@ export const spells = [
         }
       ],
       "url": "/api/spells/arcanists-magic-aura"
+    },
+    {
+      "index": "armor-of-agathys",
+      "name": "Armor of Agathys",
+      "desc": [
+        "A protective magical force surrounds you, manifesting as a spectral frost that covers you and your gear. You gain 5 temporary hit points for the duration. If a creature hits you with a melee attack while you have these hit points, the creature takes 5 cold damage."
+      ],
+      "range": "Self",
+      "components": ["V", "S", "M"],
+      "material": "A cup of water.",
+      "ritual": false,
+      "duration": "1 hour",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 1,
+      "school": {
+        "index": "abjuration",
+        "name": "Abjuration",
+        "url": "/api/magic-schools/abjuration"
+      },
+      "classes": [
+        {
+          "index": "warlock",
+          "name": "Warlock",
+          "url": "/api/classes/warlock"
+        }
+      ]
     },
     {
       "index": "astral-projection",
@@ -14458,6 +14485,32 @@ export const spells = [
         }
       ],
       "url": "/api/spells/thaumaturgy"
+    },
+    {
+      "index": "thunderous-smite",
+      "name": "Thunderous Smite",
+      "desc": [
+        "The first time you hit with a melee weapon attack during this spell’s duration, your weapon rings with thunder that is audible within 300 feet of you, and the attack deals an extra 2d6 thunder damage to the target. Additionally, if the target is a creature, it must succeed on a Strength saving throw or be pushed 10 feet away from you and knocked prone."
+      ],
+      "range": "Self",
+      "components": ["V"],
+      "ritual": false,
+      "duration": "1 minute",
+      "concentration": true,
+      "casting_time": "1 bonus action",
+      "level": 1,
+      "school": {
+        "index": "evocation",
+        "name": "Evocation",
+        "url": "/api/magic-schools/evocation"
+      },
+      "classes": [
+        {
+          "index": "paladin",
+          "name": "Paladin",
+          "url": "/api/classes/paladin"
+        }
+      ]
     },
     {
       "index": "thunderwave",

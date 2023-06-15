@@ -1,11 +1,12 @@
 import { GetFeatName, GetFeatDescription, GetProfBonus } from '../utils/common'
+import { SavingThrow } from './savingThrow.d'
+import { Background } from './background.d'
+import { Equipment } from './equipment.d'
 import { Attribute } from './attribute.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
-import { SavingThrow } from './savingThrow.d'
-import { Background } from './background.d'
-import { Equipment } from './equipment.d'
+import { Spell, SpellSlot } from './spell.d'
 
 type Character = {
     name: string,
@@ -16,6 +17,8 @@ type Character = {
     features: CharacterFeature[],
     race: CharacterRace,
     feats: CharacterFeat[],
+    spells: CharacterSpell[],
+    spellSlots: SpellSlot[],
     equipment: Equipment[],
     background: Background,
     armorClass: number,
@@ -79,6 +82,12 @@ export type CharacterFeature = {
     description: string,
     origin: string,
     url: string,
+}
+
+export type CharacterSpell = {
+    spell: Spell,
+    prepared: boolean,
+    origin: string,
 }
 
 export { 

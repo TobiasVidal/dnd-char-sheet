@@ -1,7 +1,7 @@
 import { CharacterFeature } from "../typings/character.d";
 
 export function Features({ features }: { features: CharacterFeature[] }) {
-    return (<div className="accordion" id="accordionPanelsStayOpenExample">
+    return (<div className="accordion">
         {features.map(x => <div className="accordion-item" key={features.indexOf(x)}>
             <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#characterfeature-${features.indexOf(x)}`}>
@@ -15,10 +15,4 @@ export function Features({ features }: { features: CharacterFeature[] }) {
         </div>)}
     </div>
     );
-
-    // return (<ul>
-    //     {features.map(x => <li>
-    //         {x.name}
-    //     </li>)}
-    // </ul>)
 }

@@ -1,7 +1,8 @@
+import { SpellEnum } from "../typings/spell.d";
 import { AttributeEnum } from "../typings/attribute.d"
 import { ClassEnum } from "../typings/class.d";
-import { FeatEnum } from "../typings/feat.d";
 import { SkillEnum } from "../typings/skill.d";
+import { FeatEnum } from "../typings/feat.d";
 
 export const GetNumberString = (num: number):string => (num >= 0 ? '+' : '') + num.toString();
 
@@ -111,8 +112,10 @@ const GetProfBonus = (level: number) => {
     }
 }
 
-export const GetAllSkillsArray = (): SkillEnum[] => Object.values(SkillEnum).filter(x => typeof x === 'number').map(x => x as SkillEnum);
-export const GetAllAttributesArray = (): AttributeEnum[] => Object.values(AttributeEnum).filter(x => typeof x === 'number').map(x => x as AttributeEnum);
+export const GetSpellEnumArray = (): SpellEnum[] => Object.values(SpellEnum).filter(x => typeof x === 'number').map(x => x as SpellEnum);
+export const GetSkillEnumArray = (): SkillEnum[] => Object.values(SkillEnum).filter(x => typeof x === 'number').map(x => x as SkillEnum);
+export const GetAttributeEnumArray = (): AttributeEnum[] => Object.values(AttributeEnum).filter(x => typeof x === 'number').map(x => x as AttributeEnum);
+export const GetClassEnumArray = (): ClassEnum[] => Object.values(ClassEnum).filter(x => typeof x === 'number').map(x => x as ClassEnum);
 
 export { 
     GetAttributeName,

@@ -21,6 +21,10 @@ tbody > tr:last-child > td {
   font-size: 20px;
 }
 
+.icon-sm {
+  font-size: 16px;
+}
+
 .row.accordion-button {
   margin: 0;
 }

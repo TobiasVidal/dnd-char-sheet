@@ -12,6 +12,7 @@ import Skills from './components/Skills';
 import { SkillEnum } from './typings/skill.d';
 import { Features } from './components/Features';
 import { Spells } from './components/Spells';
+import { Inventory } from './components/Inventory';
 
 function App() {
   const character:Character = GetCharacter();
@@ -45,6 +46,7 @@ function App() {
             <p>+{10 + (character.skills.find(x => x.skill === SkillEnum.Perception)?.value ?? 0)} PASSIVE PERCEPTION</p>
             <AcIniSpeed character={character} />
             <HitPoints hitPoints={character.healthMax} />
+            <Inventory character={character} />
           </div>
           <div className='col-4'>
             <Features features={character.features} />

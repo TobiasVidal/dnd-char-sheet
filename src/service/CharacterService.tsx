@@ -1,10 +1,11 @@
 import { GetSkillEnumArray, GetClassSavingThrows, GetSkillAttribute } from "../utils/common";
-import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell } from "../typings/character.d";
+import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell, CharacterAttack } from "../typings/character.d";
 import { Attribute, AttributeDefault, AttributeEnum } from "../typings/attribute.d";
 import { ClassDefault, ClassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
-import { SkillEnum } from "../typings/skill.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
+import { DamageType } from "../typings/common.d";
+import { SkillEnum } from "../typings/skill.d";
 import { FeatEnum } from "../typings/feat.d";
 import { GetClass, GetCharacterClassSpellSlots } from "../service/ClassService"
 import { Background } from "../typings/background";
@@ -30,6 +31,7 @@ const GetCharacter = (): Character => {
     SetInitiative(character);
     SetSpellSlots(character);
     SetHealthMax(character);
+    SetAttacks(character);
     SetSkills(character);
     SetSpeed(character);
     SetAC(character);
@@ -183,6 +185,23 @@ const SetHealthMax = (character: Character) => {
             character.healthMax += x.class.hitDie() - x.class.averageLevelupHealth();
         }
     });
+}
+
+const SetAttacks = (character: Character) => {
+    const attacks: CharacterAttack[] = [];
+    character.equipment.forEach(x => {
+        if (!x.damage) { return; }
+        const attributeModifier = character.attributes.find(y => y.attribute === x.damage?.attribute)?.modifier() ?? 0;
+        attacks.push({
+            name: x.name ?? '',
+            range: x.range,
+            damage: x.damage?.dice.map(dice => `${dice.dieCount}d${dice.dieSides}`).join('+') + '+' + attributeModifier,
+            attackBonus: character.profBonus() + attributeModifier,
+            damageType: DamageType[x.damage.dice[0].type],
+        });
+    });
+
+    character.attacks = attacks;
 }
 
 const GetCharacterFeatures = (): CharacterFeature[] => {

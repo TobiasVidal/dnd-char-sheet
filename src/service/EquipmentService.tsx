@@ -94,6 +94,7 @@ export const GetEquipment = (): Equipment[] => {
             isEquipped: true,
             count: 1,
             name: 'Greatsword',
+            range: '5ft',
             damage: {
                 attribute: AttributeEnum.Cha,
                 dice: [{ type: DamageType.Slashing, dieSides: 6, dieCount: 2 }]

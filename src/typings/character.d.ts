@@ -1,12 +1,13 @@
 import { GetFeatName, GetFeatDescription, GetProfBonus } from '../utils/common'
+import { Spell, SpellSlot } from './spell.d'
 import { SavingThrow } from './savingThrow.d'
 import { Background } from './background.d'
 import { Equipment } from './equipment.d'
 import { Attribute } from './attribute.d'
+import { DamageType } from './common.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
-import { Spell, SpellSlot } from './spell.d'
 
 type Character = {
     name: string,
@@ -20,6 +21,7 @@ type Character = {
     spells: CharacterSpell[],
     spellSlots: SpellSlot[],
     equipment: Equipment[],
+    attacks: CharacterAttack[],
     background: Background,
     armorClass: number,
     initiative: number,
@@ -33,6 +35,7 @@ const CharacterDefault: Character = {
     savingThrows: [],
     equipment: [],
     classes: [],
+    attacks: [],
     skills: [],
     armorClass: 10,
     healthMax: 1,
@@ -88,6 +91,14 @@ export type CharacterSpell = {
     spell: Spell,
     prepared: boolean,
     origin: string,
+}
+
+export type CharacterAttack = {
+    name: string,
+    damage: string,
+    damageType: string,
+    attackBonus: number,
+    range?: string,
 }
 
 export { 

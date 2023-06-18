@@ -1,7 +1,7 @@
-import { AttributeEnum } from "./attribute.d";
+import { AbilityScoreEnum } from "./abilityScore.d";
 
 type SavingThrow = {
-    attribute: AttributeEnum,
+    ability: AbilityScoreEnum,
     value: number,
     hasProficiency: boolean,
 }

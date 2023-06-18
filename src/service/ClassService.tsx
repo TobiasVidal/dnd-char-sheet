@@ -1,6 +1,60 @@
-import { CharacterClass } from "../typings/character";
-import { Class, ClassDefault, ClassEnum } from "../typings/class.d";
+import { Class, ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
+import { AbilityScoreEnum } from "../typings/abilityScore.d";
+import { CharacterClass } from "../typings/character.d";
 import { SpellSlot } from "../typings/spell.d";
+
+export const GetClassHitDie = (classEnum: ClassEnum): number => {
+    switch (classEnum) {
+        case ClassEnum.Paladin: return 10;
+        case ClassEnum.Warlock: return 8;
+        default: return 0;
+    }
+}
+
+export const GetClassArmorProficiencies = (classEnum: ClassEnum): string[] => {
+    switch (classEnum) {
+        case ClassEnum.Paladin: 
+            return [ 'Light Armor', 'Medium Armor', 'Heavy Armor', 'shields' ];
+        case ClassEnum.Warlock: 
+            return [ "Light armor" ];
+        default: return []
+    }
+}
+
+export const GetClassWeaponProficiencies = (classEnum: ClassEnum): string[] => {
+    switch (classEnum) {
+        case ClassEnum.Paladin: 
+        return [ "Simple weapons", "Martial weapons" ];
+        case ClassEnum.Warlock: 
+            return [ "Simple weapons" ];
+        default: return []
+    }
+}
+
+export const GetSubclassName = (subclass: SubclassEnum): string => {
+    switch (subclass) {
+        case SubclassEnum.OathOfVengance: return "Oath of Vengance";
+        case SubclassEnum.Hexblade: return "The Hexblade";
+        default: return '';
+    }
+}
+
+export const GetClassSavingThrows = (classEnum: ClassEnum):AbilityScoreEnum[] => {
+    switch (classEnum) {
+        case ClassEnum.Paladin:
+        case ClassEnum.Warlock: return [ AbilityScoreEnum.Cha, AbilityScoreEnum.Wis ];
+        default: return [];
+    }
+}
+
+export const GetClassSpellcastingAbility = (classEnum: ClassEnum): AbilityScoreEnum | undefined => {
+    switch (classEnum) {
+        case ClassEnum.Warlock:
+        case ClassEnum.Paladin: 
+            return AbilityScoreEnum.Cha;
+        default: return undefined;
+    }
+}
 
 const GetClass = (classEnum: ClassEnum):Class => {
     return {

@@ -3,7 +3,7 @@
   margin: auto;
 }
 
-.attributes-list {
+.list-unstyled {
   list-style-type: none;
 }
 
@@ -27,4 +27,8 @@ tbody > tr:last-child > td {
 
 .row.accordion-button {
   margin: 0;
+}
+
+.character-avatar {
+  max-width: 100%;
 }

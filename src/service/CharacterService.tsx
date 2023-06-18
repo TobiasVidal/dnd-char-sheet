@@ -1,35 +1,35 @@
-import { GetSkillEnumArray, GetClassSavingThrows, GetSkillAttribute } from "../utils/common";
-import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell, CharacterAttack } from "../typings/character.d";
-import { Attribute, AttributeDefault, AttributeEnum } from "../typings/attribute.d";
-import { ClassDefault, ClassEnum } from "../typings/class.d";
+import { GetSkillEnumArray, GetSkillAbility } from "../utils/common";
+import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, CharacterPersonality } from "../typings/character.d";
+import { AbilityScore, AbilityScoreDefault, AbilityScoreEnum } from "../typings/abilityScore.d";
+import { ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
+import { Background } from "../typings/background.d";
 import { DamageType } from "../typings/common.d";
 import { SkillEnum } from "../typings/skill.d";
 import { FeatEnum } from "../typings/feat.d";
-import { GetClass, GetCharacterClassSpellSlots } from "../service/ClassService"
-import { Background } from "../typings/background";
-import { GetEquipment } from "./EquipmentService";
+import { GetClass, GetCharacterClassSpellSlots, GetClassSavingThrows } from "../service/ClassService"
+import { GetCharacterEquipment } from "./CharacterEquipmentService";
 import { GetAllSpells } from "./SpellService";
 
 const GetCharacter = (): Character => {
     const character = {
         ...CharacterDefault,
         name: 'Asura',
-        attributes: GetCharacterStartingAttributes(),
+        abilityScores: GetCharacterStartingAbilityScores(),
         features: GetCharacterFeatures(),
         classes: GetCharacterClasses(),
         background: GetBackground(),
         feats: GetCharacterFeats(),
-        equipment: GetEquipment(),
+        equipment: GetCharacterEquipment(),
         race: GetCharacterRace(),
-        spells: GetCharacterSpells(),
+        personality: GetCharacterPersonality(),    
     }
-
-    UpdateCharacterAttributes(character);
+    
+    UpdateCharacterAbilityScores(character);
     SetSavingThrows(character);
+    SetSpellcasting(character);
     SetInitiative(character);
-    SetSpellSlots(character);
     SetHealthMax(character);
     SetAttacks(character);
     SetSkills(character);
@@ -39,21 +39,21 @@ const GetCharacter = (): Character => {
     return character;
 }
 
-const GetCharacterStartingAttributes = (): Attribute[] => [
-    { ...AttributeDefault, attribute: AttributeEnum.Str, value: 13 },
-    { ...AttributeDefault, attribute: AttributeEnum.Dex, value: 8 },
-    { ...AttributeDefault, attribute: AttributeEnum.Con, value: 14 },
-    { ...AttributeDefault, attribute: AttributeEnum.Int, value: 10 },
-    { ...AttributeDefault, attribute: AttributeEnum.Wis, value: 12 },
-    { ...AttributeDefault, attribute: AttributeEnum.Cha, value: 17 },
+const GetCharacterStartingAbilityScores = (): AbilityScore[] => [
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Str, value: 13 },
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Dex, value: 8 },
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Con, value: 14 },
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Int, value: 10 },
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Wis, value: 12 },
+    { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 17 },
 ];
 
-const UpdateCharacterAttributes = (character: Character): void => {
-    for (let i = 0; i < character.attributes.length; i++) {
-        const attribute = character.attributes[i];
-        attribute.value += character.race.attributes.reduce((sum, attr) => sum + (attr.attribute === attribute.attribute ? attr.value : 0), 0);
+const UpdateCharacterAbilityScores = (character: Character): void => {
+    for (let i = 0; i < character.abilityScores.length; i++) {
+        const abilityScore = character.abilityScores[i];
+        abilityScore.value += character.race.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
         character.feats.forEach(feat => {
-            attribute.value += feat.attributes.reduce((sum, attr) => sum + (attr.attribute === attribute.attribute ? attr.value : 0), 0);
+            abilityScore.value += feat.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
         });
     }
 }
@@ -62,28 +62,27 @@ const GetCharacterClasses = (): CharacterClass[] => [
     {
         ...ClassDefault,
         class: GetClass(ClassEnum.Paladin),
+        subclass: SubclassEnum.OathOfVengance,
         level: 5,
         skillProficiencies: [SkillEnum.Athletics, SkillEnum.Persuasion],
         startingClass: true,
-        weaponProficiencies: ['Simple Weapons', 'Martial Weapons'],
-        armorProficiencies: ['Light Armor', 'Medium Armor', 'Heavy Armor', 'Shields'],
     },
     {
         ...ClassDefault,
         class: GetClass(ClassEnum.Warlock),
+        subclass: SubclassEnum.Hexblade,
         level: 4,
         skillProficiencies: [],
         startingClass: false,
-        weaponProficiencies: [],
-        armorProficiencies: [],
     },
 ];
 
 const GetCharacterRace = (): CharacterRace => {
     return {
-        displayName: "Tiefling, Elf",
+        displayName: "Tiefling/Elf",
+        subtitle: "(custom lineage)",
         speed: 30,
-        attributes: [{ ...AttributeDefault, attribute: AttributeEnum.Cha, value: 2 }],
+        abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 2 }],
         languages: ["Common", "Elven"],
         traits: ["Darkvision 60ft"],
         size: "Medium",
@@ -91,23 +90,23 @@ const GetCharacterRace = (): CharacterRace => {
 }
 
 const GetCharacterFeats = (): CharacterFeat[] => [
-    { ...CharacterFeatDefault, feat: FeatEnum.ElvenAccuracy, attributes: [{ ...AttributeDefault, attribute: AttributeEnum.Cha, value: 1 }] },
+    { ...CharacterFeatDefault, feat: FeatEnum.ElvenAccuracy, abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 1 }] },
     { ...CharacterFeatDefault, feat: FeatEnum.GreatWeaponMaster },
 ];
 
 const SetSavingThrows = (character: Character) => {
     let savingThrows: SavingThrow[] = [];
     const firstLevelClass: ClassEnum = character.classes.filter(x => x.startingClass)[0].class.classEnum;
-    for (let i = 0; i < character.attributes.length; i++) {
-        const attribute = character.attributes[i];
-        const hasProficiency = GetClassSavingThrows(firstLevelClass).includes(attribute.attribute);
+    for (let i = 0; i < character.abilityScores.length; i++) {
+        const attribute = character.abilityScores[i];
+        const hasProficiency = GetClassSavingThrows(firstLevelClass).includes(attribute.abilityScoreEnum);
         const savingThrow: SavingThrow = {
-            attribute: attribute.attribute,
+            ability: attribute.abilityScoreEnum,
             hasProficiency,
             value: attribute.modifier() + (hasProficiency ? character.profBonus() : 0)
         };
-        character.equipment.filter(x => x.savingThrows).forEach(x => {
-            savingThrow.value += x.savingThrows?.find(y => y.attribute === savingThrow.attribute)?.value ?? 0
+        character.equipment.map(x => x.equipment).filter(x => x.savingThrows).forEach(x => {
+            savingThrow.value += x.savingThrows?.find(y => y.ability === savingThrow.ability)?.value ?? 0
         });
         savingThrows.push(savingThrow);
     }
@@ -129,15 +128,15 @@ const SetSkills = (character: Character) => {
     
     for (const skill of skillList) {
         const hasProficiency = HasProficiencyInSkill(character, skill);
-        const attrModifier = character.attributes.find(x => x.attribute === GetSkillAttribute(skill))?.modifier() ?? 0;
+        const attrModifier = character.abilityScores.find(x => x.abilityScoreEnum === GetSkillAbility(skill))?.modifier() ?? 0;
         const charSkill: CharacterSkill = {
             skill,
             hasProficiency,
             value: attrModifier,
         }
         if (hasProficiency) { charSkill.value += character.profBonus(); }
-        character.equipment.filter(x => x.skills).forEach(x => {
-            charSkill.value += x.skills?.find(y => y.skill === charSkill.skill)?.value ?? 0
+        character.equipment.filter(x => x.equipment.skills).forEach(x => {
+            charSkill.value += x.equipment.skills?.find(y => y.skill === charSkill.skill)?.value ?? 0
         });
         character.skills.push(charSkill);
     }
@@ -149,8 +148,21 @@ const HasProficiencyInSkill = (character: Character, skill: SkillEnum): boolean 
 }
 
 const SetAC = (character: Character) => {
-    character.armorClass = character.equipment.find(x => x.isEquipped && x.grantsBaseAC)?.grantsBaseAC ?? 10;
-    character.armorClass += character.equipment.filter(x => x.isEquipped && x.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.grantsACBonus ?? 0), 0);
+    character.armorClass = character.equipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment.grantsBaseAC ?? 10;
+    character.armorClass += character.equipment.filter(x => x.isEquipped && x.equipment.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.equipment.grantsACBonus ?? 0), 0);
+}
+
+const SetSpellcasting = (character: Character) => {
+    const spellcastingAbility = character.classes.find(x => x.class.spellcastingAbility())?.class.spellcastingAbility();
+    if (!spellcastingAbility) { return; }
+    const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === spellcastingAbility)?.modifier() ?? 0;
+    character.spellcasting = {
+        spells: GetCharacterSpells(),
+        slots: [],
+        saveDc: 8 + character.profBonus() + abilityModifier,
+        attackModifier: character.profBonus() + abilityModifier,
+    }
+    SetSpellSlots(character);
 }
 
 const SetSpellSlots = (character: Character) => {
@@ -165,11 +177,12 @@ const SetSpellSlots = (character: Character) => {
             : x
         )
     }
-    character.spellSlots = result;
+    if (!character.spellcasting) { character.spellcasting = { ...CharacterSpellcastingDefault }; }
+    character.spellcasting.slots = result;
 }
 
 const SetInitiative = (character: Character) => {
-    character.initiative = character.attributes.find(x => x.attribute === AttributeEnum.Dex)?.modifier() ?? 0;
+    character.initiative = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Dex)?.modifier() ?? 0;
 }
 
 const SetSpeed = (character: Character) => {
@@ -177,7 +190,7 @@ const SetSpeed = (character: Character) => {
 }
 
 const SetHealthMax = (character: Character) => {
-    const conModifier = character.attributes.find(x => x.attribute === AttributeEnum.Con)?.modifier() ?? 0;
+    const conModifier = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Con)?.modifier() ?? 0;
     character.healthMax = character.level() * conModifier;
     character.classes?.forEach(x => {
         character.healthMax += x.level * x.class.averageLevelupHealth();
@@ -189,9 +202,9 @@ const SetHealthMax = (character: Character) => {
 
 const SetAttacks = (character: Character) => {
     const attacks: CharacterAttack[] = [];
-    character.equipment.forEach(x => {
+    character.equipment.map(x => x.equipment).forEach(x => {
         if (!x.damage) { return; }
-        const attributeModifier = character.attributes.find(y => y.attribute === x.damage?.attribute)?.modifier() ?? 0;
+        const attributeModifier = character.abilityScores.find(y => y.abilityScoreEnum === x.damage?.ability)?.modifier() ?? 0;
         attacks.push({
             name: x.name ?? '',
             range: x.range,
@@ -346,6 +359,12 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             origin: 'Warlock [3]',
             url: 'http://dnd5e.wikidot.com/warlock#toc12',
         },
+        ...GetCharacterFeats().map(x => ({
+            name: x.name(),
+            description: x.description(),
+            origin: '',
+            url: '',
+        }))
     ]
 }
 
@@ -401,5 +420,27 @@ const GetCharacterSpells = (): CharacterSpell[] => {
         }))
     ]
 };
+
+const GetCharacterPersonality = (): CharacterPersonality => ({
+    traits: [
+        "I'm confident in my own abilities and do what I can to instill confidence in others.",
+        "I judge people by their actions, not their words."
+    ],
+    ideals: [
+        "Independence. When people follow orders blindly they embrace a kind of tyranny."
+    ],
+    flaws: [
+        "I remember every insult I've received and nurse a silent resentment toward anyone who's ever wronged me."
+    ],
+    bonds: [
+        "A powerful person killed someone I love. Some day soon, I'll have my revenge."
+    ],
+    age: 22,
+    eyes: "gold",
+    hair: "silvery white",
+    height: "1.84mts",
+    weight: "81kg",
+    skin: "reddish grey",
+})
 
 export { GetCharacter };

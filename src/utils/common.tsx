@@ -1,54 +1,54 @@
+import { AbilityScoreEnum } from "../typings/abilityScore.d"
 import { SpellEnum } from "../typings/spell.d";
-import { AttributeEnum } from "../typings/attribute.d"
 import { ClassEnum } from "../typings/class.d";
 import { SkillEnum } from "../typings/skill.d";
 import { FeatEnum } from "../typings/feat.d";
 
 export const GetNumberString = (num: number):string => (num >= 0 ? '+' : '') + num.toString();
 
-const GetAttributeName = (attr: AttributeEnum):string => {
+export const GetAbilityScoreName = (attr: AbilityScoreEnum):string => {
     switch (attr) {
-        case AttributeEnum.Str:
+        case AbilityScoreEnum.Str:
             return 'Strength';
-        case AttributeEnum.Dex:
+        case AbilityScoreEnum.Dex:
             return 'Dexterity';
-        case AttributeEnum.Con:
+        case AbilityScoreEnum.Con:
             return 'Constitution';
-        case AttributeEnum.Int:
+        case AbilityScoreEnum.Int:
             return 'Intelligence';
-        case AttributeEnum.Wis:
+        case AbilityScoreEnum.Wis:
             return 'Wisdom';
-        case AttributeEnum.Cha:
+        case AbilityScoreEnum.Cha:
             return 'Charisma';
         default: return '';
     }
 }
 
-const GetSkillAttribute = (skill: SkillEnum): AttributeEnum => {
+export const GetSkillAbility = (skill: SkillEnum): AbilityScoreEnum => {
     switch (skill) {
         case SkillEnum.Athletics:
-            return AttributeEnum.Str;
+            return AbilityScoreEnum.Str;
         case SkillEnum.Acrobatics:
         case SkillEnum.SleightOfHand:
         case SkillEnum.Stealth:
-            return AttributeEnum.Dex;
+            return AbilityScoreEnum.Dex;
         case SkillEnum.Arcana:
         case SkillEnum.History:
         case SkillEnum.Investigation:
         case SkillEnum.Nature:
         case SkillEnum.Religion:
-            return AttributeEnum.Int;
+            return AbilityScoreEnum.Int;
         case SkillEnum.AnimalHandling:
         case SkillEnum.Insight:
         case SkillEnum.Medicine:
         case SkillEnum.Perception:
         case SkillEnum.Survival:
-            return AttributeEnum.Wis;
+            return AbilityScoreEnum.Wis;
         case SkillEnum.Deception:
         case SkillEnum.Intimidation:
         case SkillEnum.Performance:
         case SkillEnum.Persuasion:
-            return AttributeEnum.Cha;
+            return AbilityScoreEnum.Cha;
         default : throw new Error('Invalid skill');
     }
 }
@@ -63,7 +63,7 @@ export const GetSkillName = (skill: SkillEnum): string => {
     }
 }
 
-const GetFeatName = (feat: FeatEnum): string => {
+export const GetFeatName = (feat: FeatEnum): string => {
     switch (feat) {
         case FeatEnum.GreatWeaponMaster:
             return "Great Weapon Master";
@@ -73,7 +73,7 @@ const GetFeatName = (feat: FeatEnum): string => {
     }
 }
 
-const GetFeatDescription = (feat: FeatEnum): string => {
+export const GetFeatDescription = (feat: FeatEnum): string => {
     switch (feat) {
         case FeatEnum.GreatWeaponMaster:
             return "You've learned to put the weight of a weapon to your advantage, letting its momentum empower your strikes. You gain the following benefits:"
@@ -87,22 +87,7 @@ const GetFeatDescription = (feat: FeatEnum): string => {
     }
 }
 
-const GetClassHitDie = (classEnum: ClassEnum) => {
-    switch (classEnum) {
-        case ClassEnum.Paladin: return 10;
-        case ClassEnum.Warlock: return 8;
-    }
-}
-
-const GetClassSavingThrows = (classEnum: ClassEnum):AttributeEnum[] => {
-    switch (classEnum) {
-        case ClassEnum.Paladin:
-        case ClassEnum.Warlock: return [ AttributeEnum.Cha, AttributeEnum.Wis ];
-        default: return [];
-    }
-}
-
-const GetProfBonus = (level: number) => {
+export const GetProfBonus = (level: number) => {
     switch (true) {
         case level <= 4: return 2;
         case level <= 8: return 3;
@@ -114,15 +99,5 @@ const GetProfBonus = (level: number) => {
 
 export const GetSpellEnumArray = (): SpellEnum[] => Object.values(SpellEnum).filter(x => typeof x === 'number').map(x => x as SpellEnum);
 export const GetSkillEnumArray = (): SkillEnum[] => Object.values(SkillEnum).filter(x => typeof x === 'number').map(x => x as SkillEnum);
-export const GetAttributeEnumArray = (): AttributeEnum[] => Object.values(AttributeEnum).filter(x => typeof x === 'number').map(x => x as AttributeEnum);
+export const GetAbilityScoreEnumArray = (): AbilityScoreEnum[] => Object.values(AbilityScoreEnum).filter(x => typeof x === 'number').map(x => x as AbilityScoreEnum);
 export const GetClassEnumArray = (): ClassEnum[] => Object.values(ClassEnum).filter(x => typeof x === 'number').map(x => x as ClassEnum);
-
-export { 
-    GetAttributeName,
-    GetSkillAttribute,
-    GetFeatName,
-    GetClassSavingThrows,
-    GetFeatDescription,
-    GetClassHitDie,
-    GetProfBonus,
-}

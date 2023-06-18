@@ -1,5 +1,5 @@
 import { SavingThrow } from "../typings/savingThrow.d";
-import { GetAttributeName, GetNumberString } from "../utils/common";
+import { GetAbilityScoreName, GetNumberString } from "../utils/common";
 
 function SavingThrows({ savingThrows }: { savingThrows: SavingThrow[] }) {
     return <div className="card">
@@ -8,10 +8,10 @@ function SavingThrows({ savingThrows }: { savingThrows: SavingThrow[] }) {
                 <table className="table savingthrow-table">
                     <tbody>
                         {savingThrows.map(x => 
-                            <tr key={x.attribute}>
+                            <tr key={x.ability}>
                                 <td className="text-center">{x.hasProficiency ? <>&#9679;</> : <>&#9675;</>}</td>
                                 <td className="text-end">{GetNumberString(x.value)}</td>
-                                <td>{GetAttributeName(x.attribute).toUpperCase()}</td>
+                                <td>{GetAbilityScoreName(x.ability).toUpperCase()}</td>
                             </tr>
                         )}
 

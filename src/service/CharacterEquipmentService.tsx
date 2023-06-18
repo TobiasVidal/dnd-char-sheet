@@ -1,0 +1,141 @@
+import { Equipment, EquipmentEnum } from "../typings/equipment.d";
+import { CharacterEquipment } from "../typings/character.d";
+import { dbEquipment } from "../db/dbEquipment";
+
+export const GetCharacterEquipment = (): CharacterEquipment[] => {
+    return [
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Book) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 2,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Chalk) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 10,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Piton) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 8,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Hammer) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Shovel) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.ExplorersPack) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Rations) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 10,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Whetstone) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.BlockAndTackle) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Crowbar) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Horn) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.RopeSilk) as Equipment,
+            isEquipped: false,
+            isCarried: false,
+            inBackpack: true,
+            count: 2,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Shield) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.RingMail) as Equipment,
+            isEquipped: true,
+            isCarried: false,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.LuckStone) as Equipment,
+            isEquipped: true,
+            isCarried: false,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.HexbladeGreatsword) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.HexbladeLance) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.HexbladeLongsword) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+        { 
+            equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.HexbladeGlaive) as Equipment,
+            isEquipped: false,
+            isCarried: true,
+            inBackpack: false,
+            count: 1,
+        },
+    ];
+}

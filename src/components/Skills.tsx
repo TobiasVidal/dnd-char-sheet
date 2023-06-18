@@ -1,6 +1,6 @@
-import { AttributeEnum } from "../typings/attribute.d";
+import { AbilityScoreEnum } from "../typings/abilityScore.d";
 import { CharacterSkill } from "../typings/character.d";
-import { GetNumberString, GetSkillAttribute, GetSkillName } from "../utils/common";
+import { GetNumberString, GetSkillAbility, GetSkillName } from "../utils/common";
 
 function Skills({ Skills }: { Skills: CharacterSkill[] }) {
     return <div className="card">
@@ -12,7 +12,7 @@ function Skills({ Skills }: { Skills: CharacterSkill[] }) {
                             <tr key={x.skill}>
                                 <td className="text-center">{x.hasProficiency ? <>&#9679;</> : <>&#9675;</>}</td>
                                 <td className="text-end">{GetNumberString(x.value)}</td>
-                                <td>{GetSkillName(x.skill)} ({AttributeEnum[GetSkillAttribute(x.skill)]})</td>
+                                <td>{GetSkillName(x.skill)} ({AbilityScoreEnum[GetSkillAbility(x.skill)]})</td>
                             </tr>
                         )}
                     </tbody>

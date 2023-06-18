@@ -3,78 +3,79 @@ import { Spell, SpellSlot } from './spell.d'
 import { SavingThrow } from './savingThrow.d'
 import { Background } from './background.d'
 import { Equipment } from './equipment.d'
-import { Attribute } from './attribute.d'
-import { DamageType } from './common.d'
+import { AbilityScore } from './abilityScore.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
 
-type Character = {
+export type Character = {
     name: string,
-    attributes: Attribute[],
+    abilityScores: AbilityScore[],
     savingThrows: SavingThrow[],
     classes: CharacterClass[],
     skills: CharacterSkill[],
     features: CharacterFeature[],
     race: CharacterRace,
     feats: CharacterFeat[],
-    spells: CharacterSpell[],
-    spellSlots: SpellSlot[],
-    equipment: Equipment[],
+    spellcasting?: CharacterSpellcasting,
+    equipment: CharacterEquipment[],
     attacks: CharacterAttack[],
+    money: CharacterMoney,
     background: Background,
     armorClass: number,
     initiative: number,
     speed: number,
     healthMax: number,
+    personality: CharacterPersonality,
     get level(): () => number,
     get profBonus(): () => number,
 }
 
-const CharacterDefault: Character = {
+export const CharacterDefault: Character = {
     savingThrows: [],
     equipment: [],
     classes: [],
     attacks: [],
     skills: [],
+    money: { gp: 0, sp: 0, cp: 0 },
     armorClass: 10,
     healthMax: 1,
     level: function() { return this.classes?.reduce((sum, x) => sum + x.level, 0) ?? 0 },
     profBonus: function() { return GetProfBonus(this.level()); },
 }
 
-type CharacterClass = {
+export type CharacterClass = {
     class: Class,
+    subclass: SubclassEnum,
     level: number,
     startingClass: boolean,
     skillProficiencies: SkillEnum[],
-    weaponProficiencies: string[],
-    armorProficiencies: string[],
 }
 
-type CharacterRace = {
+export type CharacterRace = {
     displayName: string
+    subtitle?: string
     speed: number,
-    attributes: Attribute[], 
+    abilityScores: AbilityScore[], 
     languages: string[],
     traits: string[],
     size: string,
 }
 
-type CharacterFeat = {
+export type CharacterFeat = {
     feat: FeatEnum
-    attributes: Attribute[], 
+    abilityScores: AbilityScore[], 
     get name(): () => string,
     get description(): () => string,
 }
 
-const CharacterFeatDefault: CharacterFeat = {
-    attributes: [],
+export const CharacterFeatDefault: CharacterFeat = {
+    abilityScores: [],
     name: function() { return GetFeatName(this.feat); },
     description: function() { return GetFeatDescription(this.feat); },
 }
 
-type CharacterSkill = {
+export type CharacterSkill = {
     skill: SkillEnum,
     hasProficiency: boolean,
     value: number,
@@ -101,12 +102,43 @@ export type CharacterAttack = {
     range?: string,
 }
 
-export { 
-    Character, 
-    CharacterDefault, 
-    CharacterClass, 
-    CharacterRace,
-    CharacterFeat,
-    CharacterFeatDefault,
-    CharacterSkill,
- }
+export type CharacterSpellcasting = {
+    spells: CharacterSpell[],
+    slots: SpellSlot[],
+    saveDc: number,
+    attackModifier: number,
+}
+
+export const CharacterSpellcastingDefault: CharacterSpellcasting = {
+    spells: [],
+    slots: [],
+    saveDc: 0,
+    attackModifier: 0,
+}
+
+export type CharacterEquipment = {
+    equipment: Equipment,
+    count: number,
+    isEquipped: boolean,
+    isCarried: boolean,
+    inBackpack: boolean,    
+}
+
+export type CharacterMoney = {
+    gp: number,
+    sp: number,
+    cp: number,
+}
+
+export type CharacterPersonality = {
+    ideals: string[],
+    bonds: string[],
+    flaws: string[],
+    traits: string[],
+    age?: number,
+    height?: string,
+    weight?: string,
+    eyes?: string,
+    skin?: string,
+    hair?: string,
+}

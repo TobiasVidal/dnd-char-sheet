@@ -5,7 +5,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap-utilities.min.css';
 import './App.css';
 import SavingThrows from './components/SavingThrows';
-import Attributes from './components/Attributes';
+import AbilityScores from './components/AbilityScores';
 import AcIniSpeed from './components/AcIniSpeed';
 import HitPoints from './components/HitPoints';
 import Skills from './components/Skills';
@@ -13,6 +13,8 @@ import { SkillEnum } from './typings/skill.d';
 import { Features } from './components/Features';
 import { Spells } from './components/Spells';
 import { Inventory } from './components/Inventory';
+import { SheetHeader } from './components/SheetHeader';
+import { Personality } from './components/Personality';
 
 function App() {
   const character:Character = GetCharacter();
@@ -20,20 +22,12 @@ function App() {
   return (
     <div className="App">
       <div className='sheet my-5'>
-        <div className='row'>
-          <h1 className='col-6'>
-            {character.name}
-            <small className='text-secondary ms-2'>[{character.level()}]</small>
-          </h1>
-          <div className='col-6'>
-            {character.classes.map(x => <p key={x.class.classEnum.toString()}>{`${x.class.name()} [${x.level}]`}</p>)}
-          </div>
-        </div>
+        <SheetHeader character={character} />
         <div className='row'>
           <div className='col-4'>
             <div className='row'>
               <div className='col-4'>
-                <Attributes attributes={character.attributes} />
+                <AbilityScores abilityScores={character.abilityScores} />
               </div>
               <div className='col-8'>
                 <p>+{character.profBonus()} PROFICIENCY BONUS</p>
@@ -53,8 +47,9 @@ function App() {
           </div>
         </div>
         <div>
-          <Spells spells={character.spells} spellSlots={character.spellSlots}></Spells>
+           {character.spellcasting && <Spells spellcasting={character.spellcasting}></Spells>}
         </div>
+        <Personality character={character} />
       </div>
     </div>
   );

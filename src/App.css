@@ -32,3 +32,120 @@ tbody > tr:last-child > td {
 .character-avatar {
   max-width: 100%;
 }
+
+/******************************************
+ * THEME 1 ********************************
+ ******************************************/
+ /*
+ #42414d --grey (blueish)
+ #483948 --grey (redish)
+ #2b2a33 --dark grey
+ #ED413E --main orange
+ #EFB786 --skin
+ #B2AB2E --olive green
+ rgb(65, 62, 41) --moss green
+ */
+:root {
+  --dark: #2b2a33;
+  --dark-light: #483948;
+  --main: #EA592A;
+  --main-light: #EFB786;
+  --secondary: #B2AB2E;
+  --border-radius-m: 10px;
+  --border-radius-s: 5px;
+}
+
+body, .bg-dark {
+  color: white;
+  background-color: var(--dark);
+}
+
+.bg-dark-light, 
+.accordion-button,
+.savingthrow-table td {
+  color: white;
+  background-color: var(--dark-light);
+}
+
+.sheet-header {
+  border-radius: var(--border-radius-m);
+  overflow: hidden;
+  background-color: var(--main);
+} 
+
+.sheet-header .character-name {
+  display: flex;
+  align-items: center;
+}
+
+.header-character-info {
+  padding: 5px;
+}
+
+.header-character-info .info-block {
+  padding: 5px 0 5px 15px;
+  background-color: var(--dark-light);
+  border-radius: 0 var(--border-radius-m) var(--border-radius-m) 0;
+}
+
+.circle-inline-wrapper {
+  display: inline-block;
+  margin-left: -10px;
+}
+
+.circle {
+  height: 45px;
+  width: 45px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--main);
+  padding: 0 5px 3px 0;
+  font-weight: bold;
+}
+
+.prominent-number p {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.prominent-number {
+  height: 40px;
+  border: 3px solid var(--main);
+  border-radius: var(--border-radius-m);
+  margin: 0 auto 20px;
+  max-width: 250px;
+}
+
+.ability-scores-column {
+  background-color: var(--secondary);
+  border-radius: var(--border-radius-m);
+}
+
+.accordion-button:not(.collapsed) {
+  color: white;
+  background-color: var(--main);
+}
+
+.ability-scores-column ul {
+  height: 100%;
+}
+
+.gold {
+  color: #FFD700;
+}
+
+.silver {
+  color: #C0C0C0;
+}
+
+.copper {
+  color: #B87333;
+}
+
+.money-row {
+  border-radius: var(--border-radius-m);
+  background-color: var(--dark-light);
+  border: 3px solid var(--secondary)
+}

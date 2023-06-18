@@ -15,6 +15,7 @@ import { Spells } from './components/Spells';
 import { Inventory } from './components/Inventory';
 import { SheetHeader } from './components/SheetHeader';
 import { Personality } from './components/Personality';
+import { ProminentNumber } from './components/ProminentNumber';
 
 function App() {
   const character:Character = GetCharacter();
@@ -26,18 +27,18 @@ function App() {
         <div className='row'>
           <div className='col-4'>
             <div className='row'>
-              <div className='col-4'>
+              <div className='col-4 ability-scores-column'>
                 <AbilityScores abilityScores={character.abilityScores} />
               </div>
               <div className='col-8'>
-                <p>+{character.profBonus()} PROFICIENCY BONUS</p>
+                <ProminentNumber num={character.profBonus()} text="PROFICIENCY BONUS"/>
                 <SavingThrows savingThrows={character.savingThrows}/>
                 <Skills Skills={character.skills}/>
               </div>
             </div>
           </div>
           <div className='col-4'>
-            <p>+{10 + (character.skills.find(x => x.skill === SkillEnum.Perception)?.value ?? 0)} PASSIVE PERCEPTION</p>
+            <ProminentNumber num={10 + (character.skills.find(x => x.skill === SkillEnum.Perception)?.value ?? 0)} text="PASSIVE PERCEPTION"/>
             <AcIniSpeed character={character} />
             <HitPoints hitPoints={character.healthMax} />
             <Inventory character={character} />

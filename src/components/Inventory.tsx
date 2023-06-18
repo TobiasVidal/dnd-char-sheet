@@ -2,17 +2,17 @@ import { Character } from "../typings/character.d";
 
 export function Inventory({ character }: { character: Character }) {
     return (<div>
-        <div className="row">
-            <div className="col-4">
-                <span className="material-icons inline-icon">paid</span>
+        <div className="row p-2 m-5 money-row">
+            <div className="col-4" title="gold">
+                <span className="material-icons inline-icon gold mx-3">paid</span>
                 {character.money?.gp}
             </div>
-            <div className="col-4">
-                <span className="material-icons inline-icon">paid</span>
+            <div className="col-4" title="silver">
+                <span className="material-icons inline-icon silver mx-3">paid</span>
                 {character.money?.sp}
             </div>
-            <div className="col-4">
-                <span className="material-icons inline-icon">paid</span>
+            <div className="col-4" title="copper">
+                <span className="material-icons inline-icon copper mx-3">paid</span>
                 {character.money?.cp}
             </div>
         </div>

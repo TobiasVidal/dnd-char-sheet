@@ -62,7 +62,9 @@ body, .bg-dark {
 
 .bg-dark-light, 
 .accordion-button,
-.savingthrow-table td {
+.savingthrow-table td,
+.skill-table td
+ {
   color: white;
   background-color: var(--dark-light);
 }
@@ -148,4 +150,12 @@ body, .bg-dark {
   border-radius: var(--border-radius-m);
   background-color: var(--dark-light);
   border: 3px solid var(--secondary)
+}
+
+.themetext-main-light {
+  color: var(--main-light);
+}
+
+.themetext-secondary {
+  color: var(--secondary);
 }

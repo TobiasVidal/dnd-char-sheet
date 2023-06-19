@@ -30,7 +30,7 @@ function App() {
               <div className='col-4 ability-scores-column'>
                 <AbilityScores abilityScores={character.abilityScores} />
               </div>
-              <div className='col-8'>
+              <div className='col-8 ps-4'>
                 <ProminentNumber num={character.profBonus()} text="PROFICIENCY BONUS"/>
                 <SavingThrows savingThrows={character.savingThrows}/>
                 <Skills Skills={character.skills}/>

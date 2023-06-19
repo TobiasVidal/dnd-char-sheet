@@ -3,7 +3,7 @@ import { CharacterSkill } from "../typings/character.d";
 import { GetNumberString, GetSkillAbility, GetSkillName } from "../utils/common";
 
 function Skills({ Skills }: { Skills: CharacterSkill[] }) {
-    return <div className="card">
+    return <div className="card bg-dark-light">
             <div className="card-body">
                 <h6 className="text-center"><small>SKILLS</small></h6>
                 <table className="table skill-table">

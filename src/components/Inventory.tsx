@@ -2,7 +2,7 @@ import { Character } from "../typings/character.d";
 
 export function Inventory({ character }: { character: Character }) {
     return (<div>
-        <div className="row p-2 m-5 money-row">
+        <div className="row p-2 m-4 money-row">
             <div className="col-4" title="gold">
                 <span className="material-icons inline-icon gold mx-3">paid</span>
                 {character.money?.gp}
@@ -33,12 +33,12 @@ export function Inventory({ character }: { character: Character }) {
                 </button>
             </li>
         </ul>
-        <div className="tab-content">
+        <div className="tab-content px-3 pt-2 bg-dark-light inventory-block">
             <div className="tab-pane fade show active" id="inventory-list">
-                <table>
+                <table className="table">
                     <tbody>
                         {character.equipment.map(x => <tr key={x.equipment.equipmentEnum}>
-                            <td className="text-end px-2">{x.count}</td>
+                            <td className="text-center px-2">{x.count}</td>
                             <td className="px-2">
                                 {x.isEquipped && <span className="inline-icon material-icons">
                                     pan_tool

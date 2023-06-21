@@ -10,7 +10,7 @@ function SavingThrows({ savingThrows }: { savingThrows: SavingThrow[] }) {
                         {savingThrows.map(x => 
                             <tr key={x.ability}>
                                 <td className="text-center">{x.hasProficiency ? <>&#9679;</> : <>&#9675;</>}</td>
-                                <td className="text-end">{GetNumberString(x.value)}</td>
+                                <td className="text-center">{GetNumberString(x.value)}</td>
                                 <td>{GetAbilityScoreName(x.ability).toUpperCase()}</td>
                             </tr>
                         )}

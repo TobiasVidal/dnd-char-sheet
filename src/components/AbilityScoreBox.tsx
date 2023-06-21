@@ -2,7 +2,7 @@ import { AbilityScore } from "../typings/abilityScore";
 
 function AbilityScoreBox(abilityScore: AbilityScore) {
     const modifier = abilityScore.modifier();
-    return <li className="attribute-box card text-center">
+    return <li className="abilityscore-box card text-center bg-dark-light border-0">
         <div className="card-header">
           <small>{abilityScore.name().toUpperCase()}</small>
         </div>

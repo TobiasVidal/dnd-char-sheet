@@ -1,6 +1,6 @@
 function HitPoints({ hitPoints }: { hitPoints: number }) {
-    return <div className="mt-4">
-        <p className="text-center">Hitpoints</p>
+    return <div className="mt-4 hitpoints-container px-3">
+        <p className="text-center"><b>Hitpoints</b></p>
         <div className="row text-end">
             <div className="col-4">
                 <input className="form-control" type="number" />

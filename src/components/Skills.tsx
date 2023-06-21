@@ -11,7 +11,7 @@ function Skills({ Skills }: { Skills: CharacterSkill[] }) {
                         {Skills.map(x => 
                             <tr key={x.skill}>
                                 <td className="text-center">{x.hasProficiency ? <>&#9679;</> : <>&#9675;</>}</td>
-                                <td className="text-end">{GetNumberString(x.value)}</td>
+                                <td className="text-center">{GetNumberString(x.value)}</td>
                                 <td>{GetSkillName(x.skill)} ({AbilityScoreEnum[GetSkillAbility(x.skill)]})</td>
                             </tr>
                         )}

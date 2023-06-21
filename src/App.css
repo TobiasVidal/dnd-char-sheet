@@ -49,10 +49,12 @@ tbody > tr:last-child > td {
   --dark: #2b2a33;
   --dark-light: #483948;
   --main: #EA592A;
-  --main-light: #EFB786;
+  --main-light: #FC8B5E;
   --secondary: #B2AB2E;
+  --border-radius-xl: 20px;
   --border-radius-m: 10px;
   --border-radius-s: 5px;
+  --font-size-sm: 12px;
 }
 
 body, .bg-dark {
@@ -63,6 +65,9 @@ body, .bg-dark {
 .bg-dark-light, 
 .accordion-button,
 .savingthrow-table td,
+#inventory-list td,
+#attacks-list td,
+#attacks-list th,
 .skill-table td
  {
   color: white;
@@ -158,4 +163,89 @@ body, .bg-dark {
 
 .themetext-secondary {
   color: var(--secondary);
+}
+
+.themebg-secondary {
+  background-color: var(--secondary);
+}
+
+.accordion-item {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.accordion-item:last-of-type {
+  border: 0;
+}
+
+.abilityscore-box .card-header {
+  background-color: var(--main-light);
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+}
+
+.abilityscore-box {
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: rgba(0,0,0,.125);
+}
+
+.acIniSpeed-box {
+  width: 80px;
+  margin: 0 auto;
+  border: 2px solid var(--secondary);
+  border-radius: var(--border-radius-m);
+  overflow: hidden;
+}
+
+.text-small {
+  font-size: var(--font-size-sm);
+}
+
+.hitpoints-container {
+  background-color: var(--main);
+  border-radius: var(--border-radius-m);
+}
+
+.nav-link, .nav-link:hover {
+  color: white;
+}
+
+.nav-link:hover {
+  border-color: var(--main-light) !important;
+  background-color: var(--main-light);
+}
+
+.nav-link.active {
+  background-color: var(--main) !important;
+  border-color: var(--main) !important;
+  color: white !important;
+}
+
+.nav.nav-tabs {
+  border-color: var(--main);
+}
+
+.inventory-block.tab-content {
+  border-radius: 0 0 var(--border-radius-m) var(--border-radius-m);
+  overflow-y: auto;
+  max-height: 620px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--dark-light) var(--dark);
+  border: 1px solid var(--main);
+}
+
+.accordion-item:first-of-type .accordion-button {
+  border-radius: 0;
+}
+
+.accordion-item:last-of-type,
+.accordion-item:last-of-type .accordion-button.collapsed {
+  border-radius: 0 0 var(--border-radius-m) var(--border-radius-m);
+  overflow: hidden;
 }

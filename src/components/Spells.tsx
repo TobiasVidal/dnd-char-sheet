@@ -29,9 +29,9 @@ export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }
         </ul>
         <div className="tab-content" id="spell-list-content">
             {spellLevels.map(x =>
-                <div key={x} className={`accordion mt-3 tab-pane fade ${spellLevels[0] === x ? 'show active' : ''}`} id={`spells${x}`}>
+                <div key={x} className={`accordion tab-pane fade ${spellLevels[0] === x ? 'show active' : ''}`} id={`spells${x}`}>
                     {spells.filter(y => y.spell.level === x).map(y =>
-                        <div className="accordion-item" key={spells.indexOf(y)}>
+                        <div className="accordion-item bg-dark-light" key={spells.indexOf(y)}>
                             <div className="accordion-header row accordion-button collapsed" data-bs-toggle="collapse" data-bs-target={`#spell-${spells.indexOf(y)}`}>
                                 <div className="col-3">
                                     <span className="inline-icon material-icons me-2">
@@ -53,7 +53,7 @@ export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }
                                 </div>
                             </div>
                             <div id={`spell-${spells.indexOf(y)}`} className="accordion-collapse collapse">
-                                <div className="accordion-body">
+                                <div className="accordion-body bg-dark-light">
                                     <p dangerouslySetInnerHTML={{__html:y.spell.description}}></p>
                                     {y.spell.higherLevel && <p><strong>At Higher Levels:</strong> {y.spell.higherLevel}</p>}
                                 </div>

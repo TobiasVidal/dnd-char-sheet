@@ -1,9 +1,9 @@
 import { Character } from "../typings/character.d";
 
 export function Personality({character}:{character:Character}) {
-    const avatar = require('../files/asura.jpg'); 
+    const avatar = require('../files/asura.png'); 
     return <div>
-        <div className="row">
+        <div className="row mt-5">
             <div className="col-4">
                 <img className="character-avatar" src={avatar} alt="avatar"/>
             </div>

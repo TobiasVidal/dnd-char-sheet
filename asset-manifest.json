@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/dnd-char-sheet/static/css/main.4f82af18.css",
-    "main.js": "/dnd-char-sheet/static/js/main.98947fed.js",
+    "main.css": "/dnd-char-sheet/static/css/main.432696b5.css",
+    "main.js": "/dnd-char-sheet/static/js/main.b34e35c3.js",
     "static/js/787.dfece2e2.chunk.js": "/dnd-char-sheet/static/js/787.dfece2e2.chunk.js",
-    "static/media/asura.jpg": "/dnd-char-sheet/static/media/asura.d033b838fa5cdbbd57fd.jpg",
+    "static/media/asura.png": "/dnd-char-sheet/static/media/asura.8e478c8ad355cfa41c25.png",
     "index.html": "/dnd-char-sheet/index.html",
-    "main.4f82af18.css.map": "/dnd-char-sheet/static/css/main.4f82af18.css.map",
-    "main.98947fed.js.map": "/dnd-char-sheet/static/js/main.98947fed.js.map",
+    "main.432696b5.css.map": "/dnd-char-sheet/static/css/main.432696b5.css.map",
+    "main.b34e35c3.js.map": "/dnd-char-sheet/static/js/main.b34e35c3.js.map",
     "787.dfece2e2.chunk.js.map": "/dnd-char-sheet/static/js/787.dfece2e2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f82af18.css",
-    "static/js/main.98947fed.js"
+    "static/css/main.432696b5.css",
+    "static/js/main.b34e35c3.js"
   ]
 }

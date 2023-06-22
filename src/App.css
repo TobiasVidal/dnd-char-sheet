@@ -67,6 +67,8 @@ body, .bg-dark {
 .savingthrow-table td,
 #inventory-list td,
 #attacks-list td,
+.spellslots-table td,
+.spellslots-table th,
 #attacks-list th,
 .skill-table td
  {
@@ -248,4 +250,32 @@ body, .bg-dark {
 .accordion-item:last-of-type .accordion-button.collapsed {
   border-radius: 0 0 var(--border-radius-m) var(--border-radius-m);
   overflow: hidden;
+}
+
+.spellslot-used {
+  width: 25px;
+}
+
+.spellslots-container h4 {
+  border-top: 2px solid;
+}
+
+.spellslots-container {
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  border: 2px solid var(--secondary);
+}
+
+.spell-dc-box {
+  border-right: 2px solid var(--secondary);
+}
+
+.appearance-container {
+  border: 2px solid var(--main);
+  border-radius: var(--border-radius-m);
+}
+
+.personality-box {
+  border-radius: var(--border-radius-xl);
+  height: 100%;
 }

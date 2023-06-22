@@ -2,7 +2,7 @@ import { CharacterFeature } from "../typings/character.d";
 
 export function Features({ features }: { features: CharacterFeature[] }) {
     return (<div className="accordion">
-        <h3 className="text-center mb-4">Class features & feats</h3>
+        <h3 className="text-center mb-4 themetext-secondary">Class features & feats</h3>
         {features.map(x => <div className="accordion-item bg-dark-light" key={features.indexOf(x)}>
             <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#characterfeature-${features.indexOf(x)}`}>

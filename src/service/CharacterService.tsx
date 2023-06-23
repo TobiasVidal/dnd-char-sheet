@@ -4,22 +4,22 @@ import { AbilityScore, AbilityScoreDefault, AbilityScoreEnum } from "../typings/
 import { ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
-import { Background } from "../typings/background.d";
 import { DamageType } from "../typings/common.d";
 import { SkillEnum } from "../typings/skill.d";
 import { FeatEnum } from "../typings/feat.d";
 import { GetClass, GetCharacterClassSpellSlots, GetClassSavingThrows } from "../service/ClassService"
 import { GetCharacterEquipment } from "./CharacterEquipmentService";
 import { GetAllSpells } from "./SpellService";
+import { GetCharacterBackground } from "./CharacterBackgroundService";
 
-const GetCharacter = (): Character => {
+export const GetCharacter = (): Character => {
     const character = {
         ...CharacterDefault,
         name: 'Asura',
         abilityScores: GetCharacterStartingAbilityScores(),
         features: GetCharacterFeatures(),
         classes: GetCharacterClasses(),
-        background: GetBackground(),
+        background: GetCharacterBackground(),
         feats: GetCharacterFeats(),
         equipment: GetCharacterEquipment(),
         race: GetCharacterRace(),
@@ -111,20 +111,6 @@ const SetSavingThrows = (character: Character) => {
         savingThrows.push(savingThrow);
     }
     character.savingThrows = savingThrows;
-}
-
-const GetBackground = (): Background => {
-    return {
-        name: 'back',
-        descrption: ['descr conmovedora(?'],
-        features: [
-            'A good entertainer is versatile, spicing up every performance with a variety of different routines. Your routines are: Instrumentalist, Singer, Storyteller',
-            '<strong>By Popular Demand</strong><br/>',
-            "You can always find a place to perform, usually in an inn or tavern but possibly with a circus, at a theater, or even in a noble's court. At such a place, you receive free lodging and food of a modest or comfortable standard (depending on the quality of the establishment), as long as you perform each night. In addition, your performance makes you something of a local figure. When strangers recognize you in a town where you have performed, they typically take a liking to you."
-        ],
-        toolProficiencies: ['Disguise kit', 'Lute'],
-        skillProficiencies: [ SkillEnum.Perception, SkillEnum.Deception ]
-    }
 }
 
 const SetSkills = (character: Character) => {
@@ -448,5 +434,3 @@ const GetCharacterPersonality = (): CharacterPersonality => ({
     weight: "81kg",
     skin: "reddish grey",
 })
-
-export { GetCharacter };

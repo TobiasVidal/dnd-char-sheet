@@ -55,6 +55,7 @@ tbody > tr:last-child > td {
   --border-radius-m: 10px;
   --border-radius-s: 5px;
   --font-size-sm: 12px;
+  --font-size-lg: 18px;
 }
 
 body, .bg-dark {
@@ -207,6 +208,10 @@ body, .bg-dark {
 
 .text-small {
   font-size: var(--font-size-sm);
+}
+
+.text-large {
+  font-size: var(--font-size-lg);
 }
 
 .hitpoints-container {

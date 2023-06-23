@@ -17,22 +17,22 @@ export function SpellSlotsBox({slots, dc, attack}: {slots: SpellSlot[], dc:numbe
         <tbody>
             <tr>
                 <td className="text-center">Level</td>
-                {slots.filter(x => x.amount > 0).map(x => 
-                <td className="text-center">
+                {slots.filter(x => x.amount > 0).map((x, i) => 
+                <td className="text-center" key={i}>
                     {x.level}
                 </td>)}
             </tr>
             <tr>
-                <td className="text-center" scope="row">Slots</td>
-                {slots.filter(x => x.amount > 0).map(x => 
-                <td className="text-center">
+                <td className="text-center">Slots</td>
+                {slots.filter(x => x.amount > 0).map((x, i) => 
+                <td className="text-center" key={i}>
                     {x.amount}
                 </td>)}
             </tr>
             <tr>
-                <td className="text-center" scope="row">Used</td>
-                {slots.filter(x => x.amount > 0).map(x => 
-                <td className="text-center">
+                <td className="text-center">Used</td>
+                {slots.filter(x => x.amount > 0).map((x, i) => 
+                <td className="text-center" key={i}>
                     <input className="text-center spellslot-used"/>
                 </td>)}
             </tr>

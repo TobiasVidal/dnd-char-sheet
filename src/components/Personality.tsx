@@ -4,7 +4,7 @@ import { Appearance } from "./Appearance";
 export function Personality({ character }: { character: Character }) {
     const avatar = require('../files/asura.png');
     return <div>
-        <hr className="my-5"/>
+        <hr className="my-5" />
         <div className="row mt-5">
             <div className="col-4">
                 <img className="character-avatar" src={avatar} alt="avatar" />
@@ -38,6 +38,22 @@ export function Personality({ character }: { character: Character }) {
                             {character.personality.flaws.map((x, i) => <p key={i}>{x}</p>)}
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div className="mt-4">
+            <ul className="nav nav-tabs" role="tablist">
+                <li className="nav-item">
+                    <button className='nav-link active' id='backstory-tab' data-bs-toggle="tab" data-bs-target='#backstory-content' type="button">
+                        Backstory
+                    </button>
+                </li>
+            </ul>
+            <div className="tab-content bg-dark-light">
+                <div className='accordion tab-pane fade show active p-5' id='backstory-content'>
+                    {character.background.descrption.map((x, i) => <p className="text-large" key={i}>
+                        &emsp;&emsp;{x}
+                    </p>)}
                 </div>
             </div>
         </div>

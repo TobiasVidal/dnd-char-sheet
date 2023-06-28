@@ -48,12 +48,20 @@ export function Personality({ character }: { character: Character }) {
                         Backstory
                     </button>
                 </li>
+                <li className="nav-item">
+                    <button className='nav-link' id='features-tab' data-bs-toggle="tab" data-bs-target='#features-content' type="button">
+                        Features
+                    </button>
+                </li>
             </ul>
-            <div className="tab-content bg-dark-light">
+            <div className="tab-content personality-content bg-dark-light">
                 <div className='accordion tab-pane fade show active p-5' id='backstory-content'>
                     {character.background.descrption.map((x, i) => <p className="text-large" key={i}>
                         &emsp;&emsp;{x}
                     </p>)}
+                </div>
+                <div className='accordion tab-pane fade p-5' id='features-content'>
+                    {character.background.features.map((x, i) => <p className="text-large" key={i} dangerouslySetInnerHTML={{__html:x}}></p>)}
                 </div>
             </div>
         </div>

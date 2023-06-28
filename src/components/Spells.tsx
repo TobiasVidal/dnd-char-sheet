@@ -40,12 +40,14 @@ export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }
                                         <div className="col-2">
                                             {y.spell.duration}
                                         </div>
-                                        <div className="col-2">
+                                        <div className="col-2 d-flex justify-content-between">
                                             {y.spell.components}
+                                            {y.spell.concentration && <span className="material-icons inline-icon pt-1">psychology</span>}
                                         </div>
                                     </div>
                                     <div id={`spell-${spells.indexOf(y)}`} className="accordion-collapse collapse">
                                         <div className="accordion-body bg-dark-light">
+                                            {y.spell.material && <p><strong>Materials:</strong> {y.spell.material}</p>}
                                             <p dangerouslySetInnerHTML={{__html:y.spell.description}}></p>
                                             {y.spell.higherLevel && <p><strong>At Higher Levels:</strong> {y.spell.higherLevel}</p>}
                                         </div>

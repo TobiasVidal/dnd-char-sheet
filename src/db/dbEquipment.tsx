@@ -117,6 +117,15 @@ export const dbEquipment: Equipment[] = [
             dice: [{ type: DamageType.Piercing, dieSides: 12, dieCount: 1 }]
         }
     },
+    { 
+        equipmentEnum: EquipmentEnum.ScrollOfRevivify,
+        name: 'Scroll of Revivify',
+    },
+    { 
+        equipmentEnum: EquipmentEnum.HealthPotionSmall,
+        name: 'Health Potion (small)',
+        tooltip: '2d4 + 2 healing'
+    },
 ];
 
 dbEquipment.filter(x => !x.name).forEach(x => {

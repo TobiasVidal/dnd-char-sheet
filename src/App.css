@@ -251,6 +251,7 @@ body, .bg-dark {
   border-radius: 0;
 }
 
+.personality-content.tab-content,
 .accordion-item:last-of-type,
 .accordion-item:last-of-type .accordion-button.collapsed {
   border-radius: 0 0 var(--border-radius-m) var(--border-radius-m);
@@ -283,4 +284,13 @@ body, .bg-dark {
 .personality-box {
   border-radius: var(--border-radius-xl);
   height: 100%;
+}
+
+.accordion-button::after, .accordion-button:not(.collapsed)::after {
+  background-image: url('./files/caret_down_white_small.png');
+}
+
+.btn-alter-spellslots {
+  color: var(--secondary);
+  padding: 0 0 11px;
 }

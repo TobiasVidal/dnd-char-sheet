@@ -386,7 +386,7 @@ const GetCharacterSpells = (): CharacterSpell[] => {
         SpellEnum.ShieldOfFaith,
         SpellEnum.ThunderousSmite,
     ];
-    const preparedSpells = [
+    return [
         ...warlockSpells.map(x => ({
             spell: allSpells.find(y => y.spellEnum === x.spell) as Spell,
             prepared: true,
@@ -402,15 +402,12 @@ const GetCharacterSpells = (): CharacterSpell[] => {
             prepared: true,
             origin: "Paladin"
         })),
-    ];
-    return [
-        ...preparedSpells,
         ...allSpells.filter(x => x.classes?.includes(ClassEnum.Paladin) ?? false).map(x =>({
             spell: x,
             prepared: false,
             origin: "Paladin"
-        }))
-    ]
+        })),
+    ];
 };
 
 const GetCharacterPersonality = (): CharacterPersonality => ({

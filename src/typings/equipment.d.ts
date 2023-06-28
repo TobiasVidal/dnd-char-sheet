@@ -11,11 +11,11 @@ type DamageDice = {
 export type Equipment = {
     equipmentEnum: EquipmentEnum,
     name?: string,
+    tooltip?: string,
     url?: string,
     range?: string,
     grantsBaseAC?: number,//Esto es para cosas que definen tu AC base, como armadura
     grantsACBonus?: number,//Esto es para cosas como shields, que dan un bonus (suma) al AC
-    //weight: number,//lbs
     skills?: { skill: SkillEnum, value: number }[],
     savingThrows?: { ability: AbilityScoreEnum, value: number }[],
     damage?: {
@@ -48,4 +48,6 @@ export enum EquipmentEnum {
     HexbladeLongsword,
     HexbladeGlaive,
     HexbladeLance,
+    ScrollOfRevivify,
+    HealthPotionSmall,
 }

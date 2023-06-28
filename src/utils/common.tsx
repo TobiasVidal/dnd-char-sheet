@@ -6,6 +6,8 @@ import { FeatEnum } from "../typings/feat.d";
 
 export const GetNumberString = (num: number):string => (num >= 0 ? '+' : '') + num.toString();
 
+export const ConvertToNumber = (value: string, defaultVal?: number): number => !isNaN(+value) ? +value : defaultVal ?? 0
+
 export const GetAbilityScoreName = (attr: AbilityScoreEnum):string => {
     switch (attr) {
         case AbilityScoreEnum.Str:

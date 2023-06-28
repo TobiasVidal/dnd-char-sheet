@@ -37,7 +37,7 @@ export const CharacterDefault: Character = {
     classes: [],
     attacks: [],
     skills: [],
-    money: { gp: 0, sp: 0, cp: 0 },
+    money: { gp: 75, sp: 0, cp: 0 },
     armorClass: 10,
     healthMax: 1,
     level: function() { return this.classes?.reduce((sum, x) => sum + x.level, 0) ?? 0 },

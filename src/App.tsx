@@ -1,5 +1,4 @@
 import { GetCharacter } from './service/CharacterService';
-import { Character } from './typings/character.d';
 import '../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap-utilities.min.css';
@@ -16,9 +15,10 @@ import { Inventory } from './components/Inventory';
 import { SheetHeader } from './components/SheetHeader';
 import { Personality } from './components/Personality';
 import { ProminentNumber } from './components/ProminentNumber';
+import { useState } from 'react';
 
 function App() {
-  const character:Character = GetCharacter();
+  const [character] = useState(GetCharacter());
   
   return (
     <div className="App">

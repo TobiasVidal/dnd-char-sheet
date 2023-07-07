@@ -294,3 +294,27 @@ body, .bg-dark {
   color: var(--secondary);
   padding: 0 0 11px;
 }
+
+.btn-add-hitpoints {
+  color: white;
+}
+
+.btn-add-hitpoints:hover {
+  color: var(--secondary);
+}
+
+.hp-change-amount {
+  max-width: 15%;
+}
+
+.hp-change-source {
+  max-width: 30%;
+}
+
+.hp-change-type {
+  max-width: 30%;
+}
+
+.has-pointer {
+  cursor: pointer;
+}

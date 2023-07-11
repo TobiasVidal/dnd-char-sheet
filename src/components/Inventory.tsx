@@ -81,7 +81,7 @@ export function Inventory({ character }: { character: Character }) {
                 <ul className="list-unstyled">
                     <li><strong>Weapons:</strong> {character.classes.find(x => x.startingClass)?.class.weaponProficiencies().join(", ")}</li>
                     <li><strong>Armor:</strong> {character.classes.find(x => x.startingClass)?.class.armorProficiencies().join(", ")}</li>  
-                    <li><strong>Tools:</strong> -</li>
+                    <li><strong>Tools:</strong> {character.background.toolProficiencies?.join(", ")}</li>
                     <li><strong>Languages:</strong> {character.race.languages.join(", ")}</li>
                     <li><strong>Traits:</strong> {character.race.traits.join(", ")}</li> 
                 </ul>

@@ -4,13 +4,14 @@ import { AbilityScore, AbilityScoreDefault, AbilityScoreEnum } from "../typings/
 import { ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
-import { DamageType } from "../typings/common.d";
+import { DamageType, Money } from "../typings/common.d";
 import { SkillEnum } from "../typings/skill.d";
 import { FeatEnum } from "../typings/feat.d";
 import { GetClass, GetCharacterClassSpellSlots, GetClassSavingThrows } from "../service/ClassService"
 import { GetCharacterEquipment } from "./CharacterEquipmentService";
 import { GetAllSpells } from "./SpellService";
 import { GetCharacterBackground } from "./CharacterBackgroundService";
+import { AddMoney, GetAllMoneyLogs } from "./MoneyService";
 
 export const GetCharacter = (): Character => {
     const character = {
@@ -23,7 +24,8 @@ export const GetCharacter = (): Character => {
         feats: GetCharacterFeats(),
         equipment: GetCharacterEquipment(),
         race: GetCharacterRace(),
-        personality: GetCharacterPersonality(),    
+        personality: GetCharacterPersonality(),   
+        money: GetCharacterMoney(),
     }
     
     UpdateCharacterAbilityScores(character);
@@ -431,3 +433,10 @@ const GetCharacterPersonality = (): CharacterPersonality => ({
     weight: "81kg",
     skin: "reddish grey",
 })
+
+const GetCharacterMoney = (): Money => {
+    const moneyLogs = GetAllMoneyLogs();
+    let characterMoney:Money = { gp: 0, sp: 0, cp: 0 };
+    moneyLogs.forEach(x => characterMoney = AddMoney(characterMoney, x));
+    return characterMoney;
+}

@@ -20,7 +20,7 @@ export type Character = {
     spellcasting?: CharacterSpellcasting,
     equipment: CharacterEquipment[],
     attacks: CharacterAttack[],
-    money: CharacterMoney,
+    money: Money,
     background: Background,
     armorClass: number,
     initiative: number,
@@ -37,7 +37,7 @@ export const CharacterDefault: Character = {
     classes: [],
     attacks: [],
     skills: [],
-    money: { gp: 75, sp: 0, cp: 0 },
+    money: { gp: 0, sp: 0, cp: 0 },
     armorClass: 10,
     healthMax: 1,
     level: function() { return this.classes?.reduce((sum, x) => sum + x.level, 0) ?? 0 },
@@ -122,12 +122,6 @@ export type CharacterEquipment = {
     isEquipped: boolean,
     isCarried: boolean,
     inBackpack: boolean,    
-}
-
-export type CharacterMoney = {
-    gp: number,
-    sp: number,
-    cp: number,
 }
 
 export type CharacterPersonality = {

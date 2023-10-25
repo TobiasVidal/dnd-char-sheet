@@ -4,3 +4,9 @@ export enum DamageType {
     Bludgeoning,
     Force,
 }
+
+export type Money = {
+    gp: number,
+    sp: number,
+    cp: number,
+}

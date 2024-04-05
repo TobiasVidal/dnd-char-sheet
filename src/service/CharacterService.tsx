@@ -1,6 +1,6 @@
-import { GetSkillEnumArray, GetSkillAbility } from "../utils/common";
-import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, CharacterPersonality } from "../typings/character.d";
-import { AbilityScore, AbilityScoreDefault, AbilityScoreEnum } from "../typings/abilityScore.d";
+import { GetSkillEnumArray, GetSkillAbility, GetAbilityScoreEnumArray } from "../utils/common";
+import { Character, CharacterDefault, CharacterClass, CharacterRace, CharacterFeat, CharacterFeatDefault, CharacterSkill, CharacterFeature, CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, CharacterPersonality, CharacterFeatureDefault } from "../typings/character.d";
+import { AbilityScore, AbilityScoreDefault, AbilityScoreEnum, ModifierTargetEnum, ModifierTypeEnum } from "../typings/abilityScore.d";
 import { ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
@@ -12,19 +12,20 @@ import { GetCharacterEquipment } from "./CharacterEquipmentService";
 import { GetAllSpells } from "./SpellService";
 import { GetCharacterBackground } from "./CharacterBackgroundService";
 import { AddMoney, GetAllMoneyLogs } from "./MoneyService";
+import { GetModifierAmount } from "./StatModifierService";
 
 export const GetCharacter = (): Character => {
     const character = {
         ...CharacterDefault,
         name: 'Asura',
         abilityScores: GetCharacterStartingAbilityScores(),
-        features: GetCharacterFeatures(),
-        classes: GetCharacterClasses(),
+        charFeatures: GetCharacterFeatures(),
+        charClasses: GetCharacterClasses(),
         background: GetCharacterBackground(),
-        feats: GetCharacterFeats(),
-        equipment: GetCharacterEquipment(),
-        race: GetCharacterRace(),
-        personality: GetCharacterPersonality(),   
+        charFeats: GetCharacterFeats(),
+        charEquipment: GetCharacterEquipment(),
+        charRace: GetCharacterRace(),
+        charPersonality: GetCharacterPersonality(),   
         money: GetCharacterMoney(),
     }
     
@@ -53,8 +54,8 @@ const GetCharacterStartingAbilityScores = (): AbilityScore[] => [
 const UpdateCharacterAbilityScores = (character: Character): void => {
     for (let i = 0; i < character.abilityScores.length; i++) {
         const abilityScore = character.abilityScores[i];
-        abilityScore.value += character.race.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
-        character.feats.forEach(feat => {
+        abilityScore.value += character.charRace.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
+        character.charFeats.forEach(feat => {
             abilityScore.value += feat.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
         });
     }
@@ -65,7 +66,7 @@ const GetCharacterClasses = (): CharacterClass[] => [
         ...ClassDefault,
         class: GetClass(ClassEnum.Paladin),
         subclass: SubclassEnum.OathOfVengance,
-        level: 5,
+        level: 6,
         skillProficiencies: [SkillEnum.Athletics, SkillEnum.Persuasion],
         startingClass: true,
     },
@@ -98,25 +99,35 @@ const GetCharacterFeats = (): CharacterFeat[] => [
 
 const SetSavingThrows = (character: Character) => {
     let savingThrows: SavingThrow[] = [];
-    const firstLevelClass: ClassEnum = character.classes.filter(x => x.startingClass)[0].class.classEnum;
+    const firstLevelClass: ClassEnum = character.charClasses.filter(x => x.startingClass)[0].class.classEnum;
+    const proficiencies: AbilityScoreEnum[] = GetClassSavingThrows(firstLevelClass);
     for (let i = 0; i < character.abilityScores.length; i++) {
-        const attribute = character.abilityScores[i];
-        const hasProficiency = GetClassSavingThrows(firstLevelClass).includes(attribute.abilityScoreEnum);
+        const abilityScore = character.abilityScores[i];
+        const hasProficiency = proficiencies.includes(abilityScore.abilityScoreEnum);
+        
         const savingThrow: SavingThrow = {
-            ability: attribute.abilityScoreEnum,
+            ability: abilityScore.abilityScoreEnum,
             hasProficiency,
-            value: attribute.modifier() + (hasProficiency ? character.profBonus() : 0)
+            value: abilityScore.modifier() + (hasProficiency ? character.profBonus() : 0)
         };
-        character.equipment.map(x => x.equipment).filter(x => x.savingThrows).forEach(x => {
+        
+        character.charEquipment.map(x => x.equipment).filter(x => x.savingThrows).forEach(x => {
             savingThrow.value += x.savingThrows?.find(y => y.ability === savingThrow.ability)?.value ?? 0
         });
+
+        character.charFeatures.flatMap(x => x.modifiers)
+            .filter(modifier => modifier.target === ModifierTargetEnum.SavingThrow && modifier.abilityTarget === savingThrow.ability)
+            .forEach(modifier => {
+                savingThrow.value += GetModifierAmount(modifier, character);
+        });
+        
         savingThrows.push(savingThrow);
     }
     character.savingThrows = savingThrows;
 }
 
 const SetSkills = (character: Character) => {
-    character.skills = [];
+    character.charSkills = [];
     
     const skillList: SkillEnum[] = GetSkillEnumArray();
     
@@ -129,28 +140,28 @@ const SetSkills = (character: Character) => {
             value: attrModifier,
         }
         if (hasProficiency) { charSkill.value += character.profBonus(); }
-        character.equipment.filter(x => x.equipment.skills).forEach(x => {
+        character.charEquipment.filter(x => x.equipment.skills).forEach(x => {
             charSkill.value += x.equipment.skills?.find(y => y.skill === charSkill.skill)?.value ?? 0
         });
-        character.skills.push(charSkill);
+        character.charSkills.push(charSkill);
     }
 }
 
 const HasProficiencyInSkill = (character: Character, skill: SkillEnum): boolean => {
-    return character.classes.some(x => x.skillProficiencies.includes(skill))
+    return character.charClasses.some(x => x.skillProficiencies.includes(skill))
         || character.background.skillProficiencies.includes(skill);
 }
 
 const SetAC = (character: Character) => {
-    character.armorClass = character.equipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment.grantsBaseAC ?? 10;
-    character.armorClass += character.equipment.filter(x => x.isEquipped && x.equipment.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.equipment.grantsACBonus ?? 0), 0);
+    character.armorClass = character.charEquipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment.grantsBaseAC ?? 10;
+    character.armorClass += character.charEquipment.filter(x => x.isEquipped && x.equipment.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.equipment.grantsACBonus ?? 0), 0);
 }
 
 const SetSpellcasting = (character: Character) => {
-    const spellcastingAbility = character.classes.find(x => x.class.spellcastingAbility())?.class.spellcastingAbility();
+    const spellcastingAbility = character.charClasses.find(x => x.class.spellcastingAbility())?.class.spellcastingAbility();
     if (!spellcastingAbility) { return; }
     const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === spellcastingAbility)?.modifier() ?? 0;
-    character.spellcasting = {
+    character.charSpellcasting = {
         spells: GetCharacterSpells(),
         slots: [],
         saveDc: 8 + character.profBonus() + abilityModifier,
@@ -160,8 +171,8 @@ const SetSpellcasting = (character: Character) => {
 }
 
 const SetSpellSlots = (character: Character) => {
-    const warlockClass = character.classes.find(x => x.class.classEnum === ClassEnum.Warlock);
-    const casterClasses = character.classes.filter(x => x.class.classEnum !== ClassEnum.Warlock && GetCharacterClassSpellSlots(x));
+    const warlockClass = character.charClasses.find(x => x.class.classEnum === ClassEnum.Warlock);
+    const casterClasses = character.charClasses.filter(x => x.class.classEnum !== ClassEnum.Warlock && GetCharacterClassSpellSlots(x));
     if (casterClasses.length > 1) { /* quilombo */}
     let result = GetCharacterClassSpellSlots(casterClasses[0]);
     if (warlockClass) {
@@ -171,8 +182,8 @@ const SetSpellSlots = (character: Character) => {
             : x
         )
     }
-    if (!character.spellcasting) { character.spellcasting = { ...CharacterSpellcastingDefault }; }
-    character.spellcasting.slots = result;
+    if (!character.charSpellcasting) { character.charSpellcasting = { ...CharacterSpellcastingDefault }; }
+    character.charSpellcasting.slots = result;
 }
 
 const SetInitiative = (character: Character) => {
@@ -180,13 +191,13 @@ const SetInitiative = (character: Character) => {
 }
 
 const SetSpeed = (character: Character) => {
-    character.speed = character.race.speed;
+    character.speed = character.charRace.speed;
 }
 
 const SetHealthMax = (character: Character) => {
     const conModifier = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Con)?.modifier() ?? 0;
     character.healthMax = character.level() * conModifier;
-    character.classes?.forEach(x => {
+    character.charClasses?.forEach(x => {
         character.healthMax += x.level * x.class.averageLevelupHealth();
         if (x.startingClass) {
             character.healthMax += x.class.hitDie() - x.class.averageLevelupHealth();
@@ -196,7 +207,7 @@ const SetHealthMax = (character: Character) => {
 
 const SetAttacks = (character: Character) => {
     const attacks: CharacterAttack[] = [];
-    character.equipment.map(x => x.equipment).forEach(x => {
+    character.charEquipment.map(x => x.equipment).forEach(x => {
         if (!x.damage) { return; }
         const attributeModifier = character.abilityScores.find(y => y.abilityScoreEnum === x.damage?.ability)?.modifier() ?? 0;
         attacks.push({
@@ -208,12 +219,13 @@ const SetAttacks = (character: Character) => {
         });
     });
 
-    character.attacks = attacks;
+    character.charAttacks = attacks;
 }
 
 const GetCharacterFeatures = (): CharacterFeature[] => {
     return [
         {
+            ...CharacterFeatureDefault,
             name: 'Divine Sense',
             description: `The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity (the vampire Count Strahd von Zarovich, for instance). Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the Hallow spell.
 <br/><br/>You can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses.`,
@@ -221,6 +233,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/paladin#toc4',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Lay on Hands',
             description: `Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level x 5.
             <br/><br/>
@@ -233,6 +246,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/paladin#toc5',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Spellcasting',
             description: `You have learned to draw on divine magic through meditation and prayer to cast spells as a cleric does.
             <br/><br/>
@@ -249,18 +263,21 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/paladin#toc7',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Divine Smite',
             description: `Starting at 2nd level, when you hit a creature with a melee weapon attack, you can expend one spell slot to deal radiant damage to the target, in addition to the weapon's damage. The extra damage is 2d8 for a 1st-level spell slot, plus 1d8 for each spell level higher than 1st, to a maximum of 5d8. The damage increases by 1d8 if the target is an undead or a fiend, to a maximum of 6d8.`,
             origin: 'Paladin [2]',
             url: 'http://dnd5e.wikidot.com/paladin#toc11',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Divine Health',
             description: `The divine magic flowing through you makes you immune to disease`,
             origin: 'Paladin [3]',
             url: 'http://dnd5e.wikidot.com/paladin#toc12',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Sacred Oath',
             description: `<h4>Oath Spells</h4>
             Each oath has a list of associated spells. You gain access to these spells at the levels specified in the oath description. Once you gain access to an oath spell, you always have it prepared. Oath spells don't count against the number of spells you can prepare each day.
@@ -277,6 +294,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/paladin#toc13',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Channel Divinity',
             description: `<p>you gain the following two Channel Divinity options.</p>
             <p><strong>Abjure Enemy.</strong> As an action, you present your holy symbol and speak a prayer of denunciation, using your Channel Divinity. Choose one creature within 60 feet of you that you can see. That creature must make a Wisdom saving throw, unless it is immune to being frightened. Fiends and undead have disadvantage on this saving throw.</p>
@@ -288,12 +306,14 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/paladin:vengeance#toc2',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Extra Attack',
             description: `You can attack twice, instead of once, whenever you take the Attack action on your turn`,
             origin: 'Paladin [5]',
             url: 'http://dnd5e.wikidot.com/paladin#toc19',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Hexblade\'s Curse',
             description: `<p>Starting at 1st level, you gain the ability to place a baleful curse on someone. As a bonus action, choose one creature you can see within 30 feet of you. The target is cursed for 1 minute. The curse ends early if the target dies, you die, or you are incapacitated. Until the curse ends, you gain the following benefits:</p>
             <ul>
@@ -306,6 +326,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/warlock:hexblade#toc1',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Hex Warrior',
             description: `<p>At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor, shields, and martial weapons.</p>
             <p>The influence of your patron also allows you to mystically channel your will through a particular weapon. Whenever you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two-handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest. If you later gain the Pact of the Blade feature, this benefit extends to every pact weapon you conjure with that feature, no matter the weapon's type.</p>`,
@@ -313,6 +334,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/warlock:hexblade#toc2',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Pact Magic',
             description: `<p>Your arcane research and the magic bestowed on you by your patron have given you facility with spells.<p>
             <h5>Cantrips</h5>
@@ -334,6 +356,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/warlock#toc5',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Eldritch Invocations',
             description: `<strong>Agonizing Blast</strong>
             <p>When you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.</p>
@@ -343,6 +366,7 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             url: 'http://dnd5e.wikidot.com/warlock#toc11',
         },
         {
+            ...CharacterFeatureDefault,
             name: 'Pact Boon',
             description: `<strong>Pact of the Blade</strong>
     <p>You can use your action to create a pact weapon in your empty hand. You can choose the form that this melee weapon takes each time you create it. You are proficient with it while you wield it. This weapon counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.</p>
@@ -353,7 +377,24 @@ const GetCharacterFeatures = (): CharacterFeature[] => {
             origin: 'Warlock [3]',
             url: 'http://dnd5e.wikidot.com/warlock#toc12',
         },
+        {
+            ...CharacterFeatureDefault,
+            name: 'Aura of Protection',
+            description: `<strong>Aura of Protection</strong>
+                <p>Starting at 6th level, whenever you or a friendly creature within 10 (30 if lvl 18) feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.</p>
+            `,
+            origin: 'Paladin [6]',
+            url: 'http://dnd5e.wikidot.com/paladin#toc20',
+            modifiers: GetAbilityScoreEnumArray().map(x => ({ 
+                    type: ModifierTypeEnum.AbilityScore, 
+                    target: ModifierTargetEnum.SavingThrow, 
+                    abilityTarget: x,
+                    abilitySource: AbilityScoreEnum.Cha,
+                })
+            ),
+        },
         ...GetCharacterFeats().map(x => ({
+            ...CharacterFeatureDefault,
             name: x.name(),
             description: x.description(),
             origin: '',

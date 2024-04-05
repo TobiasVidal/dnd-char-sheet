@@ -3,7 +3,7 @@ import { Spell, SpellSlot } from './spell.d'
 import { SavingThrow } from './savingThrow.d'
 import { Background } from './background.d'
 import { Equipment } from './equipment.d'
-import { AbilityScore } from './abilityScore.d'
+import { AbilityScore, StatModifier } from './abilityScore.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
@@ -12,35 +12,35 @@ export type Character = {
     name: string,
     abilityScores: AbilityScore[],
     savingThrows: SavingThrow[],
-    classes: CharacterClass[],
-    skills: CharacterSkill[],
-    features: CharacterFeature[],
-    race: CharacterRace,
-    feats: CharacterFeat[],
-    spellcasting?: CharacterSpellcasting,
-    equipment: CharacterEquipment[],
-    attacks: CharacterAttack[],
+    charClasses: CharacterClass[],
+    charSkills: CharacterSkill[],
+    charFeatures: CharacterFeature[],
+    charRace: CharacterRace,
+    charFeats: CharacterFeat[],
+    charSpellcasting?: CharacterSpellcasting,
+    charEquipment: CharacterEquipment[],
+    charAttacks: CharacterAttack[],
     money: Money,
     background: Background,
     armorClass: number,
     initiative: number,
     speed: number,
     healthMax: number,
-    personality: CharacterPersonality,
+    charPersonality: CharacterPersonality,
     get level(): () => number,
     get profBonus(): () => number,
 }
 
 export const CharacterDefault: Character = {
     savingThrows: [],
-    equipment: [],
-    classes: [],
-    attacks: [],
-    skills: [],
+    charEquipment: [],
+    charClasses: [],
+    charAttacks: [],
+    charSkills: [],
     money: { gp: 0, sp: 0, cp: 0 },
     armorClass: 10,
     healthMax: 1,
-    level: function() { return this.classes?.reduce((sum, x) => sum + x.level, 0) ?? 0 },
+    level: function() { return this.charClasses?.reduce((sum, x) => sum + x.level, 0) ?? 0 },
     profBonus: function() { return GetProfBonus(this.level()); },
 }
 
@@ -86,6 +86,12 @@ export type CharacterFeature = {
     description: string,
     origin: string,
     url: string,
+    modifiers: StatModifier[],
+}
+
+export const CharacterFeatureDefault: CharacterFeature = {
+    modifiers: [],
+    url: null,
 }
 
 export type CharacterSpell = {

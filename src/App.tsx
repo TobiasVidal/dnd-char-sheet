@@ -33,22 +33,22 @@ function App() {
               <div className='col-8 ps-4'>
                 <ProminentNumber num={character.profBonus()} text="PROFICIENCY BONUS"/>
                 <SavingThrows savingThrows={character.savingThrows}/>
-                <Skills Skills={character.skills}/>
+                <Skills Skills={character.charSkills}/>
               </div>
             </div>
           </div>
           <div className='col-4'>
-            <ProminentNumber num={10 + (character.skills.find(x => x.skill === SkillEnum.Perception)?.value ?? 0)} text="PASSIVE PERCEPTION"/>
+            <ProminentNumber num={10 + (character.charSkills.find(x => x.skill === SkillEnum.Perception)?.value ?? 0)} text="PASSIVE PERCEPTION"/>
             <AcIniSpeed character={character} />
             <HitPoints hitPoints={character.healthMax} />
             <Inventory character={character} />
           </div>
           <div className='col-4'>
-            <Features features={character.features} />
+            <Features features={character.charFeatures} />
           </div>
         </div>
         <div>
-           {character.spellcasting && <Spells spellcasting={character.spellcasting}></Spells>}
+           {character.charSpellcasting && <Spells spellcasting={character.charSpellcasting}></Spells>}
         </div>
         <Personality character={character} />
       </div>

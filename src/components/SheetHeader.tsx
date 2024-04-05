@@ -9,16 +9,16 @@ export function SheetHeader({character}:{ character: Character}) {
     </h1>
     <div className='col-7 header-character-info'>
       <div className="info-block">
-        <p>{character.classes.map(x => <span key={character.classes.indexOf(x)}>
-            {character.classes.indexOf(x) > 0 && ', '} 
+        <p>{character.charClasses.map(x => <span key={character.charClasses.indexOf(x)}>
+            {character.charClasses.indexOf(x) > 0 && ', '} 
             [{x.level}] {x.class.name()} <small className="themetext-secondary">{GetSubclassName(x.subclass)}</small>
             </span>)}
             <br/>
             <small className="text-secondary">Class & Level</small>
         </p>
         <p className="mb-0">
-            {character.race.displayName}
-            {character.race.subtitle && <small className="themetext-secondary ms-2">{character.race.subtitle}</small>}
+            {character.charRace.displayName}
+            {character.charRace.subtitle && <small className="themetext-secondary ms-2">{character.charRace.subtitle}</small>}
             <br/>
             <small className="text-secondary">Race</small>
         </p>

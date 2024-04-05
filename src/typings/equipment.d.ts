@@ -50,4 +50,5 @@ export enum EquipmentEnum {
     HexbladeLance,
     ScrollOfRevivify,
     HealthPotionSmall,
+    DancingBoots,
 }

@@ -126,6 +126,10 @@ export const dbEquipment: Equipment[] = [
         name: 'Health Potion (small)',
         tooltip: '2d4 + 2 healing'
     },
+    { 
+        equipmentEnum: EquipmentEnum.DancingBoots,
+        savingThrows: GetAbilityScoreEnumArray().map(x => ({ ability: x, value: 1 })),
+    },
 ];
 
 dbEquipment.filter(x => !x.name).forEach(x => {

@@ -37,7 +37,7 @@ export function Inventory({ character }: { character: Character }) {
             <div className="tab-pane fade show active" id="inventory-list">
                 <table className="table">
                     <tbody>
-                        {character.equipment.map(x => <tr key={x.equipment.equipmentEnum}>
+                        {character.charEquipment.map(x => <tr key={x.equipment.equipmentEnum}>
                             <td className="text-center px-2">{x.count}</td>
                             <td className="px-2">
                                 {x.isEquipped && <span className="inline-icon material-icons">
@@ -67,7 +67,7 @@ export function Inventory({ character }: { character: Character }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {character.attacks.map(x => <tr key={character.attacks.indexOf(x)}>
+                        {character.charAttacks.map(x => <tr key={character.charAttacks.indexOf(x)}>
                             <td>{x.name}</td>
                             <td>+{x.attackBonus}</td>
                             <td>{x.damage}</td>
@@ -79,11 +79,11 @@ export function Inventory({ character }: { character: Character }) {
             </div>
             <div className="tab-pane fade" id="proficiencies-list">
                 <ul className="list-unstyled">
-                    <li><strong>Weapons:</strong> {character.classes.find(x => x.startingClass)?.class.weaponProficiencies().join(", ")}</li>
-                    <li><strong>Armor:</strong> {character.classes.find(x => x.startingClass)?.class.armorProficiencies().join(", ")}</li>  
+                    <li><strong>Weapons:</strong> {character.charClasses.find(x => x.startingClass)?.class.weaponProficiencies().join(", ")}</li>
+                    <li><strong>Armor:</strong> {character.charClasses.find(x => x.startingClass)?.class.armorProficiencies().join(", ")}</li>  
                     <li><strong>Tools:</strong> {character.background.toolProficiencies?.join(", ")}</li>
-                    <li><strong>Languages:</strong> {character.race.languages.join(", ")}</li>
-                    <li><strong>Traits:</strong> {character.race.traits.join(", ")}</li> 
+                    <li><strong>Languages:</strong> {character.charRace.languages.join(", ")}</li>
+                    <li><strong>Traits:</strong> {character.charRace.traits.join(", ")}</li> 
                 </ul>
             </div>
         </div>

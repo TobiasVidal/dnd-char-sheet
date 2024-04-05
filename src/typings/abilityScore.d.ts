@@ -20,3 +20,24 @@ export const AbilityScoreDefault: AbilityScore = {
     modifier: function () { return Math.floor((this.value-10)/2); },
     name: function() { return GetAbilityScoreName(this.abilityScoreEnum); },
 }
+
+export enum ModifierTypeEnum {
+    Flat,
+    Proficiency,
+    AbilityScore,
+    //...
+}
+
+export enum ModifierTargetEnum {
+    SavingThrow,
+    AbilityScore,
+    //...
+}
+
+export type StatModifier = {
+    type: ModifierTypeEnum,
+    target: ModifierTargetEnum,
+    flatValue?: number,
+    abilityTarget?: AbilityScoreEnum,
+    abilitySource?: AbilityScoreEnum,
+}

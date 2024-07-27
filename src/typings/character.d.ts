@@ -3,14 +3,14 @@ import { Spell, SpellSlot } from './spell.d'
 import { SavingThrow } from './savingThrow.d'
 import { Background } from './background.d'
 import { Equipment } from './equipment.d'
-import { AbilityScore, StatModifier } from './abilityScore.d'
+import { CharacterAbilityScore, StatModifier } from './abilityScore.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
 
 export type Character = {
     name: string,
-    abilityScores: AbilityScore[],
+    abilityScores: CharacterAbilityScore[],
     savingThrows: SavingThrow[],
     charClasses: CharacterClass[],
     charSkills: CharacterSkill[],
@@ -45,6 +45,7 @@ export const CharacterDefault: Character = {
 }
 
 export type CharacterClass = {
+    characterId: number,
     class: Class,
     subclass: SubclassEnum,
     level: number,
@@ -56,15 +57,16 @@ export type CharacterRace = {
     displayName: string
     subtitle?: string
     speed: number,
-    abilityScores: AbilityScore[], 
+    abilityScores: CharacterAbilityScore[], 
     languages: string[],
     traits: string[],
     size: string,
 }
 
 export type CharacterFeat = {
+    characterId: number,
     feat: FeatEnum
-    abilityScores: AbilityScore[], 
+    abilityScores: CharacterAbilityScore[], 
     get name(): () => string,
     get description(): () => string,
 }
@@ -82,6 +84,7 @@ export type CharacterSkill = {
 }
 
 export type CharacterFeature = {
+    characterId: number,
     name: string,
     description: string,
     origin: string,
@@ -123,6 +126,7 @@ export const CharacterSpellcastingDefault: CharacterSpellcasting = {
 }
 
 export type CharacterEquipment = {
+    characterId: number,
     equipment: Equipment,
     count: number,
     isEquipped: boolean,
@@ -131,6 +135,7 @@ export type CharacterEquipment = {
 }
 
 export type CharacterPersonality = {
+    characterId: number,
     ideals: string[],
     bonds: string[],
     flaws: string[],

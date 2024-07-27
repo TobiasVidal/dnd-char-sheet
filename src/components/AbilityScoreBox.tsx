@@ -1,6 +1,6 @@
-import { AbilityScore } from "../typings/abilityScore";
+import { CharacterAbilityScore } from "../typings/abilityScore";
 
-function AbilityScoreBox(abilityScore: AbilityScore) {
+function AbilityScoreBox(abilityScore: CharacterAbilityScore) {
     const modifier = abilityScore.modifier();
     return <li className="abilityscore-box card text-center bg-dark-light border-0">
         <div className="card-header">

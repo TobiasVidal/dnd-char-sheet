@@ -24,7 +24,7 @@ export const GetClassArmorProficiencies = (classEnum: ClassEnum): string[] => {
 export const GetClassWeaponProficiencies = (classEnum: ClassEnum): string[] => {
     switch (classEnum) {
         case ClassEnum.Paladin: 
-        return [ "Simple weapons", "Martial weapons" ];
+            return [ "Simple weapons", "Martial weapons" ];
         case ClassEnum.Warlock: 
             return [ "Simple weapons" ];
         default: return []
@@ -53,13 +53,6 @@ export const GetClassSpellcastingAbility = (classEnum: ClassEnum): AbilityScoreE
         case ClassEnum.Paladin: 
             return AbilityScoreEnum.Cha;
         default: return undefined;
-    }
-}
-
-const GetClass = (classEnum: ClassEnum):Class => {
-    return {
-        ...ClassDefault,
-        classEnum: classEnum,
     }
 }
 
@@ -112,5 +105,3 @@ const GetWarlockSpellSlots = (level: number): SpellSlot[] => {
     else if (level > 1) { spellSlots = 2; }
     return [{level: spellLevel, amount: spellSlots}];
 }
-
-export { GetClass };

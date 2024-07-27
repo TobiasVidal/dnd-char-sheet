@@ -18,7 +18,7 @@ import { ProminentNumber } from './components/ProminentNumber';
 import { useState } from 'react';
 
 function App() {
-  const [character] = useState(GetCharacter());
+  const [character] = useState(GetCharacter(1));
   
   return (
     <div className="App">

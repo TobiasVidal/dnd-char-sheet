@@ -1,6 +1,9 @@
 enum FeatEnum {
     GreatWeaponMaster,
-    ElvenAccuracy
+    ElvenAccuracy,
+    Telekinetic,
+    Lucky,
+    WarCaster,
 }
 
 export { FeatEnum }

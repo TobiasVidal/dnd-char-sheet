@@ -3,7 +3,7 @@ import { SkillEnum } from "../typings/skill.d"
 
 export const GetCharacterBackground = (): Background => {
     return {
-        name: 'back',
+        name: 'AsuraCustom',
         descrption: [
             'Asura grew up in a small, out of the way town (New Baator, ~80 people). Most of the residents were tieflings, which was the reason for its location. While most people were mainly indifferent towards the tieflings, there were enough extremists harboring ill intentions so as to discourage them from traveling alone or venturing far, just to be safe. If you did, your best bet was to move in a large group and look high class, although that could attract another kind of unwanted attention.',
             'Traveling was rarely an issue however, as New Baator was self-sufficient. Every once in a while, a group would make a trip to a neighboring city to trade and resupply niche tools or medicines that the town couldn’t produce on its own, but that was about it. When he was 12 years old, one such trip failed to return by the expected date. A week went by and the town sent off a second, smaller party to investigate. Tensions rose as the days went by, until one night Asura woke up to distant screams and fire on the horizon. He rushed to the window and saw chaos on the streets. Hooded men were everywhere, fighting the locals that stood their ground while others fled. His mother (Nithmine, a tiefling) barged into his room, shut the blinds and pulled him to the living room in a rush. His father (Farlen Shadowcloud,a slender high elf) was already waiting with an axe in his hand and a resolute look on his face.',

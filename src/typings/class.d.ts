@@ -20,6 +20,8 @@ enum ClassEnum {
 export enum SubclassEnum {
     Hexblade,
     OathOfVengance,
+    PeaceDomain,
+    Chronurgy,
 }
 
 type Class = {

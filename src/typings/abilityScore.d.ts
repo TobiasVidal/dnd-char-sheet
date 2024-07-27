@@ -9,14 +9,15 @@ export enum AbilityScoreEnum {
     Cha,
 }
 
-export type AbilityScore = {
+export type CharacterAbilityScore = {
+    characterId: number,
     abilityScoreEnum: AbilityScoreEnum,
     value: number,
     get name():() => string,
     get modifier():() => number,
 }
 
-export const AbilityScoreDefault: AbilityScore = {
+export const AbilityScoreDefault: CharacterAbilityScore = {
     modifier: function () { return Math.floor((this.value-10)/2); },
     name: function() { return GetAbilityScoreName(this.abilityScoreEnum); },
 }

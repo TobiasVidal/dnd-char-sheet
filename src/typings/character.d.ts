@@ -9,7 +9,21 @@ import { FeatEnum } from './feat.d'
 import { Class } from './class.d'
 
 export type Character = {
+    characterId: number,
     name: string,
+    ideals: string[],
+    bonds: string[],
+    flaws: string[],
+    traits: string[],
+    age?: number,
+    height?: string,
+    weight?: string,
+    eyes?: string,
+    skin?: string,
+    hair?: string,
+}
+
+export type CharacterDisplay = Character & {    
     abilityScores: CharacterAbilityScore[],
     savingThrows: SavingThrow[],
     charClasses: CharacterClass[],
@@ -31,7 +45,7 @@ export type Character = {
     get profBonus(): () => number,
 }
 
-export const CharacterDefault: Character = {
+export const CharacterDisplayDefault: CharacterDisplay = {
     savingThrows: [],
     charEquipment: [],
     charClasses: [],
@@ -132,18 +146,4 @@ export type CharacterEquipment = {
     isEquipped: boolean,
     isCarried: boolean,
     inBackpack: boolean,    
-}
-
-export type CharacterPersonality = {
-    characterId: number,
-    ideals: string[],
-    bonds: string[],
-    flaws: string[],
-    traits: string[],
-    age?: number,
-    height?: string,
-    weight?: string,
-    eyes?: string,
-    skin?: string,
-    hair?: string,
 }

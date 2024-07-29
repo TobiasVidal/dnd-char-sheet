@@ -1,6 +1,6 @@
-import { Character } from "../typings/character.d";
+import { CharacterDisplay } from "../typings/character.d";
 
-export function Inventory({ character }: { character: Character }) {
+export function Inventory({ character }: { character: CharacterDisplay }) {
     return (<div>
         <div className="row p-2 m-4 money-row">
             <div className="col-4" title="gold">

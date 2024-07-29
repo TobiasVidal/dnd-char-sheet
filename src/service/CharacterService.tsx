@@ -1,36 +1,41 @@
 import { GetSkillEnumArray, GetSkillAbility} from "../utils/common";
-import { Character, CharacterDefault, CharacterRace, CharacterSkill, CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, CharacterPersonality } from "../typings/character.d";
-import { AbilityScoreDefault, AbilityScoreEnum, ModifierTargetEnum } from "../typings/abilityScore.d";
+import { CharacterDisplay, CharacterDisplayDefault, CharacterSkill,
+     CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, 
+     Character} from "../typings/character.d";
+import { AbilityScoreEnum, ModifierTargetEnum } from "../typings/abilityScore.d";
 import { ClassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
 import { Spell, SpellEnum } from "../typings/spell.d";
 import { DamageType, Money } from "../typings/common.d";
 import { SkillEnum } from "../typings/skill.d";
-import { GetCharacterClassSpellSlots, GetClassSavingThrows } from "../service/ClassService"
+import { GetCharacterSpellSlots, GetClassSavingThrows } from "../service/ClassService"
 import { GetCharacterEquipment } from "./CharacterEquipmentService";
 import { GetAllSpells } from "./SpellService";
 import { GetCharacterBackground } from "./CharacterBackgroundService";
-import { AddMoney, GetAllMoneyLogs } from "./MoneyService";
+import { AddMoney, GetMoneyLogs } from "./MoneyService";
 import { GetModifierAmount } from "./StatModifierService";
 import { GetCharacterAbilityScores } from "./CharacterAbilityScoreService";
 import { GetCharacterFeats } from "./CharacterFeatService";
 import { GetCharacterFeatures } from "./CharacterFeatureService";
 import { GetCharacterClasses } from "./CharacterClassService";
-import { GetCharacterPersonality } from "./CharacterPersonality";
+import { GetCharacterRace } from "./CharacterRaceService";
+import { CharacterId, dbCharacter } from "../db/dbCharacter";
 
-export const GetCharacter = (characterId: number): Character => {
+export const GetCharacter = (characterId: number): Character => dbCharacter.find(x => x.characterId === characterId)!;
+
+export const GetCharacterDisplay = (characterId: number): CharacterDisplay => {
     const character = {
-        ...CharacterDefault,
+        ...CharacterDisplayDefault,
+        ...GetCharacter(characterId),
         name: 'Asura',
         abilityScores: GetCharacterAbilityScores(characterId),
         charFeatures: GetCharacterFeatures(characterId),
         charClasses: GetCharacterClasses(characterId),
-        background: GetCharacterBackground(),
+        background: GetCharacterBackground(characterId),
         charFeats: GetCharacterFeats(characterId),
         charEquipment: GetCharacterEquipment(characterId),
-        charRace: GetCharacterRace(),
-        charPersonality: GetCharacterPersonality(characterId),   
-        money: GetCharacterMoney(),
+        charRace: GetCharacterRace(characterId),
+        money: GetCharacterMoney(characterId),
     }
     UpdateCharacterAbilityScores(character);
     SetSavingThrows(character);
@@ -45,7 +50,7 @@ export const GetCharacter = (characterId: number): Character => {
     return character;
 }
 
-const UpdateCharacterAbilityScores = (character: Character): void => {
+const UpdateCharacterAbilityScores = (character: CharacterDisplay): void => {
     for (let i = 0; i < character.abilityScores.length; i++) {
         const abilityScore = character.abilityScores[i];
         abilityScore.value += character.charRace.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
@@ -55,19 +60,7 @@ const UpdateCharacterAbilityScores = (character: Character): void => {
     }
 }
 
-const GetCharacterRace = (): CharacterRace => {
-    return {
-        displayName: "Tiefling/Elf",
-        subtitle: "(custom lineage)",
-        speed: 30,
-        abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 2 }],
-        languages: ["Common", "Elven"],
-        traits: ["Darkvision 60ft"],
-        size: "Medium",
-    }
-}
-
-const SetSavingThrows = (character: Character) => {
+const SetSavingThrows = (character: CharacterDisplay) => {
     let savingThrows: SavingThrow[] = [];
     const firstLevelClass: ClassEnum = character.charClasses.filter(x => x.startingClass)[0].class.classEnum;
     const proficiencies: AbilityScoreEnum[] = GetClassSavingThrows(firstLevelClass);
@@ -96,7 +89,7 @@ const SetSavingThrows = (character: Character) => {
     character.savingThrows = savingThrows;
 }
 
-const SetSkills = (character: Character) => {
+const SetSkills = (character: CharacterDisplay) => {
     character.charSkills = [];
     
     const skillList: SkillEnum[] = GetSkillEnumArray();
@@ -117,17 +110,17 @@ const SetSkills = (character: Character) => {
     }
 }
 
-const HasProficiencyInSkill = (character: Character, skill: SkillEnum): boolean => {
+const HasProficiencyInSkill = (character: CharacterDisplay, skill: SkillEnum): boolean => {
     return character.charClasses.some(x => x.skillProficiencies.includes(skill))
         || character.background.skillProficiencies.includes(skill);
 }
 
-const SetAC = (character: Character) => {
+const SetAC = (character: CharacterDisplay) => {
     character.armorClass = character.charEquipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment.grantsBaseAC ?? 10;
     character.armorClass += character.charEquipment.filter(x => x.isEquipped && x.equipment.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.equipment.grantsACBonus ?? 0), 0);
 }
 
-const SetSpellcasting = (character: Character) => {
+const SetSpellcasting = (character: CharacterDisplay) => {
     const spellcastingAbility = character.charClasses.find(x => x.class.spellcastingAbility())?.class.spellcastingAbility();
     if (!spellcastingAbility) { return; }
     const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === spellcastingAbility)?.modifier() ?? 0;
@@ -140,31 +133,22 @@ const SetSpellcasting = (character: Character) => {
     SetSpellSlots(character);
 }
 
-const SetSpellSlots = (character: Character) => {
-    const warlockClass = character.charClasses.find(x => x.class.classEnum === ClassEnum.Warlock);
-    const casterClasses = character.charClasses.filter(x => x.class.classEnum !== ClassEnum.Warlock && GetCharacterClassSpellSlots(x));
-    if (casterClasses.length > 1) { /* quilombo */}
-    let result = GetCharacterClassSpellSlots(casterClasses[0]);
-    if (warlockClass) {
-        const warlockSpellSlot = GetCharacterClassSpellSlots(warlockClass)[0];
-        result = result.map(x => x.level === warlockSpellSlot.level ? 
-            {level: x.level, amount: x.amount + warlockSpellSlot.amount } 
-            : x
-        )
-    }
+const SetSpellSlots = (character: CharacterDisplay) => {
     if (!character.charSpellcasting) { character.charSpellcasting = { ...CharacterSpellcastingDefault }; }
-    character.charSpellcasting.slots = result;
+    character.charSpellcasting.slots = GetCharacterSpellSlots(character.charClasses);
 }
 
-const SetInitiative = (character: Character) => {
+const SetInitiative = (character: CharacterDisplay) => {
     character.initiative = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Dex)?.modifier() ?? 0;
+    //if alert feat
+    //if feature mago chronurgy
 }
 
-const SetSpeed = (character: Character) => {
+const SetSpeed = (character: CharacterDisplay) => {
     character.speed = character.charRace.speed;
 }
 
-const SetHealthMax = (character: Character) => {
+const SetHealthMax = (character: CharacterDisplay) => {
     const conModifier = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Con)?.modifier() ?? 0;
     character.healthMax = character.level() * conModifier;
     character.charClasses?.forEach(x => {
@@ -175,7 +159,7 @@ const SetHealthMax = (character: Character) => {
     });
 }
 
-const SetAttacks = (character: Character) => {
+const SetAttacks = (character: CharacterDisplay) => {
     const attacks: CharacterAttack[] = [];
     character.charEquipment.map(x => x.equipment).forEach(x => {
         if (!x.damage) { return; }
@@ -242,8 +226,8 @@ const GetCharacterSpells = (): CharacterSpell[] => {
     ];
 };
 
-const GetCharacterMoney = (): Money => {
-    const moneyLogs = GetAllMoneyLogs();
+const GetCharacterMoney = (characterId: number): Money => {
+    const moneyLogs = GetMoneyLogs(characterId);
     let characterMoney:Money = { gp: 0, sp: 0, cp: 0 };
     moneyLogs.forEach(x => characterMoney = AddMoney(characterMoney, x));
     return characterMoney;

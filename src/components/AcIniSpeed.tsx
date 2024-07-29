@@ -1,7 +1,7 @@
-import { Character } from "../typings/character.d";
+import { CharacterDisplay } from "../typings/character.d";
 import AcIniSpeedBox from "./AcIniSpeedBox";
 
-function AcIniSpeed({ character }: { character: Character }) {
+function AcIniSpeed({ character }: { character: CharacterDisplay }) {
     return <div className="row pt-3">
         <div className="col-4">
           <AcIniSpeedBox text="AC" num={character.armorClass} />

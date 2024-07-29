@@ -1,4 +1,4 @@
-import { GetCharacter } from './service/CharacterService';
+import { GetCharacterDisplay } from './service/CharacterService';
 import '../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap-utilities.min.css';
@@ -18,7 +18,7 @@ import { ProminentNumber } from './components/ProminentNumber';
 import { useState } from 'react';
 
 function App() {
-  const [character] = useState(GetCharacter(1));
+  const [character] = useState(GetCharacterDisplay(1));
   
   return (
     <div className="App">

@@ -1,7 +1,14 @@
 Ideas generales con las que avanzar:
 
-- Actualmente haciendo que la pagina se banque 2 personajes, eso implica, 
+OVERALL
+  Actualmente haciendo que la pagina se banque 2 personajes, eso implica, 
   a grandes razgos, que todo tenga un characterId que indique a que personaje pertenece.
+
+Especificos
+
+- Agregar el feat a la raza
+
+- El coso de spell save DC para multiclass
 
 - Unificar Character y CharacterPersonality, ya que solo es 1 por personaje, me parece que todos esos datos tipo edad,
   color de pelo, ideals, etc puede tranquilamente ser data que este dentor del Character.

@@ -2,8 +2,8 @@ import { MoneyLog } from "../typings/moneylog";
 import { dbMoneyLogs } from "../db/dbMoneyLog";
 import { Money } from "../typings/common";
 
-export const GetAllMoneyLogs = (): MoneyLog[] => {
-    return dbMoneyLogs.map(x => x as MoneyLog);
+export const GetMoneyLogs = (characteId: number): MoneyLog[] => {
+    return dbMoneyLogs.filter(x => x.characterId === characteId);
 }
 
 export const AddMoney = (m1: Money, m2: Money): Money => {

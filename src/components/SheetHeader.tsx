@@ -1,7 +1,7 @@
 import { GetSubclassName } from "../service/ClassService";
-import { Character } from "../typings/character.d";
+import { CharacterDisplay } from "../typings/character.d";
 
-export function SheetHeader({character}:{ character: Character}) {
+export function SheetHeader({character}:{ character: CharacterDisplay}) {
     return <div className='row sheet-header mb-5'>
     <h1 className='col-5 character-name ps-4'>
       {character.name}

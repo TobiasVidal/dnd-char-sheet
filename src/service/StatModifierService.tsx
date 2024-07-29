@@ -1,7 +1,7 @@
 import { ModifierTypeEnum, StatModifier } from "../typings/abilityScore.d";
-import { Character } from "../typings/character.d";
+import { CharacterDisplay } from "../typings/character.d";
 
-export const GetModifierAmount = (modifier: StatModifier, character: Character): number => {
+export const GetModifierAmount = (modifier: StatModifier, character: CharacterDisplay): number => {
     switch (modifier.type) {
         case ModifierTypeEnum.Proficiency:
             return character.profBonus();

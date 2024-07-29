@@ -1,8 +1,11 @@
+import { CharacterId } from "../db/dbCharacter"
 import { Background } from "../typings/background.d"
 import { SkillEnum } from "../typings/skill.d"
 
-export const GetCharacterBackground = (): Background => {
-    return {
+export const GetCharacterBackground = (characterId: number): Background => {
+    return [
+    {
+        characterId: CharacterId.Asura,
         name: 'AsuraCustom',
         descrption: [
             'Asura grew up in a small, out of the way town (New Baator, ~80 people). Most of the residents were tieflings, which was the reason for its location. While most people were mainly indifferent towards the tieflings, there were enough extremists harboring ill intentions so as to discourage them from traveling alone or venturing far, just to be safe. If you did, your best bet was to move in a large group and look high class, although that could attract another kind of unwanted attention.',
@@ -26,5 +29,17 @@ export const GetCharacterBackground = (): Background => {
         languages: ['Infernal'],
         toolProficiencies: ['Lute'],
         skillProficiencies: [ SkillEnum.Perception, SkillEnum.Deception ]
+    },
+    {
+        characterId: CharacterId.Zilean,
+        name: 'ZileanCustom',
+        descrption: [
+            'Lvl 13 wizard go brrrrrrrrrrrr',
+        ],
+        features: [ ],
+        languages: ['Undercommon'],
+        toolProficiencies: ['Poisoner’s Kit'],
+        skillProficiencies: [ SkillEnum.Perception, SkillEnum.Stealth ]
     }
+    ].find(x => x.characterId === characterId)!;
 }

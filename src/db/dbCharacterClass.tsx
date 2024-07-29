@@ -34,7 +34,7 @@ export const dbCharacterClass: CharacterClass[] = [
         class: { ...ClassDefault, classEnum: ClassEnum.Wizard },
         subclass: SubclassEnum.Chronurgy,
         level: 13,
-        skillProficiencies: [SkillEnum.Arcana, SkillEnum.Investigation],
+        skillProficiencies: [SkillEnum.Arcana, SkillEnum.Acrobatics],
         startingClass: true,
     },
 ];

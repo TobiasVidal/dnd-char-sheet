@@ -40,5 +40,5 @@ export type StatModifier = {
     target: ModifierTargetEnum,
     flatValue?: number,
     abilityTarget?: AbilityScoreEnum,
-    abilitySource?: AbilityScoreEnum,
+    abilitySource?: AbilityScoreEnum,//Para cuando el bonus sale de un ability score, como el +CHA de Aura of Protection
 }

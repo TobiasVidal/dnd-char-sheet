@@ -1,4 +1,4 @@
-import { CharacterAbilityScore } from "../typings/abilityScore";
+import { CharacterAbilityScore } from "../typings/abilityScore.d";
 
 function AbilityScoreBox(abilityScore: CharacterAbilityScore) {
     const modifier = abilityScore.modifier();

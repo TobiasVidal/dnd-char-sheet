@@ -1,6 +1,6 @@
-import { CharacterFeature } from "../typings/character.d";
+import { CharacterFeatureDisplay } from "../typings/character.d";
 
-export function Features({ features }: { features: CharacterFeature[] }) {
+export function Features({ features }: { features: CharacterFeatureDisplay[] }) {
     return (<div className="accordion">
         <h3 className="text-center mb-4 themetext-secondary">Class features & feats</h3>
         {features.map(x => <div className="accordion-item bg-dark-light" key={features.indexOf(x)}>

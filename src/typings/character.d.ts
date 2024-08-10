@@ -6,7 +6,7 @@ import { Equipment } from './equipment.d'
 import { CharacterAbilityScore, StatModifier } from './abilityScore.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
-import { Class } from './class.d'
+import { Class, ClassFeatureEnum } from './class.d'
 
 export type Character = {
     characterId: number,
@@ -28,7 +28,7 @@ export type CharacterDisplay = Character & {
     savingThrows: SavingThrow[],
     charClasses: CharacterClass[],
     charSkills: CharacterSkill[],
-    charFeatures: CharacterFeature[],
+    charFeatures: CharacterFeatureDisplay[],
     charRace: CharacterRace,
     charFeats: CharacterFeat[],
     charSpellcasting?: CharacterSpellcasting,
@@ -99,6 +99,11 @@ export type CharacterSkill = {
 
 export type CharacterFeature = {
     characterId: number,
+    feature: ClassFeatureEnum,
+}
+
+export type CharacterFeatureDisplay = {
+    characterId: number,
     name: string,
     description: string,
     origin: string,
@@ -106,7 +111,7 @@ export type CharacterFeature = {
     modifiers: StatModifier[],
 }
 
-export const CharacterFeatureDefault: CharacterFeature = {
+export const CharacterFeatureDisplayDefault: CharacterFeature = {
     modifiers: [],
     url: null,
 }

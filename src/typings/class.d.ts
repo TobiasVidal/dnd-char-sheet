@@ -1,7 +1,8 @@
 import { GetClassArmorProficiencies, GetClassHitDie, GetClassSpellcastingAbility, GetClassWeaponProficiencies } from '../service/ClassService'
-import { AbilityScoreEnum } from './abilityScore.d';
+import { AbilityScoreEnum, StatModifier } from './abilityScore.d';
+import { SpellEnum } from './spell.d';
 
-enum ClassEnum {
+export enum ClassEnum {
     Artificer,
     Barbarian,
     Bard,
@@ -24,7 +25,30 @@ export enum SubclassEnum {
     Chronurgy,
 }
 
-type Class = {
+
+export enum ClassFeatureEnum {
+    DivineSense,
+    LayOnHands,
+    PaladinSpellcasting,
+    DivineSmite,
+    DivineHealth,
+    SacredOath,
+    HarnessDivinePower,
+    AuraOfProtection,
+    ChannelDivinityVengeance,
+    
+    ExtraAttack,
+
+    PactMagic,
+    HexbladeCurse,
+    HexWarrior,
+
+    AgonizingBlast,
+    EldritchMind,
+    PactOfTheBlade,
+}
+
+export type Class = {
     classEnum: ClassEnum,
     get name(): () => string,
     get hitDie(): () => number,
@@ -34,7 +58,7 @@ type Class = {
     get spellcastingAbility(): () => AbilityScoreEnum | undefined,
 }
 
-const ClassDefault: Class = {
+export const ClassDefault: Class = {
     name: function () { return ClassEnum[this.classEnum]; },
     hitDie: function () { return GetClassHitDie(this.classEnum); },
     averageLevelupHealth: function () { return this.hitDie()/2 + 1; },
@@ -43,4 +67,28 @@ const ClassDefault: Class = {
     armorProficiencies: function () { return GetClassArmorProficiencies(this.classEnum); },
 }
 
-export { ClassEnum, Class, ClassDefault }
+type ClassFeatureBase = {
+    level: number,
+    description: string,
+    spells: SpellEnum[], //Esto es para los spells que te da fijos. Si son spells opcionales, van dentro de la descr y los agregas en CharacterFeature
+    statModifiers: StatModifier[],
+}
+
+export const ClassFeatureBaseDefault: ClassFeatureBase = {//Esto es para ClassFeatureLevel
+    spells: [],
+    statModifiers: [],
+}
+
+export const ClassFeatureDefault: ClassFeature = { ...ClassFeatureBaseDefault, tiers: [], optional: false }
+
+export type ClassFeature = ClassFeatureBase & {
+    feature: ClassFeatureEnum,
+    name: string,
+    class: ClassEnum,
+    subclass?: SubclassEnum,
+    optional: boolean,
+    tiers: ClassFeatureLevel[]
+    url: string,
+}
+
+export type ClassFeatureLevel = ClassFeatureBase & { }

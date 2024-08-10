@@ -1,4 +1,4 @@
-import { CharacterAbilityScore } from "../typings/abilityScore";
+import { CharacterAbilityScore } from "../typings/abilityScore.d";
 import AbilityScoreBox from "./AbilityScoreBox";
 
 function AbilityScores({ abilityScores }: { abilityScores: CharacterAbilityScore[] }) {

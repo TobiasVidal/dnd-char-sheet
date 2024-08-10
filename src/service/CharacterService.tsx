@@ -16,20 +16,18 @@ import { AddMoney, GetMoneyLogs } from "./MoneyService";
 import { GetModifierAmount } from "./StatModifierService";
 import { GetCharacterAbilityScores } from "./CharacterAbilityScoreService";
 import { GetCharacterFeats } from "./CharacterFeatService";
-import { GetCharacterFeatures } from "./CharacterFeatureService";
+import { GetCharacterFeatureDisplays } from "./CharacterFeatureService";
 import { GetCharacterClasses } from "./CharacterClassService";
 import { GetCharacterRace } from "./CharacterRaceService";
-import { CharacterId, dbCharacter } from "../db/dbCharacter";
+import { dbCharacter } from "../db/dbCharacter";
 
 export const GetCharacter = (characterId: number): Character => dbCharacter.find(x => x.characterId === characterId)!;
 
 export const GetCharacterDisplay = (characterId: number): CharacterDisplay => {
-    const character = {
+    const character: CharacterDisplay = {
         ...CharacterDisplayDefault,
         ...GetCharacter(characterId),
-        name: 'Asura',
         abilityScores: GetCharacterAbilityScores(characterId),
-        charFeatures: GetCharacterFeatures(characterId),
         charClasses: GetCharacterClasses(characterId),
         background: GetCharacterBackground(characterId),
         charFeats: GetCharacterFeats(characterId),
@@ -37,6 +35,7 @@ export const GetCharacterDisplay = (characterId: number): CharacterDisplay => {
         charRace: GetCharacterRace(characterId),
         money: GetCharacterMoney(characterId),
     }
+    character.charFeatures = GetCharacterFeatureDisplays(characterId, character.charClasses);
     UpdateCharacterAbilityScores(character);
     SetSavingThrows(character);
     SetSpellcasting(character);

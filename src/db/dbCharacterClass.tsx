@@ -14,7 +14,7 @@ export const dbCharacterClass: CharacterClass[] = [
     },
     {
         characterId: CharacterId.Asura,
-        class: { ...ClassDefault, classEnum: ClassEnum.Paladin },
+        class: { ...ClassDefault, classEnum: ClassEnum.Warlock },
         subclass: SubclassEnum.Hexblade,
         level: 4,
         skillProficiencies: [],

@@ -6,9 +6,11 @@ OVERALL
 
 Especificos
 
-- Agregar el feat a la raza
+- Agregar el feat a la raza (?)
 
 - El coso de spell save DC para multiclass
+
+- El fighting style creo que me quedo colgado (repasar calculo AC)
 
 - Unificar Character y CharacterPersonality, ya que solo es 1 por personaje, me parece que todos esos datos tipo edad,
   color de pelo, ideals, etc puede tranquilamente ser data que este dentor del Character.

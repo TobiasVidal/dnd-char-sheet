@@ -1,4 +1,4 @@
-import { Class, ClassDefault, ClassEnum, SubclassEnum } from "../typings/class.d";
+import { ClassEnum, SubclassEnum } from "../typings/class.d";
 import { AbilityScoreEnum } from "../typings/abilityScore.d";
 import { CharacterClass } from "../typings/character.d";
 import { SpellSlot } from "../typings/spell.d";
@@ -17,7 +17,7 @@ export const GetClassHitDie = (classEnum: ClassEnum): number => {
 
 export const GetClassArmorProficiencies = (classEnum: ClassEnum): string[] => {
     switch (classEnum) {
-        case ClassEnum.Paladin: 
+        case ClassEnum.Cleric: 
             return [ 'Light Armor', 'Medium Armor', 'shields' ];
         case ClassEnum.Paladin: 
             return [ 'Light Armor', 'Medium Armor', 'Heavy Armor', 'shields' ];
@@ -180,13 +180,13 @@ const GetSpellSlots = (casterLevel: number): SpellSlot[] => {
     let index = 0;
 
     let lvl1Amount = 4;
-    if (casterLevel == 1) { lvl1Amount = 2; }
-    else if (casterLevel == 2) { lvl1Amount = 3; }
+    if (casterLevel === 1) { lvl1Amount = 2; }
+    else if (casterLevel === 2) { lvl1Amount = 3; }
     spellSlots[index++] = lvl1Amount;
 
     let lvl2Amount = 0;
     if (casterLevel > 3) { lvl2Amount = 3; }
-    else if (casterLevel == 3) { lvl2Amount = 2; }
+    else if (casterLevel === 3) { lvl2Amount = 2; }
     spellSlots[index++] = lvl2Amount;
 
     let lvl3Amount = 0;

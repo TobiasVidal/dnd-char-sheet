@@ -4,25 +4,16 @@ OVERALL
   Actualmente haciendo que la pagina se banque 2 personajes, eso implica, 
   a grandes razgos, que todo tenga un characterId que indique a que personaje pertenece.
 
-Especificos
-
+TODO now
 - Agregar el feat a la raza (?)
 
 - El coso de spell save DC para multiclass
 
-- El fighting style creo que me quedo colgado (repasar calculo AC)
 
-- Unificar Character y CharacterPersonality, ya que solo es 1 por personaje, me parece que todos esos datos tipo edad,
-  color de pelo, ideals, etc puede tranquilamente ser data que este dentor del Character.
-
-- Atado al anterior, separar lo que es "dbCharacter" del Character actual de alguna forma. Quizas hacer que lo que ahora es Character
-  se vuelva CharacterDisplay y que Character pase a ser la data que esta en la DB de characterId
-
-- Hacer que las CharacterFeatures pasen a ser mas auto-calculables. Pasamos a tener una tabla/clase Feature (o class feature o lo que mongo
-  pinte) que va a tener toda la data de las cosas como LayOnHands, etc, etc y un enum para todos los distintos tipos de feature. Despues va
-  a haber un dbCharacterFeature que guarde data de los casos en los que hay algo que ELEGIR. Por ej un feature que te da a elegir entre
-  ciertos spells, CharacterFeature tiene una referencia al Feature (via el enum) y sabe que spell elegiste. El feature a su vez debería tener
-  la lista de opciones idealmente.
-
+TODO eventuales (no son necesarios para la partida de lucho)
 - Hacer una home nueva, que trata de detectar el pj via el url. Si detecta uno (por nombre o id), te va a esa pagina, sino te hace una lista
   con los personajes disponibles y ahi elegis a cual vas
+
+- Fighting styles: Hacerlos (lol) y que sumen a AC, daño, etc.
+  Los haria asi: hacer que haya ClassFeatures que puedan tener clase undefined, cargar todos los FS ahi y dsps manejarlo como los
+  eldritch invocations (basically, los especificas en CharacterFeature y alv)

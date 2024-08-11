@@ -1,16 +1,14 @@
 import { GetSkillEnumArray, GetSkillAbility} from "../utils/common";
 import { CharacterDisplay, CharacterDisplayDefault, CharacterSkill,
-     CharacterSpell, CharacterAttack, CharacterSpellcastingDefault, 
-     Character} from "../typings/character.d";
+     CharacterAttack, CharacterSpellcastingDefault, 
+     Character, SpellSave} from "../typings/character.d";
 import { AbilityScoreEnum, ModifierTargetEnum } from "../typings/abilityScore.d";
 import { ClassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
-import { Spell, SpellEnum } from "../typings/spell.d";
 import { DamageType, Money } from "../typings/common.d";
 import { SkillEnum } from "../typings/skill.d";
-import { GetCharacterSpellSlots, GetClassSavingThrows } from "../service/ClassService"
+import { GetCharacterSpellSlots, GetClassSavingThrows, IsCaster } from "../service/ClassService"
 import { GetCharacterEquipment } from "./CharacterEquipmentService";
-import { GetAllSpells } from "./SpellService";
 import { GetCharacterBackground } from "./CharacterBackgroundService";
 import { AddMoney, GetMoneyLogs } from "./MoneyService";
 import { GetModifierAmount } from "./StatModifierService";
@@ -20,6 +18,7 @@ import { GetCharacterFeatureDisplays } from "./CharacterFeatureService";
 import { GetCharacterClasses } from "./CharacterClassService";
 import { GetCharacterRace } from "./CharacterRaceService";
 import { dbCharacter } from "../db/dbCharacter";
+import { GetCharacterSpells } from "./CharacterSpellService";
 
 export const GetCharacter = (characterId: number): Character => dbCharacter.find(x => x.characterId === characterId)!;
 
@@ -120,14 +119,26 @@ const SetAC = (character: CharacterDisplay) => {
 }
 
 const SetSpellcasting = (character: CharacterDisplay) => {
-    const spellcastingAbility = character.charClasses.find(x => x.class.spellcastingAbility())?.class.spellcastingAbility();
-    if (!spellcastingAbility) { return; }
-    const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === spellcastingAbility)?.modifier() ?? 0;
+    const classSpellcastingAbilities: {class: string, ability: AbilityScoreEnum }[] = character.charClasses
+        .filter(x => IsCaster(x.class.classEnum))
+        .map(x => ({ class: x.class.name(), ability: x.class.spellcastingAbility()! }));
+    if (classSpellcastingAbilities.length === 0) { return; }
+
+    let spellAbilities: AbilityScoreEnum[] = [...new Set(classSpellcastingAbilities.map(x => x.ability))];
+    const spellSaveDCs: SpellSave[] = [];
+    for (let ability of spellAbilities) {
+        const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === (ability as AbilityScoreEnum))?.modifier() ?? 0;
+        spellSaveDCs.push({
+            classes: classSpellcastingAbilities.filter(x => x.ability === ability).map(x => x.class),
+            saveDc: 8 + character.profBonus() + abilityModifier,
+            attackModifier: character.profBonus() + abilityModifier,
+        });
+    }
+
     character.charSpellcasting = {
-        spells: GetCharacterSpells(),
+        spells: GetCharacterSpells(character.characterId, character.charClasses, character.charFeatures),
         slots: [],
-        saveDc: 8 + character.profBonus() + abilityModifier,
-        attackModifier: character.profBonus() + abilityModifier,
+        saves: spellSaveDCs,
     }
     SetSpellSlots(character);
 }
@@ -174,56 +185,6 @@ const SetAttacks = (character: CharacterDisplay) => {
 
     character.charAttacks = attacks;
 }
-
-const GetCharacterSpells = (): CharacterSpell[] => {
-    const allSpells = GetAllSpells();
-    const warlockSpells = [
-        { spell: SpellEnum.EldritchBlast, origin: 'Warlock' },
-        { spell: SpellEnum.Prestidigitation, origin: 'Warlock' },
-        { spell: SpellEnum.MinorIllusion, origin: 'Warlock' },
-        { spell: SpellEnum.Suggestion, origin: 'Warlock' },
-        { spell: SpellEnum.Invisibility, origin: 'Warlock' },
-        { spell: SpellEnum.Darkness, origin: 'Warlock' },
-        { spell: SpellEnum.Shield, origin: 'Warlock - Hexblade' },
-        { spell: SpellEnum.Blur, origin: 'Warlock - Hexblade' },
-    ];
-    const paladinExtraSpells = [
-        { spell: SpellEnum.Bane, origin: 'Paladin - Oath of Vengance' },
-        { spell: SpellEnum.HuntersMark, origin: 'Paladin - Oath of Vengance' },
-        { spell: SpellEnum.HoldPerson, origin: 'Paladin - Oath of Vengance' },
-        { spell: SpellEnum.MistyStep, origin: 'Paladin - Oath of Vengance' },
-    ];
-    const paladinPreparedSpells = [
-        SpellEnum.Bless,
-        SpellEnum.Command,
-        SpellEnum.CureWounds,
-        SpellEnum.DetectMagic,
-        SpellEnum.ShieldOfFaith,
-        SpellEnum.ThunderousSmite,
-    ];
-    return [
-        ...warlockSpells.map(x => ({
-            spell: allSpells.find(y => y.spellEnum === x.spell) as Spell,
-            prepared: true,
-            origin: x.origin,
-        })),
-        ...paladinExtraSpells.map(x => ({
-            spell: allSpells.find(y => y.spellEnum === x.spell) as Spell,
-            prepared: true,
-            origin: x.origin,
-        })),
-        ...paladinPreparedSpells.map(x => ({
-            spell: allSpells.find(y => y.spellEnum === x) as Spell,
-            prepared: true,
-            origin: "Paladin"
-        })),
-        ...allSpells.filter(x => x.classes?.includes(ClassEnum.Paladin) ?? false).map(x =>({
-            spell: x,
-            prepared: false,
-            origin: "Paladin"
-        })),
-    ];
-};
 
 const GetCharacterMoney = (characterId: number): Money => {
     const moneyLogs = GetMoneyLogs(characterId);

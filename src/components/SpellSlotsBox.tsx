@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { SpellSlot } from "../typings/spell.d";
+import { SpellSave } from "../typings/character";
 
-export function SpellSlotsBox({ slots, dc, attack }: { slots: SpellSlot[], dc: number, attack: number }) {
+export function SpellSlotsBox({ slots, saves }: { slots: SpellSlot[], saves: SpellSave[] }) {
     const [usableSpellSlots] = useState(slots.filter(x => x.amount > 0).map(x => x));
     const [remainingSpellSlots, setRemainingSpellSlots] = useState(usableSpellSlots.map(x => x));
 
@@ -16,16 +17,20 @@ export function SpellSlotsBox({ slots, dc, attack }: { slots: SpellSlot[], dc: n
     }
 
     return <div className="spellslots-container p-3 bg-dark-light">
-        <div className="row mb-3">
-            <div className="col-6 text-center spell-dc-box">
-                <h6 className="themetext-secondary">DC</h6>
-                <h2>{dc}</h2>
+        {saves.map((x, i) => <>
+            <p className="text-center mb-1 text-secondary">{x.classes.reduce((str, className) => str + ', ' + className)}</p>
+            <div className="row mb-3" key={i}>
+                <div className="col-6 text-center spell-dc-box">
+                    <h6 className="themetext-secondary">DC</h6>
+                    <h2>{x.saveDc}</h2>
+                </div>
+                <div className="col-6 text-center">
+                    <h6 className="themetext-secondary">ATTACK</h6>
+                    <h2>{x.attackModifier}</h2>
+                </div>
             </div>
-            <div className="col-6 text-center">
-                <h6 className="themetext-secondary">ATTACK</h6>
-                <h2>{attack}</h2>
-            </div>
-        </div>
+        </>)}
+
         <h4 className="text-center themetext-secondary pt-3">SPELL SLOTS</h4>
         <table className="table spellslots-table mb-0">
             <tbody>

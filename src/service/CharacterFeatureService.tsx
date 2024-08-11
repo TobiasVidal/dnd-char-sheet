@@ -1,45 +1,41 @@
-import { dbWarlokClassFeatures } from "../db/_ClassFeature/WarlockClassFeatures";
 import { dbCharacterFeature } from "../db/dbCharacterFeature";
 import { dbClassFeature } from "../db/dbClassFeature";
 import { ModifierTargetEnum, ModifierTypeEnum } from "../typings/abilityScore.d";
-import { CharacterClass, CharacterFeature, CharacterFeatureDisplay } from "../typings/character.d";
-import { ClassEnum } from "../typings/class.d";
+import { CharacterClass, CharacterFeature, CharacterFeatureDisplay, CharacterFeatureDisplayDefault } from "../typings/character.d";
+import { ClassEnum, ClassFeature } from "../typings/class.d";
 import { GetCharacterFeats } from "./CharacterFeatService";
 
 export const GetCharacterFeatureDisplays = (characterId: number, classes: CharacterClass[]): CharacterFeatureDisplay[] => {
-    //const result = [];
     const charFeatures: CharacterFeature[] = dbCharacterFeature.filter(x => x.characterId === characterId).map(x => ({...x}));
-    for (let index = 0; index < dbWarlokClassFeatures.length; index++) {
-        const x = dbWarlokClassFeatures[index];
-
-        console.log(x.name, ClassEnum.Warlock, x, classes, classes.some(y => 
-            y.class.classEnum === x.class
-            && x.level <= y.level 
-            && (x.subclass === undefined || x.subclass === y.subclass)
-    ))
-    }
-    const classFeatures: CharacterFeatureDisplay[] = dbClassFeature.filter(x => 
+    const result: CharacterFeatureDisplay[] = [];
+    const classFeatures: ClassFeature[] = dbClassFeature.filter(x => 
         charFeatures.some(y => x.feature === y.feature)
         || (!x.optional && classes.some(y => 
                 y.class.classEnum === x.class
                 && x.level <= y.level 
                 && (x.subclass === undefined || x.subclass === y.subclass)
         ))
-    ).map(x => ({
-        characterId: characterId,
-        name: x.name,
-        description: x.description,
-        origin: `${ClassEnum[x.class]} ${x.level}`,
-        url: '',
-        modifiers: x.statModifiers
-    }));
+    );
+    for (let feature of classFeatures) {
+        const charClass: CharacterClass = classes.find(x => x.class.classEnum === feature.class)!;
+        result.push({
+            characterId: characterId,
+            name: feature.name,
+            description: feature.description,
+            origin: `${ClassEnum[feature.class]} ${feature.level}`,
+            url: '',
+            modifiers: feature.statModifiers,
+            spells: [ ...feature.spells, ...(feature.tiers?.filter(tier => tier.level < charClass.level).flatMap(x => x.spells) ?? []) ]
+        });
+    }
     
-    const classFeats: CharacterFeatureDisplay[] = GetCharacterFeats(characterId).map(x => ({
+    GetCharacterFeats(characterId).forEach(x => result.push({
+        ...CharacterFeatureDisplayDefault,
+        spells: [],
         characterId: characterId,
         name: x.name(),
         description: x.description(),
         origin: 'Feat',
-        url: '',
         modifiers: x.abilityScores.map(y => ({ 
             type: ModifierTypeEnum.AbilityScore,
             target: ModifierTargetEnum.AbilityScore,
@@ -47,8 +43,5 @@ export const GetCharacterFeatureDisplays = (characterId: number, classes: Charac
             abilityTarget: y.abilityScoreEnum,
         })),
     }));
-    return [
-        ...classFeatures,
-        ...classFeats
-    ];
+    return result;
 }

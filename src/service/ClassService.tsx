@@ -123,7 +123,7 @@ export const GetCharacterSpellSlots = (classes: CharacterClass[]): SpellSlot[] =
         warlockSpellSlot = result[0];
     }
 
-    if (!classes.some(x => IsCaster(x.class.classEnum))) {
+    if (!classes.some(x => x.class.classEnum !== ClassEnum.Warlock && IsCaster(x.class.classEnum))) {
         return result;
     }
     
@@ -150,7 +150,17 @@ export const GetCharacterSpellSlots = (classes: CharacterClass[]): SpellSlot[] =
     return result;
 }
 
-const IsCaster = (classEnum: ClassEnum): boolean => IsHalfCaster(classEnum) || IsFullCaster(classEnum);
+export const IsCaster = (classEnum: ClassEnum): boolean => GetClassSpellcastingAbility(classEnum) !== undefined;
+
+export const KnowsAllAvailableSpells = (classEnum: ClassEnum): boolean => {
+    switch (classEnum) {
+        case ClassEnum.Cleric:
+        case ClassEnum.Paladin:
+            return true;
+        default:
+            return false;
+    }
+}
 
 const IsFullCaster = (classEnum: ClassEnum): boolean => {
     switch (classEnum) {
@@ -171,6 +181,21 @@ const IsHalfCaster = (classEnum: ClassEnum): boolean => {
             return true;
         default: return false;
     }
+}
+
+export const GetCurrentMaxSpellSlot = (classEnum: ClassEnum, level: number) => {
+    let spellSlots: SpellSlot[] = [];
+    if (!IsCaster(classEnum)) { return 0; }
+    if (classEnum === ClassEnum.Warlock) {
+        spellSlots = GetWarlockSpellSlots(level);
+    }
+    else if (IsHalfCaster(classEnum)) {
+        spellSlots = GetHalfCasterSpellSlots(level);
+    }
+    else {
+        spellSlots = GetSpellSlots(level);
+    }
+    return spellSlots[spellSlots.length-1].level;
 }
 
 //Esto sirve para full casters y multiclass

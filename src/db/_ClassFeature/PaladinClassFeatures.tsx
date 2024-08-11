@@ -78,10 +78,9 @@ export const dbPaladinClassFeatures: ClassFeature[] = [
         <br/><br/>
         Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your paladin spell save DC.`,
         url: 'http://dnd5e.wikidot.com/paladin#toc13',
-        tiers: [
+        tiers: [//Esto deberia moverlo a un sector unico para "oath spells" asi es mas facil separar x cada oath
             { ...ClassFeatureBaseDefault, level: 3, spells:[ SpellEnum.Bane, SpellEnum.HuntersMark ] },
             { ...ClassFeatureBaseDefault, level: 5, spells:[ SpellEnum.HoldPerson, SpellEnum.MistyStep ] },
-            { ...ClassFeatureBaseDefault, level: 3, spells:[ SpellEnum.Bane, SpellEnum.HuntersMark ] },
         ]
     },
     {
@@ -113,7 +112,7 @@ export const dbPaladinClassFeatures: ClassFeature[] = [
             <p>Starting at 6th level, whenever you or a friendly creature within 10 (30 if lvl 18) feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.</p>
         `,
         url: 'http://dnd5e.wikidot.com/paladin#toc20',
-        modifiers: GetAbilityScoreEnumArray().map(x => ({ 
+        statModifiers: GetAbilityScoreEnumArray().map(x => ({ 
                 type: ModifierTypeEnum.AbilityScore, 
                 target: ModifierTargetEnum.SavingThrow, 
                 abilityTarget: x,

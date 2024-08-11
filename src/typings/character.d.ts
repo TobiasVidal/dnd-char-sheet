@@ -1,12 +1,12 @@
 import { GetFeatName, GetFeatDescription, GetProfBonus } from '../utils/common'
-import { Spell, SpellSlot } from './spell.d'
+import { Spell, SpellEnum, SpellSlot } from './spell.d'
 import { SavingThrow } from './savingThrow.d'
 import { Background } from './background.d'
 import { Equipment } from './equipment.d'
 import { CharacterAbilityScore, StatModifier } from './abilityScore.d'
 import { SkillEnum } from './skill.d'
 import { FeatEnum } from './feat.d'
-import { Class, ClassFeatureEnum } from './class.d'
+import { Class, ClassEnum, ClassFeatureEnum } from './class.d'
 
 export type Character = {
     characterId: number,
@@ -40,7 +40,6 @@ export type CharacterDisplay = Character & {
     initiative: number,
     speed: number,
     healthMax: number,
-    charPersonality: CharacterPersonality,
     get level(): () => number,
     get profBonus(): () => number,
 }
@@ -107,19 +106,26 @@ export type CharacterFeatureDisplay = {
     name: string,
     description: string,
     origin: string,
-    url: string,
+    url?: string,
     modifiers: StatModifier[],
+    spells: SpellEnum[],
 }
 
 export const CharacterFeatureDisplayDefault: CharacterFeature = {
     modifiers: [],
-    url: null,
+    spells: [],
 }
 
 export type CharacterSpell = {
+    characterId: number,
+    spellEnum: SpellEnum,
+    prepared?: boolean,
+    origin?: string,
+    class?: ClassEnum,
+}
+
+export type CharacterSpellDisplay = CharacterSpell & {
     spell: Spell,
-    prepared: boolean,
-    origin: string,
 }
 
 export type CharacterAttack = {
@@ -130,11 +136,16 @@ export type CharacterAttack = {
     range?: string,
 }
 
-export type CharacterSpellcasting = {
-    spells: CharacterSpell[],
-    slots: SpellSlot[],
+type SpellSave = {
+    classes: string[],
     saveDc: number,
     attackModifier: number,
+}
+
+export type CharacterSpellcasting = {
+    spells: CharacterSpellDisplay[],
+    slots: SpellSlot[],
+    saves: SpellSave[],
 }
 
 export const CharacterSpellcastingDefault: CharacterSpellcasting = {

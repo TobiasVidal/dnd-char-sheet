@@ -2,7 +2,7 @@ import { CharacterSpellcasting } from "../typings/character.d";
 import { SpellSlotsBox } from "./SpellSlotsBox";
 
 export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }) {
-    const { spells, slots, saveDc, attackModifier } = spellcasting;
+    const { spells, slots, saves } = spellcasting;
     const spellLevels: number[] = [...new Set(spells.map(x => x.spell.level).sort())]
     return (
     <div>
@@ -58,7 +58,7 @@ export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }
                 </div>
             </div>
             <div className="col-3">
-                <SpellSlotsBox slots={slots} dc={saveDc} attack={attackModifier} />
+                <SpellSlotsBox slots={slots} saves={saves} />
             </div>
         </div>
     </div>)

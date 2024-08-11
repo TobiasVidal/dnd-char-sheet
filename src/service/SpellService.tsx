@@ -9,7 +9,6 @@ export const GetSpell = (spellEnum: SpellEnum): Spell => {
     return result;
 }
 
-
 export const GetAllSpells = (): Spell[] => {
     return dbSpells.map(x => ({
         spellEnum: GetSpellEnumByDbIndex(x.index),

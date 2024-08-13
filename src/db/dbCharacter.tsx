@@ -9,6 +9,7 @@ export const dbCharacter: Character[] = [
     {
         characterId: CharacterId.Asura,
         name: 'Asura',
+        avatar: 'asura.png',
         traits: [
             "I'm confident in my own abilities and do what I can to instill confidence in others.",
             "I judge people by their actions, not their words."
@@ -32,6 +33,7 @@ export const dbCharacter: Character[] = [
     {
         characterId: CharacterId.Zilean,
         name: 'Zilean',
+        avatar: 'zilean.jpg',
         traits: [ ],
         ideals: [
             ""

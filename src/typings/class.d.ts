@@ -27,6 +27,16 @@ export enum SubclassEnum {
 
 
 export enum ClassFeatureEnum {
+    //Cleric
+    ClericSpellcasting,
+    EmboldeningBond,
+    ImplementOfPeace,
+    PeaceDomainSpells,
+    
+    //Generic
+    ExtraAttack,
+
+    //Paladin
     DivineSense,
     LayOnHands,
     PaladinSpellcasting,
@@ -35,17 +45,25 @@ export enum ClassFeatureEnum {
     SacredOath,
     HarnessDivinePower,
     AuraOfProtection,
-    ChannelDivinityVengeance,
-    
-    ExtraAttack,
+    ChannelDivinityVengeance,   
 
+    //Warlock
     PactMagic,
     HexbladeCurse,
     HexWarrior,
-
     AgonizingBlast,
     EldritchMind,
     PactOfTheBlade,
+
+    //Wizard
+    WizardSpellcasting,
+    ArcaneRecovery,
+    CantripFormulas,
+    ChronalShift,
+    TemporalAwareness,
+    MomentaryStasis,
+    ArcaneAbeyance,
+    ConvergentFuture,
 }
 
 export type Class = {
@@ -87,6 +105,7 @@ export type ClassFeature = ClassFeatureBase & {
     class: ClassEnum,
     subclass?: SubclassEnum,
     optional: boolean,
+    spellsPrepared?: boolean,//Esto indica si los spells que te da esta feature estan preparados o no
     tiers: ClassFeatureLevel[]
     url: string,
 }

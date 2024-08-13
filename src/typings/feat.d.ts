@@ -1,8 +1,9 @@
 enum FeatEnum {
-    GreatWeaponMaster,
     ElvenAccuracy,
-    Telekinetic,
+    GreatWeaponMaster,
     Lucky,
+    Resilient,
+    Telekinetic,
     WarCaster,
 }
 

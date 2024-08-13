@@ -19,7 +19,7 @@ export const GetCharacterRace = (characterId: number): CharacterRace =>
             displayName: "Tiefling/Elf",
             subtitle: "(custom lineage)",
             speed: 30,
-            abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 2 }],
+            abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Int, value: 2 }],
             languages: ["Common", "Elven"],
             traits: ["Darkvision 60ft"],
             //Feat

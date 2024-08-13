@@ -2,12 +2,11 @@ import { CharacterDisplay } from "../typings/character.d";
 import { Appearance } from "./Appearance";
 
 export function Personality({ character }: { character: CharacterDisplay }) {
-    const avatar = require('../files/asura.png');
     return <div>
         <hr className="my-5" />
         <div className="row mt-5">
             <div className="col-4">
-                <img className="character-avatar" src={avatar} alt="avatar" />
+                <img className="character-avatar" src={process.env.PUBLIC_URL + "/img/" + character.avatar} alt="avatar" />
             </div>
             <div className="col-8 px-4">
                 <Appearance character={character} />

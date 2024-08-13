@@ -11,6 +11,7 @@ import { Class, ClassEnum, ClassFeatureEnum } from './class.d'
 export type Character = {
     characterId: number,
     name: string,
+    avatar: string,
     ideals: string[],
     bonds: string[],
     flaws: string[],
@@ -79,7 +80,8 @@ export type CharacterRace = {
 export type CharacterFeat = {
     characterId: number,
     feat: FeatEnum
-    abilityScores: CharacterAbilityScore[], 
+    abilityScores: CharacterAbilityScore[],
+    level?: number,//En que nivel lo obtuviste, solo para log interno
     get name(): () => string,
     get description(): () => string,
 }

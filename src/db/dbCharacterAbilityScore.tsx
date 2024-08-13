@@ -12,9 +12,9 @@ export const dbCharacterAbilityScore: CharacterAbilityScore[] = [
     ].map(x => ({ ...x, characterId: CharacterId.Asura })),
     ...[
         { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Str, value: 9 },
-        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Dex, value: 13 },
-        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Con, value: 14 },
-        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Int, value: 15 },
+        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Dex, value: 14 },
+        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Con, value: 13 },
+        { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Int, value: 15+2 },
         { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Wis, value: 13 },
         { ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Cha, value: 8 },
     ].map(x => ({ ...x, characterId: CharacterId.Zilean })),

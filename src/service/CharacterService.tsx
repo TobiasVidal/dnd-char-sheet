@@ -34,6 +34,7 @@ export const GetCharacterDisplay = (characterId: number): CharacterDisplay => {
         charRace: GetCharacterRace(characterId),
         money: GetCharacterMoney(characterId),
     }
+    
     character.charFeatures = GetCharacterFeatureDisplays(characterId, character.charClasses);
     UpdateCharacterAbilityScores(character);
     SetSavingThrows(character);

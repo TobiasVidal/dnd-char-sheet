@@ -31,6 +31,7 @@ export enum SpellEnum {
   ProtectionFromEvilAndGood,
   ProtectionFromPoison,
   PurifyFoodAndDrink,
+  Sanctuary,
   SearingSmite,
   Shield,
   ShieldOfFaith,

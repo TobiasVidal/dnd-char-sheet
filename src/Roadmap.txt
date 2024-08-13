@@ -5,9 +5,13 @@ OVERALL
   a grandes razgos, que todo tenga un characterId que indique a que personaje pertenece.
 
 TODO now
-- Agregar el feat a la raza (?)
-
-- El coso de spell save DC para multiclass
+- Hacer que cargue el pj nuevo! ver que cosas no funcan y go from there jaja
+- Imagen pj
+- Paleta colores pj nuevo
+- Agregar el PJ feature que me da una skill proficiency
+- Que cuando levanto spells de los features, se fije si estan preparados o no
+- Que resilient me haga proficiente en int saves
+- potato potato revisar mis saves que estan mal
 
 
 TODO eventuales (no son necesarios para la partida de lucho)

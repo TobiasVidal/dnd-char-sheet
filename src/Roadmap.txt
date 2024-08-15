@@ -5,13 +5,17 @@ OVERALL
   a grandes razgos, que todo tenga un characterId que indique a que personaje pertenece.
 
 TODO now
-- Hacer que cargue el pj nuevo! ver que cosas no funcan y go from there jaja
-- Imagen pj
+
+- Definir que spells quiero
 - Paleta colores pj nuevo
-- Agregar el PJ feature que me da una skill proficiency
-- Que cuando levanto spells de los features, se fije si estan preparados o no
-- Que resilient me haga proficiente en int saves
-- potato potato revisar mis saves que estan mal
+- Pensar que mas cosas quiero tener en el inventario
+  Coso del contingency
+  Piedrita con libro
+  Algo con continual flame
+- Que no figuren los cantrips que no tengo
+- Revisar weapon y armor proficiencies
+- Que figuren los cantrips de daño en la seccion ataques?
+- Ajustar altura y raza
 
 
 TODO eventuales (no son necesarios para la partida de lucho)
@@ -21,3 +25,6 @@ TODO eventuales (no son necesarios para la partida de lucho)
 - Fighting styles: Hacerlos (lol) y que sumen a AC, daño, etc.
   Los haria asi: hacer que haya ClassFeatures que puedan tener clase undefined, cargar todos los FS ahi y dsps manejarlo como los
   eldritch invocations (basically, los especificas en CharacterFeature y alv)
+
+- Hacer un character.GetModifiers() que te traiga todos los modifiers, asi si el dia de mañana tengo un stat modifier en un item puedo
+  agrupar todo con el metodo este. Quizas tambien ordenarlo de algun modo.

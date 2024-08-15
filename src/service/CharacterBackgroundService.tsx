@@ -37,8 +37,8 @@ export const GetCharacterBackground = (characterId: number): Background => {
             'Lvl 13 wizard go brrrrrrrrrrrr',
         ],
         features: [ ],
-        languages: ['Undercommon'],
-        toolProficiencies: ['Poisoner’s Kit'],
+        languages: ['Infernal'],
+        toolProficiencies: ['Smit\'s Kit', 'Carpenter\'s Kit'],
         skillProficiencies: [ SkillEnum.Perception, SkillEnum.Stealth ]
     }
     ].find(x => x.characterId === characterId)!;

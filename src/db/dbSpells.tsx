@@ -176,6 +176,35 @@ export const dbSpells = [
       "url": "/api/spells/aid"
     },
     {
+      "index": "gift-of-alacrity",
+      "name": "Gift of Alacrity",
+      "desc": [
+        "You touch a willing creature. For the duration, the target can add 1d8 to its initiative rolls.",
+      ],
+      "range": "Touch",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "8 hours",
+      "concentration": false,
+      "casting_time": "1 minute",
+      "level": 1,
+    },
+    {
+      "index": "sickening-radiance",
+      "name": "Sickening Radiance",
+      "desc": [
+        "Dim, greenish light spreads within a 30-foot-radius sphere centered on a point you choose within range. The light spreads around corners, and it lasts until the spell ends.",
+        "When a creature moves into the spell’s area for the first time on a turn or starts its turn there, that creature must succeed on a Constitution saving throw or take 4d10 radiant damage, and it suffers one level of exhaustion and emits a dim, greenish light in a 5-foot radius. This light makes it impossible for the creature to benefit from being invisible. The light and any levels of exhaustion caused by this spell go away when the spell ends."
+      ],
+      "range": "120 feet",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "10 minutes",
+      "concentration": true,
+      "casting_time": "1 action",
+      "level": 2,
+    },
+    {
       "index": "alarm",
       "name": "Alarm",
       "desc": [
@@ -9488,6 +9517,40 @@ export const dbSpells = [
       "url": "/api/spells/mage-hand"
     },
     {
+      "index": "mind-sliver",
+      "name": "Mind Sliver",
+      "desc": [
+        "You drive a disorienting spike of psychic energy into the mind of one creature you can see within range. The target must succeed on an Intelligence saving throw or take 1d6 psychic damage and subtract 1d4 from the next saving throw it makes before the end of your next turn."
+      ],
+      "range": "60 feet",
+      "components": ["V"],
+      "ritual": false,
+      "duration": "1 round",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 0,
+      "damage": {
+        "damage_type": {
+          "index": "psychic",
+          "name": "Psychic",
+          "url": "/api/damage-types/psychic"
+        },
+        "damage_at_character_level": {
+          "1": "1d6",
+          "5": "2d6",
+          "11": "3d6",
+          "17": "4d6"
+        }
+      },
+      "dc": {
+        "dc_type": {
+          "index": "int",
+          "name": "INT",
+        },
+        "dc_success": "none"
+      },
+    },
+    {
       "index": "magic-circle",
       "name": "Magic Circle",
       "desc": [
@@ -9602,6 +9665,23 @@ export const dbSpells = [
       "subclasses": [],
       "url": "/api/spells/magic-jar"
     },
+    {
+      "index": "magnify-gravity",
+      "name": "Magnify Gravity",
+      "desc": [
+        "The gravity in a 10-foot-radius sphere centered on a point you can see within range increases for a moment. Each creature in the sphere on the turn when you cast the spell must make a Constitution saving throw. On a failed save, a creature takes 2d8 force damage, and its speed is halved until the end of its next turn. On a successful save, a creature takes half as much damage and suffers no reduction to its speed.",
+        "Until the start of your next turn, any object that isn't being worn or carried in the sphere requires a successful Strength check against your spell save DC to pick up or move.",
+      ],
+      "higher_level": [
+        "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st."
+      ],
+      "range": "120 feet",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 1,},
     {
       "index": "magic-missile",
       "name": "Magic Missile",
@@ -11416,6 +11496,25 @@ export const dbSpells = [
       "url": "/api/spells/prestidigitation"
     },
     {
+      "index": "shape-water",
+      "name": "Shape Water",
+      "desc": [
+        "You choose an area of water that you can see within range and that fits within a 5-foot cube. You manipulate it in one of the following ways:",
+        "- You instantaneously move or otherwise change the flow of the water as you direct, up to 5 feet in any direction. This movement doesn’t have enough force to cause damage.",
+        "- You cause the water to form into simple shapes and animate at your direction. This change lasts for 1 hour.",
+        "- You change the water’s color or opacity. The water must be changed in the same way throughout. This change lasts for 1 hour.",
+        "- You freeze the water, provided that there are no creatures in it. The water unfreezes in 1 hour.",
+        "If you cast this spell multiple times, you can have no more than two of its non-instantaneous effects active at a time, and you can dismiss such an effect as an action.",
+      ],
+      "range": "30 feet",
+      "components": ["S"],
+      "ritual": false,
+      "duration": "Instantaneous or 1 hour",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 0,
+    },
+    {
       "index": "prismatic-spray",
       "name": "Prismatic Spray",
       "desc": [
@@ -11747,6 +11846,23 @@ export const dbSpells = [
         }
       ],
       "url": "/api/spells/protection-from-energy"
+    },
+    {
+      "index": "absorb-elements",
+      "name": "Absorb Elements",
+      "desc": [
+        "The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends.",
+      ],
+      "higher_level": [
+        "When you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st."
+      ],
+      "range": "Self",
+      "components": ["S"],
+      "ritual": false,
+      "duration": "1 round",
+      "concentration": true,
+      "casting_time": "1 reaction",
+      "level": 1,
     },
     {
       "index": "protection-from-evil-and-good",
@@ -13295,6 +13411,21 @@ export const dbSpells = [
       ],
       "subclasses": [],
       "url": "/api/spells/simulacrum"
+    },
+    {
+      "index": "silvery-barbs",
+      "name": "Silvery Barbs",
+      "desc": [
+        "You magically distract the triggering creature and turn its momentary uncertainty into encouragement for another creature. The triggering creature must reroll the d20 and use the lower roll.",
+        "You can then choose a different creature you can see within range (you can choose yourself). The chosen creature has advantage on the next attack roll, ability check, or saving throw it makes within 1 minute. A creature can be empowered by only one use of this spell at a time.",
+      ],
+      "range": "60 feet",
+      "components": ["V"],
+      "ritual": false,
+      "duration": "instantaneous",
+      "concentration": false,
+      "casting_time": "1 reaction",
+      "level": 1,
     },
     {
       "index": "sleep",

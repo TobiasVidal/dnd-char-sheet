@@ -2,10 +2,11 @@ import { GetSkillEnumArray, GetSkillAbility} from "../utils/common";
 import { CharacterDisplay, CharacterDisplayDefault, CharacterSkill,
      CharacterAttack, CharacterSpellcastingDefault, 
      Character, SpellSave} from "../typings/character.d";
-import { AbilityScoreEnum, ModifierTargetEnum } from "../typings/abilityScore.d";
+import { AbilityScoreEnum, ModifierTargetEnum, ModifierTypeEnum, StatModifier } from "../typings/abilityScore.d";
+import { DamageType, Money } from "../typings/common.d";
 import { ClassEnum } from "../typings/class.d";
 import { SavingThrow } from "../typings/savingThrow.d";
-import { DamageType, Money } from "../typings/common.d";
+import { Equipment } from "../typings/equipment.d";
 import { SkillEnum } from "../typings/skill.d";
 import { GetCharacterSpellSlots, GetClassSavingThrows, IsCaster } from "../service/ClassService"
 import { GetCharacterEquipment } from "./CharacterEquipmentService";
@@ -54,7 +55,8 @@ const UpdateCharacterAbilityScores = (character: CharacterDisplay): void => {
         const abilityScore = character.abilityScores[i];
         abilityScore.value += character.charRace.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
         character.charFeats.forEach(feat => {
-            abilityScore.value += feat.abilityScores.reduce((sum, attr) => sum + (attr.abilityScoreEnum === abilityScore.abilityScoreEnum ? attr.value : 0), 0);
+            abilityScore.value += feat.statModifiers.filter(x => x.abilityTarget === abilityScore.abilityScoreEnum && x.type === ModifierTypeEnum.Flat)
+                .reduce((sum, attr) => sum + attr.flatValue!, 0);
         });
     }
 }
@@ -63,9 +65,15 @@ const SetSavingThrows = (character: CharacterDisplay) => {
     let savingThrows: SavingThrow[] = [];
     const firstLevelClass: ClassEnum = character.charClasses.filter(x => x.startingClass)[0].class.classEnum;
     const proficiencies: AbilityScoreEnum[] = GetClassSavingThrows(firstLevelClass);
+    const charStatModifiers: StatModifier[] = GetStatModifiers(character);
     for (let i = 0; i < character.abilityScores.length; i++) {
         const abilityScore = character.abilityScores[i];
-        const hasProficiency = proficiencies.includes(abilityScore.abilityScoreEnum);
+        const hasProficiency = proficiencies.includes(abilityScore.abilityScoreEnum)
+            || charStatModifiers.some(x =>
+                    x.type === ModifierTypeEnum.BecomeProficient
+                    && x.abilityTarget === abilityScore.abilityScoreEnum
+                    && x.target === ModifierTargetEnum.SavingThrow
+                );
         
         const savingThrow: SavingThrow = {
             ability: abilityScore.abilityScoreEnum,
@@ -111,11 +119,18 @@ const SetSkills = (character: CharacterDisplay) => {
 
 const HasProficiencyInSkill = (character: CharacterDisplay, skill: SkillEnum): boolean => {
     return character.charClasses.some(x => x.skillProficiencies.includes(skill))
-        || character.background.skillProficiencies.includes(skill);
+        || character.background.skillProficiencies.includes(skill)
+        || GetStatModifiers(character).some(x =>
+            x.type === ModifierTypeEnum.BecomeProficient
+            && x.skillTarget === skill
+        );
 }
 
 const SetAC = (character: CharacterDisplay) => {
-    character.armorClass = character.charEquipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment.grantsBaseAC ?? 10;
+    const mainArmor: Equipment | undefined = character.charEquipment.find(x => x.isEquipped && x.equipment.grantsBaseAC)?.equipment;
+    const dex: number = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Dex)!.modifier();
+    
+    character.armorClass = (mainArmor?.grantsBaseAC ?? 10) + Math.min(mainArmor?.dexACCap ?? 0, dex);
     character.armorClass += character.charEquipment.filter(x => x.isEquipped && x.equipment.grantsACBonus).reduce((currentArmorBonus, equipment) => currentArmorBonus + (equipment.equipment.grantsACBonus ?? 0), 0);
 }
 
@@ -151,8 +166,7 @@ const SetSpellSlots = (character: CharacterDisplay) => {
 
 const SetInitiative = (character: CharacterDisplay) => {
     character.initiative = character.abilityScores.find(x => x.abilityScoreEnum === AbilityScoreEnum.Dex)?.modifier() ?? 0;
-    //if alert feat
-    //if feature mago chronurgy
+    character.initiative += GetStatModifiers(character).filter(x => x.target === ModifierTargetEnum.Initiative).reduce((a, x) => a + GetModifierAmount(x, character), 0);
 }
 
 const SetSpeed = (character: CharacterDisplay) => {
@@ -192,4 +206,15 @@ const GetCharacterMoney = (characterId: number): Money => {
     let characterMoney:Money = { gp: 0, sp: 0, cp: 0 };
     moneyLogs.forEach(x => characterMoney = AddMoney(characterMoney, x));
     return characterMoney;
+}
+
+const GetStatModifiers = (character: CharacterDisplay): StatModifier[] => {
+    let result: StatModifier[] = [];
+    for (let feature of character.charFeatures) {
+        feature.modifiers.forEach(x => result.push(x));
+    }
+    // for (let equipment of character.charEquipment) {
+    //     equipment.modifiers.forEach(x => result.push(x));
+    // }
+    return result;
 }

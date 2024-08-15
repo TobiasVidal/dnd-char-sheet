@@ -7,6 +7,7 @@ const GetEquipmentName = (equipment: EquipmentEnum): string => {
     switch (equipment) {
         case EquipmentEnum.BlockAndTackle: return 'Block and Tackle';
         case EquipmentEnum.ExplorersPack: return 'Explorer\'s Pack';
+        case EquipmentEnum.HalfPlate: return 'Half Plate';
         case EquipmentEnum.LuckStone: return 'Stone of Good Luck';
         case EquipmentEnum.RingMail: return 'Ring Mail';
         case EquipmentEnum.RopeSilk: return 'Silk Rope';
@@ -26,59 +27,37 @@ const GetEquipmentUrl = (equipment: EquipmentEnum): string => {
 }
 
 export const dbEquipment: Equipment[] = [
+    { equipmentEnum: EquipmentEnum.Book, },
+    { equipmentEnum: EquipmentEnum.BlockAndTackle, },
+    { equipmentEnum: EquipmentEnum.Chalk, },
+    { equipmentEnum: EquipmentEnum.Crowbar, },
+    { equipmentEnum: EquipmentEnum.Dagger, },
+    { equipmentEnum: EquipmentEnum.ExplorersPack, },
     { 
-        equipmentEnum: EquipmentEnum.Book,
+        equipmentEnum: EquipmentEnum.HalfPlate,
+        grantsBaseAC: 15,
+        dexACCap: 2,
     },
-    { 
-        equipmentEnum: EquipmentEnum.Chalk,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Piton,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Hammer,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Shovel,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.ExplorersPack,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Rations,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Whetstone,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.BlockAndTackle,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Crowbar,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Horn,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Dagger,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.RopeSilk,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.Shield,
-        grantsACBonus: 2,
-    },
-    { 
-        equipmentEnum: EquipmentEnum.RingMail,
-        grantsBaseAC: 16,
-    },
+    { equipmentEnum: EquipmentEnum.Hammer, },
+    { equipmentEnum: EquipmentEnum.Horn, },
     { 
         equipmentEnum: EquipmentEnum.LuckStone,
         skills: GetSkillEnumArray().map(x => ({ skill: x, value: 1 })),
         savingThrows: GetAbilityScoreEnumArray().map(x => ({ ability: x, value: 1 })),
     },
-
+    { equipmentEnum: EquipmentEnum.Piton, },
+    { equipmentEnum: EquipmentEnum.Rations, },
+    { 
+        equipmentEnum: EquipmentEnum.RingMail,
+        grantsBaseAC: 16,
+    },
+    { equipmentEnum: EquipmentEnum.RopeSilk, },
+    { equipmentEnum: EquipmentEnum.Shovel, },
+    { 
+        equipmentEnum: EquipmentEnum.Shield,
+        grantsACBonus: 2,
+    },
+    { equipmentEnum: EquipmentEnum.Whetstone, },
 
     //Custom
     { 

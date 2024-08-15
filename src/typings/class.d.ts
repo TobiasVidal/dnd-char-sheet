@@ -105,7 +105,6 @@ export type ClassFeature = ClassFeatureBase & {
     class: ClassEnum,
     subclass?: SubclassEnum,
     optional: boolean,
-    spellsPrepared?: boolean,//Esto indica si los spells que te da esta feature estan preparados o no
     tiers: ClassFeatureLevel[]
     url: string,
 }

@@ -1,4 +1,5 @@
 import { GetAbilityScoreName } from "../utils/common";
+import { SkillEnum } from "./skill";
 
 export enum AbilityScoreEnum {
     Str,
@@ -24,14 +25,17 @@ export const AbilityScoreDefault: CharacterAbilityScore = {
 
 export enum ModifierTypeEnum {
     Flat,
-    Proficiency,
+    Proficiency,//Esto es que le sumas tu proficiency
     AbilityScore,
+    BecomeProficient,//Esto es que pasas a tener proficiency en x cosa
     //...
 }
 
 export enum ModifierTargetEnum {
     SavingThrow,
     AbilityScore,
+    Skill,
+    Initiative,
     //...
 }
 
@@ -39,6 +43,8 @@ export type StatModifier = {
     type: ModifierTypeEnum,
     target: ModifierTargetEnum,
     flatValue?: number,
+    expertise?: boolean,
     abilityTarget?: AbilityScoreEnum,
     abilitySource?: AbilityScoreEnum,//Para cuando el bonus sale de un ability score, como el +CHA de Aura of Protection
+    skillTarget?: SkillEnum,
 }

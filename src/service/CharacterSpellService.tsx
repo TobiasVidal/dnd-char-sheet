@@ -26,6 +26,7 @@ export const GetCharacterSpells = (characterId: number, classes: CharacterClass[
         .map(x => ({ classEnum: x.class.classEnum, maxSpellLevel: GetCurrentMaxSpellSlot(x.class.classEnum, x.level)}));
     var allClassSpells = allSpells.filter(spell => 
             !spells.some(x => x.spellEnum === spell.spellEnum)
+            && spell.level > 0
             && spell.classes?.some(spellClass => 
                 classesAllSpells.some(x => x.classEnum === spellClass && x.maxSpellLevel >= spell.level))
         ).map(x => ({ 

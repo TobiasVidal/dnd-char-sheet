@@ -1,4 +1,4 @@
-import { ClassEnum, ClassFeature, ClassFeatureBaseDefault, ClassFeatureDefault, ClassFeatureEnum } from "../../typings/class.d";
+import { ClassEnum, ClassFeature, ClassFeatureBaseDefault, ClassFeatureDefault, ClassFeatureEnum, SubclassEnum } from "../../typings/class.d";
 import { SpellEnum } from "../../typings/spell.d";
 
 export const dbClericClassFeatures: ClassFeature[] = [
@@ -34,9 +34,8 @@ export const dbClericClassFeatures: ClassFeature[] = [
         ...ClassFeatureDefault,
         name: 'Domain Spells',
         feature: ClassFeatureEnum.PeaceDomainSpells,
-        optional: true,
+        subclass: SubclassEnum.PeaceDomain,
         level: 1,
-        spellsPrepared: true,
         description: `<p>Each domain has a list of spells-its domain spells that you gain at the cleric levels noted in the domain description. Once you gain a domain spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day.</p>
         <p>If you have a domain spell that doesn't appear on the cleric spell list, the spell is nonetheless a cleric spell for you.</p>`,
         tiers: [

@@ -6,4 +6,4 @@ export const AsuraFeature: CharacterFeature[] = [
     { feature: ClassFeatureEnum.AgonizingBlast, },
     { feature: ClassFeatureEnum.EldritchMind, },
     { feature: ClassFeatureEnum.PactOfTheBlade, },
-].map(x => ({ ...x, characterId: CharacterId.Asura }));
+].map(x => ({ ...x, modifiers: [], characterId: CharacterId.Asura }));

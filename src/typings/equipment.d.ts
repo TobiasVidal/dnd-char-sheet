@@ -14,6 +14,7 @@ export type Equipment = {
     tooltip?: string,
     url?: string,
     range?: string,
+    dexACCap?: number,
     grantsBaseAC?: number,//Esto es para cosas que definen tu AC base, como armadura
     grantsACBonus?: number,//Esto es para cosas como shields, que dan un bonus (suma) al AC
     skills?: { skill: SkillEnum, value: number }[],
@@ -32,6 +33,7 @@ export enum EquipmentEnum {
     Dagger,
     ExplorersPack,
     Hammer,
+    HalfPlate,
     Horn,
     Oil,
     Piton,

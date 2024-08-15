@@ -1,8 +1,8 @@
+import { AbilityScoreEnum, ModifierTargetEnum, ModifierTypeEnum } from "../../typings/abilityScore.d";
 import { ClassEnum, ClassFeature, ClassFeatureDefault, ClassFeatureEnum } from "../../typings/class.d";
 
 export const dbWizardClassFeatures: ClassFeature[] = [
     { 
-        ...ClassFeatureDefault,
         name: 'Spellcasting [Wizard]',
         feature: ClassFeatureEnum.WizardSpellcasting,
         level: 1,
@@ -30,7 +30,6 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         url: 'https://dnd5e.wikidot.com/wizard',
     },
     { 
-        ...ClassFeatureDefault,
         name: 'Arcane Recovery',
         feature: ClassFeatureEnum.ArcaneRecovery,
         level: 1,
@@ -38,7 +37,6 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         url: 'http://dnd5e.wikidot.com/wizard#toc12',
     },
     { 
-        ...ClassFeatureDefault,
         name: 'Cantrip Formulas',
         feature: ClassFeatureEnum.CantripFormulas,
         level: 3,
@@ -47,7 +45,6 @@ export const dbWizardClassFeatures: ClassFeature[] = [
     },
 
     { 
-        ...ClassFeatureDefault,
         name: 'Chronal Shift',
         feature: ClassFeatureEnum.ChronalShift,
         level: 2,
@@ -56,15 +53,18 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         url: 'https://dnd5e.wikidot.com/wizard:chronurgy',
     },
     { 
-        ...ClassFeatureDefault,
         name: 'Temporal Awareness',
         feature: ClassFeatureEnum.TemporalAwareness,
         level: 2,
         description: `<p>Starting at 2nd level, you can add your Intelligence modifiers to your initiative rolls.</p>`,
+        statModifiers: [{ 
+            type: ModifierTypeEnum.AbilityScore,
+            target: ModifierTargetEnum.Initiative,
+            abilitySource: AbilityScoreEnum.Int,
+        }],
         url: 'https://dnd5e.wikidot.com/wizard:chronurgy',
     },
     { 
-        ...ClassFeatureDefault,
         name: 'Momentary Stasis',
         feature: ClassFeatureEnum.MomentaryStasis,
         level: 6,
@@ -74,7 +74,6 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         url: 'https://dnd5e.wikidot.com/wizard:chronurgy',
     },
     { 
-        ...ClassFeatureDefault,
         name: 'Arcane Abeyance',
         feature: ClassFeatureEnum.ArcaneAbeyance,
         level: 10,
@@ -84,8 +83,7 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         `,
         url: 'https://dnd5e.wikidot.com/wizard:chronurgy',
     },
-    { 
-        ...ClassFeatureDefault,
+    {   
         name: 'Convergent Future',
         feature: ClassFeatureEnum.ConvergentFuture,
         level: 14,
@@ -93,4 +91,4 @@ export const dbWizardClassFeatures: ClassFeature[] = [
         <p>When you use this feature, you gain one level of exhaustion. Only by finishing a long rest can you remove a level of exhaustion gained in this way.</p>`,
         url: 'https://dnd5e.wikidot.com/wizard:chronurgy',
     },
-].map(x => ({ ...x, class: ClassEnum.Wizard }));
+].map(x => ({ ...ClassFeatureDefault, ...x, class: ClassEnum.Wizard }));

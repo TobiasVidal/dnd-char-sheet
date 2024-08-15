@@ -80,14 +80,14 @@ export type CharacterRace = {
 export type CharacterFeat = {
     characterId: number,
     feat: FeatEnum
-    abilityScores: CharacterAbilityScore[],
+    statModifiers: StatModifier[],
     level?: number,//En que nivel lo obtuviste, solo para log interno
     get name(): () => string,
     get description(): () => string,
 }
 
 export const CharacterFeatDefault: CharacterFeat = {
-    abilityScores: [],
+    statModifiers: [],
     name: function() { return GetFeatName(this.feat); },
     description: function() { return GetFeatDescription(this.feat); },
 }
@@ -101,6 +101,7 @@ export type CharacterSkill = {
 export type CharacterFeature = {
     characterId: number,
     feature: ClassFeatureEnum,
+    modifiers: StatModifier[],
 }
 
 export type CharacterFeatureDisplay = {

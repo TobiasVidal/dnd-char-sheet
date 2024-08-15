@@ -7,12 +7,15 @@ OVERALL
 TODO now
 
 - Definir que spells quiero
+
+- Ver que verga pasa con sickening radiance
+
 - Paleta colores pj nuevo
 - Pensar que mas cosas quiero tener en el inventario
   Coso del contingency
   Piedrita con libro
   Algo con continual flame
-- Que no figuren los cantrips que no tengo
+- Resaltar los spells que son rituales
 - Revisar weapon y armor proficiencies
 - Que figuren los cantrips de daño en la seccion ataques?
 - Ajustar altura y raza

@@ -202,7 +202,14 @@ export const dbSpells = [
       "duration": "10 minutes",
       "concentration": true,
       "casting_time": "1 action",
-      "level": 2,
+      "level": 4,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
     },
     {
       "index": "alarm",

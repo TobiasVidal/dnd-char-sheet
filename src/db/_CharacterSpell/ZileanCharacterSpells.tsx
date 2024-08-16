@@ -65,6 +65,7 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.Knock },
             { spellEnum: SpellEnum.LocateObject },
             { spellEnum: SpellEnum.MagicMouth },
+            { spellEnum: SpellEnum.RimesBindingIce },
             { spellEnum: SpellEnum.RopeTrick },
             { spellEnum: SpellEnum.Skywrite },
             { spellEnum: SpellEnum.Web },
@@ -108,6 +109,7 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.GreaterInvisibility },
             { spellEnum: SpellEnum.PrivateSanctum },
             { spellEnum: SpellEnum.ResilientSphere },
+            { spellEnum: SpellEnum.SummonGreaterDemon },
             { spellEnum: SpellEnum.WallOfFire },
         ],
         //LVL 5
@@ -123,8 +125,10 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.HoldMonster },
             { spellEnum: SpellEnum.PlanarBinding },
             { spellEnum: SpellEnum.Scrying },
-            { spellEnum: SpellEnum.WallOfStone },
+            { spellEnum: SpellEnum.SkillEmpowerment },
+            { spellEnum: SpellEnum.SynapticStatic },
             { spellEnum: SpellEnum.TelepathicBond },
+            { spellEnum: SpellEnum.WallOfStone },
         ],
         //LVL 6
         ...[
@@ -132,10 +136,12 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.Scatter },
         ].map(x => ({ ...x, prepared: true, })),
         ...[
+            { spellEnum: SpellEnum.CreateHomunculus },
             { spellEnum: SpellEnum.Disintegrate },
             { spellEnum: SpellEnum.GlobeOfInvulnerability },
             { spellEnum: SpellEnum.InstantSummons },
             { spellEnum: SpellEnum.MagicJar },
+            { spellEnum: SpellEnum.MentalPrison },
             { spellEnum: SpellEnum.TrueSeeing },
         ],
         //LVL 7

@@ -5748,6 +5748,196 @@ export const dbSpells = [
       "url": "/api/spells/find-steed"
     },
     {
+      "index": "rimes-binding-ice",
+      "name": "Rime's Binding Ice",
+      "desc": [
+        "A burst of cold energy emanates from you in a 30-foot cone. Each creature in that area must make a Constitution saving throw. On a failed save, a creature takes 3d8 cold damage and is hindered by ice formations for 1 minute, or until it or another creature within reach of it uses an action to break away the ice. A creature hindered by ice has its speed reduced to 0. On a successful save, a creature takes half as much damage and isn’t hindered by ice.",
+      ],
+      "range": "Self (30-foot cone)",
+      "components": ["S", "M"],
+      "material": "a vial of meltwater",
+      "higher_level": [
+        "When you cast this spell using a spell slot of 3rd level or higher, increase the cold damage by 1d8 for each slot level above 2nd."
+      ],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 2,
+      "classes": [
+        {
+          "index": "sorcerer",
+          "name": "Sorcerer",
+          "url": "/api/classes/sorcerer"
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
+      "index": "mental-prison",
+      "name": "Mental Prison",
+      "desc": [
+        "You attempt to bind a creature within an illusory cell that only it perceives. One creature you can see within range must make an Intelligence saving throw. The target succeeds automatically if it is immune to being charmed. On a successful save, the target takes 5d10 psychic damage, and the spell ends. On a failed save, the target takes 5d10 psychic damage, and you make the area immediately around the target’s space appear dangerous to it in some way. You might cause the target to perceive itself as being surrounded by fire, floating razors, or hideous maws filled with dripping teeth. Whatever form the illusion takes, the target can’t see or hear anything beyond it and is restrained for the spell’s duration. If the target is moved out of the illusion, makes a melee attack through it, or reaches any part of its body through it, the target takes 10d10 psychic damage, and the spell ends.",
+      ],
+      "range": "60 feet",
+      "components": ["S"],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 6,
+      "classes": [
+        {
+          "index": "sorcerer",
+          "name": "Sorcerer",
+          "url": "/api/classes/sorcerer"
+        },
+        {
+          "index": "warlock",
+          "name": "Warlock",
+          "url": "/api/classes/warlock"
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
+      "index": "create-homunculus",
+      "name": "Create Homunculus",
+      "desc": [
+        "While speaking an intricate incantation, you cut yourself with a jewel-encrusted dagger, taking 2d4 piercing damage that can’t be reduced in any way. You then drip your blood on the spell’s other components and touch them, transforming them into a special construct called a homunculus. The statistics of the homunculus are in the Monster Manual. It is your faithful companion, and it dies if you die. Whenever you finish a long rest, you can spend up to half your Hit Dice if the homunculus is on the same plane of existence as you. When you do so, roll each die and add your Constitution modifier to it. Your hit point maximum is reduced by the total, and the homunculus’s hit point maximum and current hit points are both increased by it. This process can reduce you to no lower than 1 hit point. and the change to your and the homunculus’s hit points ends when you finish your next long rest. The reduction to your hit point maximum can’t be removed by any means before then, except by the homunculus‘s death. You can have only one homunculus at a time. If you cast this spell while your homunculus lives, the spell fails.",
+      ],
+      "range": "Touch",
+      "components": ["V", "S", "M" ],
+      "material": "clay, ash, and mandrake root, all of which the spell consumes, and a jewel-encrusted dagger worth at least 1,000 gp",
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 hour",
+      "level": 6,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
+      "index": "skill-empowerment",
+      "name": "Skill Empowerment",
+      "desc": [
+        "Your magic deepens a creature’s understanding of its own talent. You touch one willing creature and give it expertise in one skill of your choice; until the spell ends, the creature doubles its proficiency bonus for ability checks it makes that use the chosen skill.",
+        "You must choose a skill in which the target is proficient and that isn’t already benefiting from an effect, such as Expertise, that doubles its proficiency bonus.",
+      ],
+      "range": "Touch",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "1 hour",
+      "concentration": true,
+      "casting_time": "1 hour",
+      "level": 5,
+      "classes": [
+        {
+          "index": "bard",
+          "name": "Bard",
+          "url": "/api/classes/bard"
+        },
+        {
+          "index": "sorcerer",
+          "name": "Sorcerer",
+          "url": "/api/classes/sorcerer"
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        },
+        {
+          "index": "artificer",
+          "name": "Artificer",
+          "url": "/api/classes/artificer"
+        }
+      ],
+    },
+    {
+      "index": "summon-greater-demon",
+      "name": "Summon Greater Demon",
+      "desc": [
+        "You utter foul words, summoning one demon from the chaos of the Abyss. You choose the demon’s type, which must be one of challenge rating 5 or lower, such as a shadow demon or a barlgura. The demon appears in an unoccupied space you can see within range, and the demon disappears when it drops to 0 hit points or when the spell ends.",
+        "Roll initiative for the demon, which has its own turns. When you summon it and on each of your turns thereafter, you can issue a verbal command to it (requiring no action on your part), telling it what it must do on its next turn. If you issue no command, it spends its turn attacking any creature within reach that has attacked it.",
+        "At the end of each of the demon’s turns, it makes a Charisma saving throw. The demon has disadvantage on this saving throw if you say its true name. On a failed save, the demon continues to obey you. On a successful save, your control of the demon ends for the rest of the duration, and the demon spends its turns pursuing and attacking the nearest non-demons to the best of its ability. If you stop concentrating on the spell before it reaches its full duration, an uncontrolled demon doesn’t disappear for 1d6 rounds if it still has hit points.",
+        "As part of casting the spell, you can form a circle on the ground with the blood used as a material component. The circle is large enough to encompass your space. While the spell lasts, the summoned demon can’t cross the circle or harm it, and it can’t target anyone within it. Using the material component in this manner consumes it when the spell ends.",
+      ],
+      "range": "60 feet",
+      "components": ["V", "S", "M"],
+      "material": "a vial of blood from a humanoid killed within the past 24 hours",
+      "higher_level": [
+        "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d6 for each slot level above 3rd."
+      ],
+      "ritual": false,
+      "duration": "1 hour",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 4,
+      "classes": [
+        {
+          "index": "warlock",
+          "name": "Warlock",
+          "url": "/api/classes/warlock"
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
+      "index": "synaptic-static",
+      "name": "Synaptic Static",
+      "desc": [
+        "You choose a point within range and cause psychic energy to explode there. Each creature in a 20-foot-radius sphere centered on that point must make an Intelligence saving throw. A creature with an Intelligence score of 2 or lower can’t be affected by this spell. A target takes 8d6 psychic damage on a failed save, or half as much damage on a successful one.",
+        "After a failed save, a target has muddled thoughts for 1 minute. During that time, it rolls a d6 and subtracts the number rolled from all its attack rolls and ability checks, as well as its Constitution saving throws to maintain concentration. The target can make an Intelligence saving throw at the end of each of its turns, ending the effect on itself on a success.",
+      ],
+      "range": "120 feet",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 5,
+      "classes": [
+        {
+          "index": "warlock",
+          "name": "Warlock",
+          "url": "/api/classes/warlock"
+        },
+        {
+          "index": "bard",
+          "name": "Bard",
+          "url": "/api/classes/bard"
+        },
+        {
+          "index": "sorcerer",
+          "name": "Sorcerer",
+          "url": "/api/classes/sorcerer"
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
       "index": "find-traps",
       "name": "Find Traps",
       "desc": [

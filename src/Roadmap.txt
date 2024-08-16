@@ -6,26 +6,22 @@ OVERALL
 
 TODO now
 
-- Definir que spells quiero
+- Definir que spells quiero - me faltan 2
 - Pensar que mas cosas quiero tener en el inventario
   Coso del contingency
   Piedrita con libro
   Algo con continual flame
-- Resaltar los spells que son rituales
-- Revisar weapon y armor proficiencies
-- Que figuren los cantrips de daño en la seccion ataques?
 - Ajustar altura y raza
 
 
 TODO eventuales (no son necesarios para la partida de lucho)
 - Que los colores los cargue de la db
-
+- Que figuren los cantrips de daño en la seccion ataques
+- Revisar weapon y armor proficiencies
 - Hacer una home nueva, que trata de detectar el pj via el url. Si detecta uno (por nombre o id), te va a esa pagina, sino te hace una lista
   con los personajes disponibles y ahi elegis a cual vas
-
 - Fighting styles: Hacerlos (lol) y que sumen a AC, daño, etc.
   Los haria asi: hacer que haya ClassFeatures que puedan tener clase undefined, cargar todos los FS ahi y dsps manejarlo como los
   eldritch invocations (basically, los especificas en CharacterFeature y alv)
-
 - Hacer un character.GetModifiers() que te traiga todos los modifiers, asi si el dia de mañana tengo un stat modifier en un item puedo
   agrupar todo con el metodo este. Quizas tambien ordenarlo de algun modo.

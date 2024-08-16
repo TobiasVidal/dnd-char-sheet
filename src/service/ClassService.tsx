@@ -195,7 +195,7 @@ export const GetCurrentMaxSpellSlot = (classEnum: ClassEnum, level: number) => {
     else {
         spellSlots = GetSpellSlots(level);
     }
-    return spellSlots[spellSlots.length-1].level;
+    return spellSlots.find(x => x.amount > 0)!.level;
 }
 
 //Esto sirve para full casters y multiclass

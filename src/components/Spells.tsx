@@ -27,7 +27,7 @@ export function Spells({ spellcasting }: { spellcasting: CharacterSpellcasting }
                                     <div className="accordion-header row accordion-button collapsed" data-bs-toggle="collapse" data-bs-target={`#spell-${spells.indexOf(y)}`}>
                                         <div className="col-3">
                                             <span className="inline-icon material-icons me-2">
-                                                bookmark{y.prepared ? '' : "_border"}
+                                                {y.prepared ? "bookmark" : (y.spell.ritual ? "bookmark_added" : "bookmark_border")}
                                             </span>
                                             {y.spell.name}
                                         </div>

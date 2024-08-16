@@ -7,7 +7,6 @@ OVERALL
 TODO now
 
 - Definir que spells quiero
-- Paleta colores pj nuevo
 - Pensar que mas cosas quiero tener en el inventario
   Coso del contingency
   Piedrita con libro
@@ -19,6 +18,8 @@ TODO now
 
 
 TODO eventuales (no son necesarios para la partida de lucho)
+- Que los colores los cargue de la db
+
 - Hacer una home nueva, que trata de detectar el pj via el url. Si detecta uno (por nombre o id), te va a esa pagina, sino te hace una lista
   con los personajes disponibles y ahi elegis a cual vas
 

@@ -35,9 +35,12 @@ export const GetCharacterSpells = (characterId: number, classes: CharacterClass[
             spellEnum: x.spellEnum!,
             prepared: false,
          }));
+
     return [...spells, ...allClassSpells].sort((a, b) => {
         if (a.prepared && !b.prepared) { return -1; }
         if (b.prepared && !a.prepared) { return 1; }
+        if (a.spell.ritual && !b.spell.ritual) { return -1; }
+        if (b.spell.ritual && !a.spell.ritual) { return 1; }
         return a.spell.name.localeCompare(b.spell.name);
     });
 }

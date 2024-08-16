@@ -46,16 +46,26 @@ tbody > tr:last-child > td {
  rgb(65, 62, 41) --moss green
  */
 :root {
+  /* ASURA
   --dark: #2b2a33;
   --dark-light: #483948;
   --main: #EA592A;
   --main-light: #FC8B5E;
-  --secondary: #B2AB2E;
+  --secondary: #B2AB2E; */
+  --dark: #222;
+  --dark-light: #5b6875;
+  --main: #16abba;
+  --main-light: #5b5175;
+  --secondary: #d4ac0d;
   --border-radius-xl: 20px;
   --border-radius-m: 10px;
   --border-radius-s: 5px;
   --font-size-sm: 12px;
   --font-size-lg: 18px;
+}
+
+.themetext-faded {
+  color: #c7c5bf;/* Asura rgb(108, 117, 125) */
 }
 
 body, .bg-dark {

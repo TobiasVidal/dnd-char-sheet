@@ -18,7 +18,7 @@ export function SpellSlotsBox({ slots, saves }: { slots: SpellSlot[], saves: Spe
 
     return <div className="spellslots-container p-3 bg-dark-light">
         {saves.map((x, i) => <div key={i}>
-            <p className="text-center mb-1 text-secondary">{x.classes.reduce((str, className) => str + ', ' + className)}</p>
+            <p className="text-center mb-1 themetext-faded">{x.classes.reduce((str, className) => str + ', ' + className)}</p>
             <div className="row mb-3">
                 <div className="col-6 text-center spell-dc-box">
                     <h6 className="themetext-secondary">DC</h6>

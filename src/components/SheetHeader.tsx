@@ -5,7 +5,7 @@ export function SheetHeader({character}:{ character: CharacterDisplay}) {
     return <div className='row sheet-header mb-5'>
     <h1 className='col-5 character-name ps-4'>
       {character.name}
-      <small className='text-secondary ms-2'>[{character.level()}]</small>
+      <small className='themetext-faded ms-2'>[{character.level()}]</small>
     </h1>
     <div className='col-7 header-character-info'>
       <div className="info-block">
@@ -14,13 +14,13 @@ export function SheetHeader({character}:{ character: CharacterDisplay}) {
             [{x.level}] {x.class.name()} <small className="themetext-secondary">{GetSubclassName(x.subclass)}</small>
             </span>)}
             <br/>
-            <small className="text-secondary">Class & Level</small>
+            <small className="themetext-faded">Class & Level</small>
         </p>
         <p className="mb-0">
             {character.charRace.displayName}
             {character.charRace.subtitle && <small className="themetext-secondary ms-2">{character.charRace.subtitle}</small>}
             <br/>
-            <small className="text-secondary">Race</small>
+            <small className="themetext-faded">Race</small>
         </p>
       </div>
     </div>

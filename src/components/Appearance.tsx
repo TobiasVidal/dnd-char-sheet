@@ -6,42 +6,42 @@ export function Appearance({ character }: { character: CharacterDisplay }) {
             <p>
                 {character.age}
                 <br />
-                <small className="text-secondary">Age</small>
+                <small className="themetext-faded">Age</small>
             </p>
         </div>
         <div className="col-4">
             <p>
                 {character.height}
                 <br />
-                <small className="text-secondary">Height</small>
+                <small className="themetext-faded">Height</small>
             </p>
         </div>
         <div className="col-4">
             <p>
                 {character.weight}
                 <br />
-                <small className="text-secondary">Weight</small>
+                <small className="themetext-faded">Weight</small>
             </p>
         </div>
         <div className="col-4">
             <p>
                 {character.eyes}
                 <br />
-                <small className="text-secondary">Eyes</small>
+                <small className="themetext-faded">Eyes</small>
             </p>
         </div>
         <div className="col-4">
             <p>
                 {character.hair}
                 <br />
-                <small className="text-secondary">Hair</small>
+                <small className="themetext-faded">Hair</small>
             </p>
         </div>
         <div className="col-4">
             <p>
                 {character.skin}
                 <br />
-                <small className="text-secondary">Skin</small>
+                <small className="themetext-faded">Skin</small>
             </p>
         </div>
     </div>

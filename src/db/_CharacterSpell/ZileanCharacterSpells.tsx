@@ -4,6 +4,22 @@ import { SpellEnum } from "../../typings/spell.d";
 import { CharacterId } from "../dbCharacter";
 
 export const ZileanCharacterSpells: CharacterSpell[] = [
+    //Cleric
+    ...[
+        //Cantrips
+        ...[
+            { spellEnum: SpellEnum.Guidance },
+            { spellEnum: SpellEnum.SacredFlame },
+            { spellEnum: SpellEnum.TollTheDead },
+        ].map(x => ({ ...x, prepared: true, })),
+        //LVL 1
+        ...[
+            { spellEnum: SpellEnum.Bless },
+            { spellEnum: SpellEnum.HealingWord },
+            { spellEnum: SpellEnum.Heroism },
+            { spellEnum: SpellEnum.Sanctuary },
+        ].map(x => ({ ...x, prepared: true, })),
+    ].map(x => ({ ...x, class: ClassEnum.Cleric })),
     //Wizard
     ...[
         //Cantrips
@@ -44,11 +60,15 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.EnhanceAbility },
             { spellEnum: SpellEnum.GentleRepose },
             { spellEnum: SpellEnum.Invisibility },
+            { spellEnum: SpellEnum.ImmovableObject },
+            { spellEnum: SpellEnum.JimsGlowingCoin },
             { spellEnum: SpellEnum.Knock },
             { spellEnum: SpellEnum.LocateObject },
             { spellEnum: SpellEnum.MagicMouth },
             { spellEnum: SpellEnum.RopeTrick },
+            { spellEnum: SpellEnum.Skywrite },
             { spellEnum: SpellEnum.Web },
+            { spellEnum: SpellEnum.Wristpocket },
         ],
         //LVL 3
         ...[
@@ -62,7 +82,9 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.Counterspell },
             { spellEnum: SpellEnum.DispelMagic },
             { spellEnum: SpellEnum.Fly },
+            { spellEnum: SpellEnum.FeignDeath },
             { spellEnum: SpellEnum.GlyphOfWarding },
+            { spellEnum: SpellEnum.IntellectFortress },
             { spellEnum: SpellEnum.MagicCircle },
             { spellEnum: SpellEnum.PhantomSteed },
             { spellEnum: SpellEnum.ProtectionFromEnergy },
@@ -107,6 +129,7 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
         //LVL 6
         ...[
             { spellEnum: SpellEnum.Contingency },
+            { spellEnum: SpellEnum.Scatter },
         ].map(x => ({ ...x, prepared: true, })),
         ...[
             { spellEnum: SpellEnum.Disintegrate },

@@ -1365,6 +1365,35 @@ export const dbSpells = [
       "url": "/api/spells/blade-barrier"
     },
     {
+      "index": "scatter",
+      "name": "Scatter",
+      "desc": [
+        "The air quivers around up to five creatures of your choice that you can see within range. An unwilling creature must succeed on a Wisdom saving throw to resist this spell. You teleport each affected target to an unoccupied space that you can see within 120 feet of you. That space must be on the ground or on a floor.",
+      ],
+      "range": "30 feet",
+      "components": ["V"],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 6,
+      "dc": {
+        "dc_type": {
+          "index": "wis",
+          "name": "WIS",
+          "url": "/api/ability-scores/wis"
+        },
+      },
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+      "subclasses": [],
+    },
+    {
       "index": "bless",
       "name": "Bless",
       "desc": [
@@ -12623,6 +12652,61 @@ export const dbSpells = [
       "url": "/api/spells/sacred-flame"
     },
     {
+      "index": "toll-the-dead",
+      "name": "Toll the Dead",
+      "desc": [
+        "You point at one creature you can see within range, and the sound of a dolorous bell fills the air around it for a moment. The target must succeed on a Wisdom saving throw or take 1d8 necrotic damage. If the target is missing any of its hit points, it instead takes 1d12 necrotic damage.",
+      ],
+      "range": "60 feet",
+      "components": ["V", "S"],
+      "ritual": false,
+      "duration": "Instantaneous",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 0,
+      "damage": {
+        "damage_type": {
+          "index": "necrotic",
+          "name": "Necrotic",
+          "url": "/api/damage-types/necrotic"
+        },
+        "damage_at_character_level": {
+          "1": "1d8/1d12",
+          "5": "2d8/2d12",
+          "11": "3d8/3d12",
+          "17": "4d8/4d12"
+        }
+      },
+      "dc": {
+        "dc_type": {
+          "index": "dex",
+          "name": "DEX",
+          "url": "/api/ability-scores/dex"
+        },
+        "dc_success": "none"
+      },
+      "school": {
+        "index": "evocation",
+        "name": "Evocation",
+        "url": "/api/magic-schools/evocation"
+      },
+      "classes": [
+        {
+          "index": "cleric",
+          "name": "Cleric",
+          "url": "/api/classes/cleric"
+        }
+      ],
+      "subclasses": [
+        {
+          "index": "lore",
+          "name": "Lore",
+          "url": "/api/subclasses/lore"
+        }
+      ],
+      "url": "/api/spells/sacred-flame"
+    },
+    {
       "index": "sanctuary",
       "name": "Sanctuary",
       "desc": [
@@ -14852,6 +14936,84 @@ export const dbSpells = [
       "url": "/api/spells/tiny-hut"
     },
     {
+      "index": "feign-death",
+      "name": "Feign Death",
+      "desc": [
+        "You touch a willing creature and put it into a cataleptic state that is indistinguishable from death.",
+        "For the spell’s duration, or until you use an action to touch the target and dismiss the spell, the target appears dead to all outward inspection and to spells used to determine the target’s status. The target is blinded and incapacitated, and its speed drops to 0. The target has resistance to all damage except psychic damage. If the target is diseased or poisoned when you cast the spell, or becomes diseased or poisoned while under the spell’s effect, the disease and poison have no effect until the spell ends.",
+      ],
+      "range": "Touch",
+      "components": ["V", "S", "M"],
+      "material": "A pinch of graveyard dirt.",
+      "ritual": true,
+      "duration": "1 hours",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 3,
+      "classes": [
+        {
+          "index": "bard",
+          "name": "Bard",
+          "url": "/api/classes/bard"
+        },
+        {
+          "index": "cleric",
+          "name": "Cleric",
+        },
+        {
+          "index": "druid",
+          "name": "Druid",
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        }
+      ],
+    },
+    {
+      "index": "intellect-fortress",
+      "name": "Intellect Fortress",
+      "desc": [
+        "For the duration, you or one willing creature you can see within range has resistance to psychic damage, as well as advantage on Intelligence, Wisdom, and Charisma saving throws.",
+      ],
+      "range": "Touch",
+      "components": ["V", "S", "M"],
+      "material": "A pinch of graveyard dirt.",
+      "ritual": true,
+      "duration": "1 hours",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 3,
+      "higher_level": [
+        "When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd. The creatures must be within 30 feet of each other when you target them."
+      ],
+      "classes": [
+        {
+          "index": "bard",
+          "name": "Bard",
+          "url": "/api/classes/bard"
+        },
+        {
+          "index": "sorcerer",
+          "name": "Sorcerer",
+        },
+        {
+          "index": "warlock",
+          "name": "Warlock",
+        },
+        {
+          "index": "wizard",
+          "name": "Wizard",
+          "url": "/api/classes/wizard"
+        },
+        {
+          "index": "artificer",
+          "name": "Artificer",
+        }
+      ],
+    },
+    {
       "index": "tongues",
       "name": "Tongues",
       "desc": [
@@ -15618,6 +15780,93 @@ export const dbSpells = [
         }
       ],
       "url": "/api/spells/warding-bond"
+    },
+    {
+      "index": "immovable-object",
+      "name": "Immovable Object",
+      "desc": [
+        "You touch an object that weighs no more than 10 pounds and cause it to become magically fixed in place. You and the creatures you designate when you cast this spell can move the object normally. You can also set a password that, when spoken within 5 feet of the object, suppresses this spell for 1 minute.",
+        "If the object is fixed in the air, it can hold up to 4,000 pounds of weight. More weight causes the object to fall. Otherwise, a creature can use an action to make a Strength check against your spell save DC. On a success, the creature can move the object up to 10 feet.",
+      ],
+      "higher_level": [
+        "If you cast this spell using a spell slot of 4th or 5th level, the DC to move the object increases by 5, it can carry up to 8,000 pounds of weight, and the duration increases to 24 hours. If you cast this spell using a spell slot of 6th level or higher, the DC to move the object increases by 10, it can carry up to 20,000 pounds of weight, and the effect is permanent until dispelled."
+      ],
+      "range": "Touch",
+      "components": ["V", "S", "M"],
+      "material": "gold dust worth at least 25 gp, which the spell consumes",
+      "ritual": false,
+      "duration": "1 hour",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 2,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+        }
+      ],
+    },
+    {
+      "index": "jims-glowing-coin",
+      "name": "Jim's Glowing Coin",
+      "desc": [
+        "When you cast the spell, you hurl the coin that is the spell's material component to any spot within range. The coin lights up as if under the effect of a light spell. Each creature of your choice that you can see within 30 feet of the coin must succeed on a Wisdom saving throw or be distracted for the duration. While distracted, a creature has disadvantage on Wisdom (Perception) checks and initiative rolls.",
+      ],
+      "range": "60 feet",
+      "components": ["S", "M"],
+      "material": "a coin, 2 gold coins, which is consumed as tax for using the spell",
+      "ritual": false,
+      "duration": "1 minute",
+      "concentration": false,
+      "casting_time": "1 action",
+      "level": 2,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+        }
+      ],
+    },
+    {
+      "index": "wristpocket",
+      "name": "Wristpocket",
+      "desc": [
+        "You flick your wrist, causing one object in your hand to vanish. The object, which only you can be holding and can weigh no more than 5 pounds, is transported to an extradimensional space, where it remains for the duration.",
+        "Until the spell ends, you can use your action to summon the object to your free hand, and you can use your action to return the object to the extradimensional space. An object still in the pocket plane when the spell ends appears in your space, at your feet.",
+      ],
+      "range": "Self",
+      "components": ["S"],
+      "ritual": true,
+      "duration": "1 minute",
+      "concentration": true,
+      "casting_time": "1 action",
+      "level": 2,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+        }
+      ],
+    },
+    {
+      "index": "skywrite",
+      "name": "Skywrite",
+      "desc": [
+        "You cause up to ten words to form in a part of the sky you can see. The words appear to be made of cloud and remain in place for the spell’s duration. The words dissipate when the spell ends. A strong wind can disperse the clouds and end the spell early.",
+      ],
+      "range": "Sight",
+      "components": ["S"],
+      "ritual": true,
+      "duration": "1 day",
+      "concentration": true,
+      "casting_time": "1 action",
+      "level": 2,
+      "classes": [
+        {
+          "index": "wizard",
+          "name": "Wizard",
+        }
+      ],
     },
     {
       "index": "water-breathing",

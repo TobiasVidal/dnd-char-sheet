@@ -6,12 +6,17 @@ import { DamageType } from "../typings/common.d";
 const GetEquipmentName = (equipment: EquipmentEnum): string => {
     switch (equipment) {
         case EquipmentEnum.BlockAndTackle: return 'Block and Tackle';
-        case EquipmentEnum.ExplorersPack: return 'Explorer\'s Pack';
+        case EquipmentEnum.CobblersTools: return 'Cobbler\'s Tools';
+        case EquipmentEnum.ContingencyStatuette: return 'Contingency Statuette';
+        case EquipmentEnum.ContinualFlameRing: return 'Continual Flame Ring';
+        case EquipmentEnum.ComponentPouch: return 'Component Pouch';
         case EquipmentEnum.HalfPlate: return 'Half Plate';
+        case EquipmentEnum.ExplorersPack: return 'Explorer\'s Pack';
         case EquipmentEnum.LuckStone: return 'Stone of Good Luck';
         case EquipmentEnum.RingMail: return 'Ring Mail';
         case EquipmentEnum.RopeSilk: return 'Silk Rope';
-        default: return EquipmentEnum[equipment];;
+        case EquipmentEnum.SmithsTools: return 'Smith\'s Tools';
+        default: return EquipmentEnum[equipment];
     }
 }
 
@@ -30,6 +35,9 @@ export const dbEquipment: Equipment[] = [
     { equipmentEnum: EquipmentEnum.Book, },
     { equipmentEnum: EquipmentEnum.BlockAndTackle, },
     { equipmentEnum: EquipmentEnum.Chalk, },
+    { equipmentEnum: EquipmentEnum.CobblersTools, },
+    { equipmentEnum: EquipmentEnum.ContingencyStatuette, },
+    { equipmentEnum: EquipmentEnum.ComponentPouch, },
     { equipmentEnum: EquipmentEnum.Crowbar, },
     { equipmentEnum: EquipmentEnum.Dagger, },
     { equipmentEnum: EquipmentEnum.ExplorersPack, },
@@ -45,6 +53,15 @@ export const dbEquipment: Equipment[] = [
         skills: GetSkillEnumArray().map(x => ({ skill: x, value: 1 })),
         savingThrows: GetAbilityScoreEnumArray().map(x => ({ ability: x, value: 1 })),
     },
+    { 
+        equipmentEnum: EquipmentEnum.Mace,
+        name: 'Mace',
+        range: '5ft',
+        damage: {
+            ability: AbilityScoreEnum.Str,
+            dice: [{ type: DamageType.Bludgeoning, dieSides: 6, dieCount: 1 }]
+        }
+    },
     { equipmentEnum: EquipmentEnum.Piton, },
     { equipmentEnum: EquipmentEnum.Rations, },
     { 
@@ -57,9 +74,14 @@ export const dbEquipment: Equipment[] = [
         equipmentEnum: EquipmentEnum.Shield,
         grantsACBonus: 2,
     },
+    { equipmentEnum: EquipmentEnum.SmithsTools, },
+    { equipmentEnum: EquipmentEnum.Spellbook, },
+    { equipmentEnum: EquipmentEnum.Vial, },
+    { equipmentEnum: EquipmentEnum.Emblem, },
     { equipmentEnum: EquipmentEnum.Whetstone, },
-
+    
     //Custom
+    { equipmentEnum: EquipmentEnum.ContinualFlameRing, },
     { 
         equipmentEnum: EquipmentEnum.HexbladeGreatsword,
         name: 'Greatsword',

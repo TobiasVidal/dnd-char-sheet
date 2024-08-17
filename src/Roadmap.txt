@@ -6,13 +6,13 @@ OVERALL
 
 TODO now
 
-- Definir que spells quiero - me faltan 2
+- Definir que spells quiero - me faltan 4
 - Pensar que mas cosas quiero tener en el inventario
   Coso del contingency
   Piedrita con libro
   Algo con continual flame
 - Ajustar altura y raza
-
+- spell slots ta mostrando solo clerigo
 
 TODO eventuales (no son necesarios para la partida de lucho)
 - Que los colores los cargue de la db

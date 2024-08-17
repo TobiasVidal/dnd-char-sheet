@@ -73,6 +73,7 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
         ],
         //LVL 3
         ...[
+            { spellEnum: SpellEnum.Counterspell },
             { spellEnum: SpellEnum.Fireball },
             { spellEnum: SpellEnum.HypnoticPattern },
             { spellEnum: SpellEnum.SleetStorm },
@@ -80,7 +81,6 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
         ...[
             { spellEnum: SpellEnum.BestowCurse },
             { spellEnum: SpellEnum.Clairvoyance },
-            { spellEnum: SpellEnum.Counterspell },
             { spellEnum: SpellEnum.DispelMagic },
             { spellEnum: SpellEnum.Fly },
             { spellEnum: SpellEnum.FeignDeath },
@@ -99,6 +99,7 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
         ...[
             { spellEnum: SpellEnum.Polymorph },
             { spellEnum: SpellEnum.SickeningRadiance },
+            { spellEnum: SpellEnum.WallOfFire },
         ].map(x => ({ ...x, prepared: true, })),
         ...[
             { spellEnum: SpellEnum.ArcaneEye },
@@ -110,11 +111,11 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.PrivateSanctum },
             { spellEnum: SpellEnum.ResilientSphere },
             { spellEnum: SpellEnum.SummonGreaterDemon },
-            { spellEnum: SpellEnum.WallOfFire },
         ],
         //LVL 5
         ...[
             { spellEnum: SpellEnum.WallOfForce },
+            { spellEnum: SpellEnum.SynapticStatic },
         ].map(x => ({ ...x, prepared: true, })),
         ...[
             //{ spellEnum: SpellEnum.SynapticStatic },
@@ -126,7 +127,6 @@ export const ZileanCharacterSpells: CharacterSpell[] = [
             { spellEnum: SpellEnum.PlanarBinding },
             { spellEnum: SpellEnum.Scrying },
             { spellEnum: SpellEnum.SkillEmpowerment },
-            { spellEnum: SpellEnum.SynapticStatic },
             { spellEnum: SpellEnum.TelepathicBond },
             { spellEnum: SpellEnum.WallOfStone },
         ],

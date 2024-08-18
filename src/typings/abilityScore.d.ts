@@ -36,6 +36,7 @@ export enum ModifierTargetEnum {
     AbilityScore,
     Skill,
     Initiative,
+    SpellDC,
     //...
 }
 

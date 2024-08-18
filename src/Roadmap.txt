@@ -13,6 +13,7 @@ TODO now
   Algo con continual flame
 - Ajustar altura y raza
 - spell slots ta mostrando solo clerigo
+- Ordenar items x worn, carried, backpack
 
 TODO eventuales (no son necesarios para la partida de lucho)
 - Que los colores los cargue de la db
@@ -24,4 +25,9 @@ TODO eventuales (no son necesarios para la partida de lucho)
   Los haria asi: hacer que haya ClassFeatures que puedan tener clase undefined, cargar todos los FS ahi y dsps manejarlo como los
   eldritch invocations (basically, los especificas en CharacterFeature y alv)
 - Hacer un character.GetModifiers() que te traiga todos los modifiers, asi si el dia de mañana tengo un stat modifier en un item puedo
-  agrupar todo con el metodo este. Quizas tambien ordenarlo de algun modo.
+  agrupar todo con el metodo este. Quizas tambien ordenarlo de algun modo (onda que mire ultimo las cosas tipo amulet of health que 
+  te da un flat nro que pisa el tuyo).
+- Hacer que los stat modifiers del equipo puedan estar atados a una rareza, que despues definis en el charequipment de que rareza es el tuyo.
+  Eso o decidir que es muy complejo y me da paja e ir por la opcion de que cada rareza sea un item "distinto"
+- Por ahora los bonus a spell save DC aplican tambien a spell attack, eso no esta estrictamente bien pero la verdad va a ser raro que justo agarre
+  un item que de bonus a uno y no al otro

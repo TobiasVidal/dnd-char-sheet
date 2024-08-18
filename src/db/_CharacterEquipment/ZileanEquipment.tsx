@@ -44,8 +44,8 @@ export const ZileanEquipment: CharacterEquipment[] = [
     { 
         equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.Spellbook)!,
         isEquipped: false,
-        isCarried: true,
-        inBackpack: false,
+        isCarried: false,
+        inBackpack: true,
         count: 1,
     },
     { 
@@ -101,6 +101,20 @@ export const ZileanEquipment: CharacterEquipment[] = [
         equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.ContinualFlameRing)!,
         isEquipped: true,
         isCarried: false,
+        inBackpack: false,
+        count: 1,
+    },
+    { 
+        equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.ArcaneGrimoire)!,
+        isEquipped: true,
+        isCarried: false,
+        inBackpack: false,
+        count: 1,
+    },
+    { 
+        equipment: dbEquipment.find(x => x.equipmentEnum === EquipmentEnum.ObsidianSteedFigurine)!,
+        isEquipped: false,
+        isCarried: true,
         inBackpack: false,
         count: 1,
     },

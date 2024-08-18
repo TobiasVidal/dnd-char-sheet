@@ -164,5 +164,5 @@ export type CharacterEquipment = {
     count: number,
     isEquipped: boolean,
     isCarried: boolean,
-    inBackpack: boolean,    
+    inBackpack: boolean,
 }

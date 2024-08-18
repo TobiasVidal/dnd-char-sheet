@@ -16,11 +16,11 @@ export const GetCharacterRace = (characterId: number): CharacterRace =>
         },
         {
             characterId: CharacterId.Zilean,
-            displayName: "Tiefling/Elf",
+            displayName: "Tiefling/Aasimar",
             subtitle: "(custom lineage)",
             speed: 30,
             abilityScores: [{ ...AbilityScoreDefault, abilityScoreEnum: AbilityScoreEnum.Int, value: 2 }],
-            languages: ["Common", "Elven"],
+            languages: ["Common", "Invernal", "Celestial"],
             traits: ["Darkvision 60ft"],
             //Feat
             size: "Medium",

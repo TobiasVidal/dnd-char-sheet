@@ -1,4 +1,4 @@
-import { AbilityScoreEnum } from "./abilityScore.d"
+import { AbilityScoreEnum, StatModifier } from "./abilityScore.d"
 import { SkillEnum } from "./skill.d"
 import { DamageType } from "./common.d"
 
@@ -19,6 +19,7 @@ export type Equipment = {
     grantsACBonus?: number,//Esto es para cosas como shields, que dan un bonus (suma) al AC
     skills?: { skill: SkillEnum, value: number }[],
     savingThrows?: { ability: AbilityScoreEnum, value: number }[],
+    statModifiers: StatModifier[]
     damage?: {
         ability: AbilityScoreEnum,
         dice: DamageDice[],
@@ -26,6 +27,7 @@ export type Equipment = {
 }
 
 export enum EquipmentEnum {
+    ArcaneGrimoire,
     Book,
     BlockAndTackle,
     Chalk,
@@ -37,6 +39,7 @@ export enum EquipmentEnum {
     Dagger,
     Emblem,
     ExplorersPack,
+    ObsidianSteedFigurine,
     Hammer,
     HalfPlate,
     Horn,

@@ -140,14 +140,18 @@ const SetSpellcasting = (character: CharacterDisplay) => {
         .map(x => ({ class: x.class.name(), ability: x.class.spellcastingAbility()! }));
     if (classSpellcastingAbilities.length === 0) { return; }
 
+    const statModifiers: StatModifier[] = GetStatModifiers(character);
+    const spellDCBonus = statModifiers.filter(x => x.target === ModifierTargetEnum.SpellDC)
+                            .reduce((total, bonus) => total + GetModifierAmount(bonus, character), 0);
+
     let spellAbilities: AbilityScoreEnum[] = [...new Set(classSpellcastingAbilities.map(x => x.ability))];
     const spellSaveDCs: SpellSave[] = [];
     for (let ability of spellAbilities) {
         const abilityModifier = character.abilityScores.find(x => x.abilityScoreEnum === (ability as AbilityScoreEnum))?.modifier() ?? 0;
         spellSaveDCs.push({
             classes: classSpellcastingAbilities.filter(x => x.ability === ability).map(x => x.class),
-            saveDc: 8 + character.profBonus() + abilityModifier,
-            attackModifier: character.profBonus() + abilityModifier,
+            saveDc: 8 + character.profBonus() + abilityModifier + spellDCBonus,
+            attackModifier: character.profBonus() + abilityModifier + spellDCBonus,
         });
     }
 
@@ -213,8 +217,9 @@ const GetStatModifiers = (character: CharacterDisplay): StatModifier[] => {
     for (let feature of character.charFeatures) {
         feature.modifiers.forEach(x => result.push(x));
     }
-    // for (let equipment of character.charEquipment) {
-    //     equipment.modifiers.forEach(x => result.push(x));
-    // }
+    for (let charEquipment of character.charEquipment) {
+        if (!(charEquipment.isCarried || charEquipment.isEquipped)) { continue; }
+        charEquipment.equipment.statModifiers.forEach(x => result.push(x));
+    }
     return result;
 }

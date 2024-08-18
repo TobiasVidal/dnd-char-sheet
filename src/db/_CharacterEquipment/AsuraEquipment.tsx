@@ -158,4 +158,4 @@ export const AsuraEquipment: CharacterEquipment[] = [
         inBackpack: false,
         count: 1,
     },
-].map(x => ({ characterId: CharacterId.Asura, ...x}));
+].map(x => ({ characterId: CharacterId.Asura, ...x }));

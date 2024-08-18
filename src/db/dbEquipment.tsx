@@ -1,10 +1,11 @@
 import { GetAbilityScoreEnumArray, GetSkillEnumArray } from "../utils/common";
+import { AbilityScoreEnum, ModifierTargetEnum, ModifierTypeEnum } from "../typings/abilityScore.d";
 import { Equipment, EquipmentEnum } from "../typings/equipment.d";
-import { AbilityScoreEnum } from "../typings/abilityScore.d";
 import { DamageType } from "../typings/common.d";
 
 const GetEquipmentName = (equipment: EquipmentEnum): string => {
     switch (equipment) {
+        case EquipmentEnum.ArcaneGrimoire: return 'Arcane Grimoire [Very Rare]';
         case EquipmentEnum.BlockAndTackle: return 'Block and Tackle';
         case EquipmentEnum.CobblersTools: return 'Cobbler\'s Tools';
         case EquipmentEnum.ContingencyStatuette: return 'Contingency Statuette';
@@ -13,6 +14,7 @@ const GetEquipmentName = (equipment: EquipmentEnum): string => {
         case EquipmentEnum.HalfPlate: return 'Half Plate';
         case EquipmentEnum.ExplorersPack: return 'Explorer\'s Pack';
         case EquipmentEnum.LuckStone: return 'Stone of Good Luck';
+        case EquipmentEnum.ObsidianSteedFigurine: return 'Obsidian Steed Figurine';
         case EquipmentEnum.RingMail: return 'Ring Mail';
         case EquipmentEnum.RopeSilk: return 'Silk Rope';
         case EquipmentEnum.SmithsTools: return 'Smith\'s Tools';
@@ -32,6 +34,14 @@ const GetEquipmentUrl = (equipment: EquipmentEnum): string => {
 }
 
 export const dbEquipment: Equipment[] = [
+    { 
+        equipmentEnum: EquipmentEnum.ArcaneGrimoire,
+        statModifiers: [{
+            type: ModifierTypeEnum.Flat,
+            target: ModifierTargetEnum.SpellDC,
+            flatValue: 3,
+        }]
+    },
     { equipmentEnum: EquipmentEnum.Book, },
     { equipmentEnum: EquipmentEnum.BlockAndTackle, },
     { equipmentEnum: EquipmentEnum.Chalk, },
@@ -62,6 +72,7 @@ export const dbEquipment: Equipment[] = [
             dice: [{ type: DamageType.Bludgeoning, dieSides: 6, dieCount: 1 }]
         }
     },
+    { equipmentEnum: EquipmentEnum.ObsidianSteedFigurine, },
     { equipmentEnum: EquipmentEnum.Piton, },
     { equipmentEnum: EquipmentEnum.Rations, },
     { 
@@ -131,8 +142,19 @@ export const dbEquipment: Equipment[] = [
         equipmentEnum: EquipmentEnum.DancingBoots,
         savingThrows: GetAbilityScoreEnumArray().map(x => ({ ability: x, value: 1 })),
     },
-];
+].map(x => ({statModifiers: [], ...x}));
+/*
+1 Bronze Griffon 
+1 Ebony Fly 
+2 Golden Lions
+3 Ivory Goats
+1 Marble Elephant 
+1 Obsidian Steed 
+1 Onyx Dog 
+1 Silver Raven 
 
+rgb(240, 196, 114) amarillo
+*/
 dbEquipment.filter(x => !x.name).forEach(x => {
     x.name = GetEquipmentName(x.equipmentEnum);
     x.url = GetEquipmentUrl(x.equipmentEnum);
